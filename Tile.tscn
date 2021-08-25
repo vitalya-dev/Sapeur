@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=2]
+
+[sub_resource type="Theme" id=1]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.756863, 0.756863, 0.756863, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.709804, 0.709804, 0.709804, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.756863, 0.756863, 0.756863, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0, 0, 0, 1 )
+corner_detail = 9
+
+[node name="Tile" type="Button"]
+anchor_left = 0.500135
+anchor_top = 0.500227
+anchor_right = 0.500135
+anchor_bottom = 0.500227
+margin_left = -512.138
+margin_top = -300.136
+margin_right = -493.138
+margin_bottom = -280.136
+rect_min_size = Vector2( 19, 20 )
+rect_clip_content = true
+theme = SubResource( 1 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/normal = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
