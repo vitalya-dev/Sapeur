@@ -18,6 +18,9 @@ func _ready():
 func _process(delta):
 	print($Game.rect_size);
 
+func _input(ev):
+	if ev.is_action_pressed("ui_cancel"):
+		get_tree().quit()
 
 func make_tiles():
 	$Game/Field.set_columns(SIZE.x)
