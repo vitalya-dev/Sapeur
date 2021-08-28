@@ -35,7 +35,7 @@ func make_tiles():
 			$Game/Field.add_child(tile);
 			
 func distribute_mines():
-	# Distribute mines
+	randomize()
 	var mines_count = MINES
 	while mines_count > 0:
 		var minepos = randi() % int(SIZE.x * SIZE.y)
