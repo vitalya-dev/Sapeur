@@ -1,55 +1,44 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Tile.gd" type="Script" id=1]
-[ext_resource path="res://PressStart2P-vaV7.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Assets/normal.png" type="Texture" id=2]
+[ext_resource path="res://PressStart2P-vaV7.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="Theme" id=1]
 
-[sub_resource type="StyleBoxFlat" id=2]
-bg_color = Color( 0.8, 0.8, 0.8, 1 )
-border_width_left = 1
-border_width_top = 1
-border_color = Color( 0, 0, 0, 1 )
-corner_detail = 9
+[sub_resource type="DynamicFont" id=2]
+size = 9
+font_data = ExtResource( 3 )
 
-[sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 1, 1, 1, 1 )
-border_width_left = 1
-border_width_top = 1
-border_color = Color( 0, 0, 0, 1 )
-corner_detail = 9
-
-[sub_resource type="DynamicFont" id=4]
-size = 12
-font_data = ExtResource( 2 )
-
-[node name="Tile" type="Button"]
+[node name="Tile" type="TextureButton"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -9.50003
-margin_top = -9.85968
-margin_right = 9.50003
-margin_bottom = 10.1403
-rect_min_size = Vector2( 19, 20 )
+margin_left = -8.0
+margin_top = -8.0
+margin_right = 8.0
+margin_bottom = 8.0
 rect_clip_content = true
 focus_mode = 0
 theme = SubResource( 1 )
-custom_styles/hover = SubResource( 2 )
-custom_styles/pressed = SubResource( 3 )
-custom_styles/focus = SubResource( 2 )
-custom_styles/disabled = SubResource( 2 )
-custom_styles/normal = SubResource( 2 )
-custom_fonts/font = SubResource( 4 )
-custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
-custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 shortcut_in_tooltip = false
 button_mask = 3
 enabled_focus_mode = 0
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 2 )
+texture_hover = ExtResource( 2 )
+texture_disabled = ExtResource( 2 )
+texture_focused = ExtResource( 2 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Text" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1

@@ -1,4 +1,4 @@
-extends Button
+extends TextureButton
 
 
 # Declare member variables here. Examples:
@@ -32,10 +32,10 @@ func _input(ev):
 func flag():
 	match state:
 		NORMAL:
-			set_text("F")
+			$Text.set_text("F")
 			state = FLAGGED
 		FLAGGED:
-			set_text("")
+			$Text.set_text("")
 			state = NORMAL
 								
 func open():
@@ -43,15 +43,21 @@ func open():
 		FLAGGED, NORMAL:
 			state = OPEN
 			if self.mine:
-				set_text("X")
+				$Text.set_text("X")
+			elif mines_around > 0:
+				$Text.set_text(str(mines_around))
 			else:
-				set_text(str(mines_around))
+				$Text.set_text("")
+			set_texture(preload("res://Assets/open.png"))
 			emit_signal("open")
 	
-		
+func set_texture(texture):
+	set_normal_texture(texture)
+	set_hover_texture(texture)
+	set_pressed_texture(texture)
+	set_focused_texture(texture)	
 		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
-	#print(flagged)

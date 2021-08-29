@@ -14,7 +14,7 @@ func _ready():
 	make_tiles()
 	distribute_mines()
 	set_neighbors()
-	adjust_window_size();
+	#adjust_window_size();
 	switch_full_screen();
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
