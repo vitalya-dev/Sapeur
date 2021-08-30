@@ -9,13 +9,14 @@ var mine = false
 var mines_around = 0
 
 const text_color = [
-	Color(0.3, 0.3, 1),
-	Color(0.3, 1,   0.3),
-	Color(1,   0.3, 0.3),
-	Color(0.3, 1,   1),
-	Color(1,   0.3, 1),
-	Color(1,   1,   0.3),
-	Color(1,   1,   1)
+	Color("0000ff"),
+	Color("008000"),
+	Color("ff0000"),
+	Color("000080"),
+	Color("800000"),
+	Color("008080"),
+	Color("000000"),
+	Color("808080")
 ]
 	
 signal open
@@ -57,7 +58,7 @@ func open():
 				$Text.set_text("X")
 			elif mines_around > 0:
 				$Text.set_text(str(mines_around))
-				$Text.set("custom_colors/font_color", text_color[mines_around])
+				$Text.set("custom_colors/font_color", text_color[mines_around - 1])
 			else:
 				$Text.set_text("")
 			set_texture(preload("res://Assets/open.png"))
