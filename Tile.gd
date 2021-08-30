@@ -8,6 +8,16 @@ extends TextureButton
 var mine = false 
 var mines_around = 0
 
+const text_color = [
+	Color(0.3, 0.3, 1),
+	Color(0.3, 1,   0.3),
+	Color(1,   0.3, 0.3),
+	Color(0.3, 1,   1),
+	Color(1,   0.3, 1),
+	Color(1,   1,   0.3),
+	Color(1,   1,   1)
+]
+	
 signal open
 
 enum {
@@ -17,6 +27,7 @@ enum {
 }
 
 var state = NORMAL;
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -46,6 +57,7 @@ func open():
 				$Text.set_text("X")
 			elif mines_around > 0:
 				$Text.set_text(str(mines_around))
+				$Text.set("custom_colors/font_color", text_color[mines_around])
 			else:
 				$Text.set_text("")
 			set_texture(preload("res://Assets/open.png"))
