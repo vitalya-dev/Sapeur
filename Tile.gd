@@ -61,7 +61,7 @@ func open():
 				$Text.set("custom_colors/font_color", text_color[mines_around - 1])
 			else:
 				$Text.set_text("")
-			set_texture(preload("res://Assets/open.png"))
+			set_texture(preload("res://Assets/tile_open.png"))
 			emit_signal("open")
 	
 func set_texture(texture):

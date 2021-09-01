@@ -7,7 +7,7 @@
 [sub_resource type="Theme" id=1]
 
 [sub_resource type="DynamicFont" id=2]
-size = 9
+size = 8
 font_data = ExtResource( 3 )
 
 [node name="Tile" type="TextureButton"]

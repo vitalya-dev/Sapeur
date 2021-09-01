@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/message_button.png-1a773bddb69187352bdf6dde155e6abc.stex"
+path="res://.import/message_button_normal.png-58b6673484633efa45a06c346ff920b9.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/message_button.png"
-dest_files=[ "res://.import/message_button.png-1a773bddb69187352bdf6dde155e6abc.stex" ]
+source_file="res://Assets/message_button_normal.png"
+dest_files=[ "res://.import/message_button_normal.png-58b6673484633efa45a06c346ff920b9.stex" ]
 
 [params]
 
@@ -24,7 +24,7 @@ flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
-process/fix_alpha_border=true
+process/fix_alpha_border=false
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false

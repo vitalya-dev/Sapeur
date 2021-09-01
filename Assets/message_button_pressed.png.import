@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/avatar_background.png-b081c95a1585c42f82e110783b316dc6.stex"
+path="res://.import/message_button_pressed.png-7aff8e40a3b255b72d98037fa707fd5c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/avatar_background.png"
-dest_files=[ "res://.import/avatar_background.png-b081c95a1585c42f82e110783b316dc6.stex" ]
+source_file="res://Assets/message_button_pressed.png"
+dest_files=[ "res://.import/message_button_pressed.png-7aff8e40a3b255b72d98037fa707fd5c.stex" ]
 
 [params]
 
