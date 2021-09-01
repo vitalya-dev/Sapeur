@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Main.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Field.gd" type="Script" id=1]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.756863, 0.756863, 0.756863, 1 )
@@ -10,7 +10,7 @@ border_width_right = 5
 border_width_bottom = 5
 border_color = Color( 0, 0, 0, 1 )
 
-[node name="Main" type="CenterContainer"]
+[node name="Field" type="CenterContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
@@ -20,8 +20,10 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+size = Vector2( 10, 10 )
+mines = 10
 
-[node name="Game" type="PanelContainer" parent="."]
+[node name="Panel" type="PanelContainer" parent="."]
 margin_left = 251.0
 margin_top = 139.0
 margin_right = 261.0
@@ -34,7 +36,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Field" type="GridContainer" parent="Game"]
+[node name="Grid" type="GridContainer" parent="Panel"]
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 5.0

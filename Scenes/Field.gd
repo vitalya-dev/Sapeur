@@ -1,7 +1,7 @@
 extends Control
 
-var SIZE = Vector2(10, 10)
-var MINES = 10
+export var size : Vector2
+export var mines : int
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -10,7 +10,7 @@ var MINES = 10
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Game.rect_size = Vector2(0, 0)
+	$Panel.rect_size = Vector2(0, 0)
 	make_tiles()
 	distribute_mines()
 	set_neighbors()
@@ -26,44 +26,43 @@ func _input(ev):
 		get_tree().quit()
 
 func make_tiles():
-	$Game/Field.set_columns(SIZE.x)
-	for y in range(SIZE.y):
-		for x in range(SIZE.x):
-			var tile = preload('res://Tile.tscn').instance()
-			tile.rect_position = Vector2(x,y);
+	$Panel/Grid.set_columns(size.x)
+	for y in range(size.y):
+		for x in range(size.x):
+			var tile = preload('res://Scenes/Tile.tscn').instance()
 			tile.connect("open", self, '_on_tile_open', [Vector2(x, y)])
-			$Game/Field.add_child(tile);
+			$Panel/Grid.add_child(tile);
 			
 func distribute_mines():
 	randomize()
-	var mines_count = MINES
+	var mines_count = mines
 	while mines_count > 0:
-		var minepos = randi() % int(SIZE.x * SIZE.y)
-		if not $Game/Field.get_child(minepos).mine:
-			$Game/Field.get_child(minepos).mine = true
+		var minepos = randi() % int(size.x * size.y)
+		if not $Panel/Grid.get_child(minepos).mine:
+			$Panel/Grid.get_child(minepos).mine = true
 			mines_count -= 1	
 
 func set_neighbors():
-	for y in range(SIZE.y):
-		for x in range(SIZE.x):
-			var mines = 0
+	for y in range(size.y):
+		for x in range(size.x):
+			var mines_around = 0
 			var pos = Vector2(x, y)
 			for neighbor in get_neighbors(pos):
 				if get_tile(neighbor).mine:
-					mines += 1
-			get_tile(pos).mines_around = mines
+					mines_around += 1
+			get_tile(pos).mines_around = mines_around
 
 func get_tile(pos):
-	return $Game/Field.get_child(pos.x + (pos.y * SIZE.x))
+	return $Panel/Grid.get_child(pos.x + (pos.y * size.x))
 
 func get_neighbors(pos):
 	var neighbors = []
 	for delta_x in [-1, 0, 1]:
 		for delta_y in [-1, 0, 1]:
 			var neighbor = Vector2(pos.x + delta_x, pos.y + delta_y)
-			if neighbor.x < 0 or neighbor.x >= SIZE.x:
+			if neighbor.x < 0 or neighbor.x >= size.x:
 				continue
-			if neighbor.y < 0 or neighbor.y >= SIZE.y:
+			if neighbor.y < 0 or neighbor.y >= size.y:
 				continue
 			if neighbor.x == pos.x and neighbor.y == pos.y:
 				continue
@@ -72,7 +71,7 @@ func get_neighbors(pos):
 				
 func adjust_window_size():
 	yield(get_tree(), "idle_frame")
-	OS.set_window_size($Game.rect_size)
+	OS.set_window_size($Panel.rect_size)
 	
 	
 func switch_full_screen():

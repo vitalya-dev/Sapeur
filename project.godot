@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="Sapeur"
-run/main_scene="res://Message.tscn"
+run/main_scene="res://Scenes/Level_1.tscn"
 config/icon="res://icon.png"
 
 [display]
