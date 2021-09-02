@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/avatar_hero.png-bd5967d3a44e33a5c236322a973f6aaa.stex"
+path="res://.import/avatar_colonel.png-253329b610a1e7685e6db6a07635220d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/avatar_hero.png"
-dest_files=[ "res://.import/avatar_hero.png-bd5967d3a44e33a5c236322a973f6aaa.stex" ]
+source_file="res://Assets/avatar_colonel.png"
+dest_files=[ "res://.import/avatar_colonel.png-253329b610a1e7685e6db6a07635220d.stex" ]
 
 [params]
 
@@ -20,11 +20,11 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
-process/fix_alpha_border=false
+process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
