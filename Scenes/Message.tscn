@@ -42,7 +42,8 @@ __meta__ = {
 "_edit_group_": true,
 "_edit_use_anchors_": false
 }
-avatar = ExtResource( 5 )
+messages = PoolStringArray( "@Это тренировачное задание.", "@Найди все мины и постарайся не облажаться, сержант." )
+avatar_1 = ExtResource( 5 )
 
 [node name="Avatar" type="Sprite" parent="."]
 position = Vector2( 5, 4 )
