@@ -26,7 +26,7 @@ var state = "NORMAL";
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-    pass
+    add_to_group("tiles")
 
 func _input(ev):
     if is_hovered() and ev is InputEventMouseButton:

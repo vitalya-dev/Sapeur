@@ -30,7 +30,6 @@ func _process(delta):
             pass
         "FAIL":
             pass
-        
             
 
 func _input(ev):
@@ -91,14 +90,20 @@ func switch_full_screen():
     OS.window_fullscreen = true
 
 func _on_tile_open(pos):
-    if check_fail():
-        state = "FAIL"
-    elif check_win():
-        state = "WIN"
-    elif get_tile(pos).mines_around == 0:
-        print("open other")
-        for neighbor in get_neighbors(pos):
-            get_tile(neighbor).open()
+    match state:
+        "GAME":
+            if check_fail():
+                get_tree().call_group("tiles", "open")
+                state = "FAIL"
+            elif check_win():
+                state = "WIN"
+            elif get_tile(pos).mines_around == 0:
+                for neighbor in get_neighbors(pos):
+                    get_tile(neighbor).open()
+        "WIN":
+            pass
+        "FAIL":
+            pass
 
 
 func check_fail():
