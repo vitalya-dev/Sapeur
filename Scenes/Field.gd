@@ -7,7 +7,12 @@ export var mines : int
 # var a = 2
 # var b = "text"
 
+
+signal win
+signal fail
+
 var state = "INIT"
+var debug_font = make_font(24)
 
 # Called when the node enters the scene tree for the first time.
 func init():
@@ -17,6 +22,13 @@ func init():
     set_neighbors()
     #adjust_window_size();
     switch_full_screen();
+
+
+func make_font(font_size):
+    var font = DynamicFont.new()
+    font.size = font_size
+    font.set_font_data(load("res://PressStart2P-vaV7.ttf"))
+    return font
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -30,7 +42,12 @@ func _process(delta):
             pass
         "FAIL":
             pass
-            
+
+
+func _draw():
+    #draw_string(debug_font, Vector2(0, 24), state, Color(1.0, 1.0, 1.0))
+    pass
+    
 
 func _input(ev):
     if ev.is_action_pressed("ui_cancel"):
@@ -42,6 +59,7 @@ func make_tiles():
         for x in range(size.x):
             var tile = preload('res://Scenes/Tile.tscn').instance()
             tile.connect("open", self, '_on_tile_open', [Vector2(x, y)])
+            tile.connect("flagged", self, "_on_tile_flagged", [Vector2(x, y)])
             $Panel/Grid.add_child(tile);
             
 func distribute_mines():
@@ -90,20 +108,22 @@ func switch_full_screen():
     OS.window_fullscreen = true
 
 func _on_tile_open(pos):
-    match state:
-        "GAME":
-            if check_fail():
-                get_tree().call_group("tiles", "open")
-                state = "FAIL"
-            elif check_win():
-                state = "WIN"
-            elif get_tile(pos).mines_around == 0:
-                for neighbor in get_neighbors(pos):
-                    get_tile(neighbor).open()
-        "WIN":
-            pass
-        "FAIL":
-            pass
+    if check_fail():
+        get_tree().call_group("tiles", "open")
+        state = "FAIL"
+        emit_signal("fail")
+    elif check_win():
+        state = "WIN"
+        emit_signal("win")
+    elif get_tile(pos).mines_around == 0:
+        for neighbor in get_neighbors(pos):
+            get_tile(neighbor).open()
+
+func _on_tile_flagged(pos):
+    if check_win():
+        get_tree().call_group("tiles", "open")
+        state = "WIN"
+        emit_signal("win")
 
 
 func check_fail():

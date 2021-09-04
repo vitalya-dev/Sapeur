@@ -20,6 +20,7 @@ const text_color = [
 ]
     
 signal open
+signal flagged
 
 var state = "NORMAL";
 
@@ -40,6 +41,7 @@ func flag():
         "NORMAL":
             $Text.set_text("F")
             state = "FLAGGED"
+            emit_signal("flagged")
         "FLAGGED":
             $Text.set_text("")
             state = "NORMAL"
