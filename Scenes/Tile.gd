@@ -8,6 +8,8 @@ extends TextureButton
 var mine = false 
 var mines_around = 0
 
+var is_active = true
+
 const text_color = [
     Color("0000ff"),
     Color("008000"),
@@ -30,11 +32,14 @@ func _ready():
     add_to_group("tiles")
 
 func _input(ev):
-    if is_hovered() and ev is InputEventMouseButton:
+    if is_active and is_hovered() and ev is InputEventMouseButton:
         if ev.button_index == 2 and ev.pressed:
             flag()
         if ev.button_index == 1 and ev.pressed:
             open()
+
+func active(val):
+    is_active = val
 
 func flag():
     match state:

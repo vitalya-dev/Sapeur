@@ -109,11 +109,12 @@ func switch_full_screen():
 
 func _on_tile_open(pos):
     if check_fail():
-        get_tree().call_group("tiles", "open")
         state = "FAIL"
+        get_tree().call_group("tiles", "active", false)
         emit_signal("fail")
     elif check_win():
         state = "WIN"
+        get_tree().call_group("tiles", "active", false)
         emit_signal("win")
     elif get_tile(pos).mines_around == 0:
         for neighbor in get_neighbors(pos):
@@ -121,8 +122,8 @@ func _on_tile_open(pos):
 
 func _on_tile_flagged(pos):
     if check_win():
-        get_tree().call_group("tiles", "open")
         state = "WIN"
+        get_tree().call_group("tiles", "active", false)
         emit_signal("win")
 
 

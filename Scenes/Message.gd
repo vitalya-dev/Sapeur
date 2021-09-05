@@ -21,14 +21,15 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
     frame_delta = delta
-
+    if current_message >= messages.size() - 1:
+        $Button/ButtonText.text = "Выход"
 
 func _on_Button_pressed():
     if current_message < messages.size() - 1:
         current_message += 1
         show_current_message()
     else:
-        hide()
+        queue_free()
 
 func show_current_message():
     match messages[current_message][0]:

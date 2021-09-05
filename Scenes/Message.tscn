@@ -4,6 +4,7 @@
 [ext_resource path="res://Assets/avatar_background.png" type="Texture" id=2]
 [ext_resource path="res://Assets/message_button_pressed.png" type="Texture" id=3]
 [ext_resource path="res://Assets/message_button_normal.png" type="Texture" id=4]
+[ext_resource path="res://Scenes/Message.gd" type="Script" id=5]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.00392157, 0.203922, 0.168627, 1 )
@@ -12,56 +13,6 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color( 0, 0, 0, 1 )
-
-[sub_resource type="GDScript" id=2]
-script/source = "extends Panel
-
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = \"text\"
-export var messages: PoolStringArray
-export var avatar_1: Texture
-export var avatar_2: Texture
-export var avatar_3: Texture
-export var avatar_4: Texture
-
-var current_message = 0
-var frame_delta = 0
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-    if messages.size() > 0:
-        show_current_message()	
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-    frame_delta = delta
-
-
-func _on_Button_pressed():
-    if current_message < messages.size() - 1:
-        current_message += 1
-        show_current_message()
-    else:
-        hide()
-
-func show_current_message():
-    match messages[current_message][0]:
-        \"@\":
-            $Avatar/Picture.texture = avatar_1
-        \"#\":
-            $Avatar/Picture.texture = avatar_2
-        \"$\":
-            $Avatar/Picture.texture = avatar_3
-        \"%\":
-            $Avatar/Picture.texture = avatar_4
-    $Text.text = messages[current_message].right(1)
-    $Text.percent_visible = 0;		
-    while $Text.percent_visible < 1:
-        $Text.percent_visible += frame_delta
-        yield(get_tree(), \"idle_frame\")
-"
 
 [sub_resource type="DynamicFont" id=3]
 size = 8
@@ -85,12 +36,11 @@ rect_min_size = Vector2( 320, 80 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 1 )
-script = SubResource( 2 )
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_group_": true,
 "_edit_use_anchors_": false
 }
-messages = PoolStringArray( "", "" )
 
 [node name="Avatar" type="Sprite" parent="."]
 position = Vector2( 5, 4 )
