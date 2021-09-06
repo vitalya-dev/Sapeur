@@ -10,19 +10,30 @@ extends CenterContainer
 func _ready():
     $Field.connect("win", self, "_on_win")
     $Field.connect("fail", self, "_on_fail")
+    $Field.active(false)
     show_intro_message()
+    while (get_node("Message")):
+        yield(get_tree().create_timer(0.5), "timeout")
+    $Field.active(true)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
-#    pass
+#pass
 
+
+func _on_init():
+    yield(get_tree().create_timer(0.5), "timeout")
+    $Field.active(false)
+    show_intro_message()
 
 func _on_fail():
+    yield(get_tree().create_timer(1), "timeout")
     show_fail_message()
 
 
 func _on_win():
+    yield(get_tree().create_timer(1), "timeout")
     show_win_message()
 
 
@@ -31,7 +42,7 @@ func show_intro_message():
     message.messages = ["@Это учебное задание.", "@Обезвредь все мины, сержант.", "#Будет исполнено, товарищ полковник."]
     message.avatar_1 = preload("res://Assets/avatar_colonel.png")
     message.avatar_2 = preload("res://Assets/avatar_sergeant.png")
-    add_child(message);
+    add_child(message, true);
 
 func show_win_message():
     var message = preload('res://Scenes/Message.tscn').instance()

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scenes/Field.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Levels/Level_1.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=3]
 
 [node name="Level_1" type="CenterContainer"]
 anchor_right = 1.0
@@ -24,3 +25,5 @@ margin_right = 255.0
 margin_bottom = 144.0
 use_top_left = true
 mines = 2
+
+[node name="HUD" parent="." instance=ExtResource( 3 )]

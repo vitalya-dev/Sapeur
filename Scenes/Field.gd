@@ -10,32 +10,23 @@ export var mines : int
 
 signal win
 signal fail
+signal init
 
-var state = "INIT"
+var state = "GAME"
 var debug_font = make_font(24)
 
 # Called when the node enters the scene tree for the first time.
-func init():
+func _ready():
     $Panel.rect_size = Vector2(0, 0)
     make_tiles()
     distribute_mines()
     set_neighbors()
-    #adjust_window_size();
     switch_full_screen();
 
-
-func make_font(font_size):
-    var font = DynamicFont.new()
-    font.size = font_size
-    font.set_font_data(load("res://PressStart2P-vaV7.ttf"))
-    return font
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
     match state:
-        "INIT":
-            init()
-            state = "GAME"
         "GAME":
             pass
         "WIN":
@@ -107,33 +98,32 @@ func switch_full_screen():
     yield(get_tree(), "idle_frame")
     OS.window_fullscreen = true
 
+func active(val):
+    get_tree().call_group("tiles", "active", val)
+
 func _on_tile_open(pos):
-    if check_fail():
-        state = "FAIL"
-        get_tree().call_group("tiles", "active", false)
-        emit_signal("fail")
-    elif check_win():
-        state = "WIN"
-        get_tree().call_group("tiles", "active", false)
-        emit_signal("win")
-    elif get_tile(pos).mines_around == 0:
-        for neighbor in get_neighbors(pos):
-            get_tile(neighbor).open()
+    match state:
+        "GAME":
+            if get_tile(pos).mine:
+                state = "FAIL"
+                active(false)
+                emit_signal("fail")
+            elif check_win():
+                state = "WIN"
+                active(false)
+                emit_signal("win")
+            elif get_tile(pos).mines_around == 0:
+                for neighbor in get_neighbors(pos):
+                    get_tile(neighbor).open()
 
 func _on_tile_flagged(pos):
-    if check_win():
-        state = "WIN"
-        get_tree().call_group("tiles", "active", false)
-        emit_signal("win")
+    match state:
+        "GAME":
+            if check_win():
+                state = "WIN"
+                active(false)
+                emit_signal("win")
 
-
-func check_fail():
-    for y in range(size.y):
-        for x in range(size.x):
-            var pos = Vector2(x, y)
-            if get_tile(pos).state == "OPEN" and get_tile(pos).mine:
-                return true
-    return false
 
 func check_win():
     var opened_tiles = 0
@@ -146,3 +136,10 @@ func check_win():
             elif get_tile(pos).state == "FLAGGED":
                 flagged_tiles += 1
     return opened_tiles == size.x * size.y - mines and flagged_tiles == mines
+
+
+func make_font(font_size):
+    var font = DynamicFont.new()
+    font.size = font_size
+    font.set_font_data(load("res://PressStart2P-vaV7.ttf"))
+    return font
