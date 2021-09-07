@@ -1,61 +1,23 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Assets/avatar_sergeant.png" type="Texture" id=1]
-[ext_resource path="res://Assets/flag_rounded.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/HUD.gd" type="Script" id=3]
 
 [node name="HUD" type="CanvasLayer"]
+script = ExtResource( 3 )
+flags_count = 10
 
 [node name="Avatar" type="Sprite" parent="."]
 position = Vector2( 8, 8 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="Flag2" type="Sprite" parent="."]
-position = Vector2( 88, 32 )
-texture = ExtResource( 2 )
-centered = false
-
-[node name="Flag3" type="Sprite" parent="."]
-position = Vector2( 112, 32 )
-texture = ExtResource( 2 )
-centered = false
-
-[node name="Flag4" type="Sprite" parent="."]
-position = Vector2( 136, 32 )
-texture = ExtResource( 2 )
-centered = false
-
-[node name="Flag5" type="Sprite" parent="."]
-position = Vector2( 160, 32 )
-texture = ExtResource( 2 )
-centered = false
-
-[node name="Flag6" type="Sprite" parent="."]
-position = Vector2( 184, 32 )
-texture = ExtResource( 2 )
-centered = false
-
-[node name="Flag7" type="Sprite" parent="."]
-position = Vector2( 208, 32 )
-texture = ExtResource( 2 )
-centered = false
-
-[node name="Flag8" type="Sprite" parent="."]
-position = Vector2( 232, 32 )
-texture = ExtResource( 2 )
-centered = false
-
-[node name="Flag9" type="Sprite" parent="."]
-position = Vector2( 256, 32 )
-texture = ExtResource( 2 )
-centered = false
-
-[node name="Flag10" type="Sprite" parent="."]
-position = Vector2( 280, 32 )
-texture = ExtResource( 2 )
-centered = false
-
-[node name="Flag1" type="Sprite" parent="."]
-position = Vector2( 64, 32 )
-texture = ExtResource( 2 )
-centered = false
+[node name="Flags" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 64.0
+margin_top = 32.0
+margin_bottom = -240.0
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/flag_rounded.png-fb23ca8de6c3c1331c25341c054ad721.stex"
+path="res://.import/circle.png-c4157733c2ad3470a49e52db87e6ad2d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/flag_rounded.png"
-dest_files=[ "res://.import/flag_rounded.png-fb23ca8de6c3c1331c25341c054ad721.stex" ]
+source_file="res://Assets/circle.png"
+dest_files=[ "res://.import/circle.png-c4157733c2ad3470a49e52db87e6ad2d.stex" ]
 
 [params]
 

@@ -15,34 +15,34 @@ var frame_delta = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-    if messages.size() > 0:
-        show_current_message()	
+	if messages.size() > 0:
+		show_current_message()	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-    frame_delta = delta
-    if current_message >= messages.size() - 1:
-        $Button/ButtonText.text = "Выход"
+	frame_delta = delta
+	if current_message >= messages.size() - 1:
+		$Button/ButtonText.text = "Выход"
 
 func _on_Button_pressed():
-    if current_message < messages.size() - 1:
-        current_message += 1
-        show_current_message()
-    else:
-        queue_free()
+	if current_message < messages.size() - 1:
+		current_message += 1
+		show_current_message()
+	else:
+		queue_free()
 
 func show_current_message():
-    match messages[current_message][0]:
-        "@":
-            $Avatar/Picture.texture = avatar_1
-        "#":
-            $Avatar/Picture.texture = avatar_2
-        "$":
-            $Avatar/Picture.texture = avatar_3
-        "%":
-            $Avatar/Picture.texture = avatar_4
-    $Text.text = messages[current_message].right(1)
-    $Text.percent_visible = 0;		
-    while $Text.percent_visible < 1:
-        $Text.percent_visible += frame_delta
-        yield(get_tree(), "idle_frame")
+	match messages[current_message][0]:
+		"@":
+			$Avatar/Picture.texture = avatar_1
+		"#":
+			$Avatar/Picture.texture = avatar_2
+		"$":
+			$Avatar/Picture.texture = avatar_3
+		"%":
+			$Avatar/Picture.texture = avatar_4
+	$Text.text = messages[current_message].right(1)
+	$Text.percent_visible = 0;		
+	while $Text.percent_visible < 1:
+		$Text.percent_visible += frame_delta
+		yield(get_tree(), "idle_frame")
