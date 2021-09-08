@@ -8,24 +8,28 @@ extends CenterContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Field.connect("win", self, "_on_win")
-	$Field.connect("fail", self, "_on_fail")
-	$Field.active(false)
+	init_field()
+	init_hud()
 	show_intro_message()
 	while (get_node("Message")):
 		yield(get_tree().create_timer(0.5), "timeout")
 	$Field.active(true)
 
 
+func init_field():
+	$Field.connect("win", self, "_on_win")
+	$Field.connect("fail", self, "_on_fail")
+	$Field.connect("flag_push", self, "_on_flag_push")
+	$Field.active(false)
+	
+func init_hud():
+	for i in range($Field.mines):
+		$HUD.push_flag()	
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #pass
 
-
-func _on_init():
-	yield(get_tree().create_timer(0.5), "timeout")
-	$Field.active(false)
-	show_intro_message()
 
 func _on_fail():
 	yield(get_tree().create_timer(1), "timeout")
@@ -36,6 +40,9 @@ func _on_win():
 	yield(get_tree().create_timer(1), "timeout")
 	show_win_message()
 
+func _on_flag_push():
+	$HUD.push_flag()
+
 
 func show_intro_message():
 	var message = preload('res://Scenes/Message.tscn').instance()
@@ -43,6 +50,7 @@ func show_intro_message():
 	message.avatar_1 = preload("res://Assets/avatar_colonel.png")
 	message.avatar_2 = preload("res://Assets/avatar_sergeant.png")
 	add_child(message, true);
+
 
 func show_win_message():
 	var message = preload('res://Scenes/Message.tscn').instance()

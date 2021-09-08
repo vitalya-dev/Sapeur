@@ -5,7 +5,6 @@
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 3 )
-flags_count = 10
 
 [node name="Avatar" type="Sprite" parent="."]
 position = Vector2( 8, 8 )

@@ -10,7 +10,9 @@ export var mines : int
 
 signal win
 signal fail
-signal init
+
+signal flag_pop
+signal flag_push
 
 var state = "GAME"
 var debug_font = make_font(24)
@@ -51,6 +53,7 @@ func make_tiles():
 			var tile = preload('res://Scenes/Tile.tscn').instance()
 			tile.connect("open", self, '_on_tile_open', [Vector2(x, y)])
 			tile.connect("flagged", self, "_on_tile_flagged", [Vector2(x, y)])
+			tile.connect("unflagged", self, "_on_tile_unflagged", [Vector2(x, y)])
 			$Panel/Grid.add_child(tile)
 			
 func distribute_mines():
@@ -104,7 +107,8 @@ func active(val):
 func _on_tile_open(pos):
 	match state:
 		"GAME":
-			if get_tile(pos).mine:
+			var tile = get_tile(pos)
+			if tile.mine:
 				state = "FAIL"
 				active(false)
 				emit_signal("fail")
@@ -112,17 +116,23 @@ func _on_tile_open(pos):
 				state = "WIN"
 				active(false)
 				emit_signal("win")
-			elif get_tile(pos).mines_around == 0:
+			elif tile.mines_around == 0:
 				for neighbor in get_neighbors(pos):
 					get_tile(neighbor).open()
 
 func _on_tile_flagged(pos):
 	match state:
 		"GAME":
+			emit_signal("flag_pop")
 			if check_win():
 				state = "WIN"
 				active(false)
 				emit_signal("win")
+
+func _on_tile_unflagged(pos):
+	match state:
+		"GAME":
+			emit_signal("flag_push")
 
 
 func check_win():
