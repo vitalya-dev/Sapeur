@@ -25,6 +25,9 @@ func _process(delta):
 		$Button/ButtonText.text = "Выход"
 
 func _on_Button_pressed():
+	if $Text.percent_visible < 1:
+		$Text.percent_visible = 1
+		return
 	if current_message < messages.size() - 1:
 		current_message += 1
 		show_current_message()

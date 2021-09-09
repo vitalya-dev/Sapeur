@@ -11,8 +11,8 @@ export var mines : int
 signal win
 signal fail
 
-signal flag_pop
-signal flag_push
+signal tile_flagged
+signal tile_unflagged
 
 var state = "GAME"
 var debug_font = make_font(24)
@@ -123,7 +123,7 @@ func _on_tile_open(pos):
 func _on_tile_flagged(pos):
 	match state:
 		"GAME":
-			emit_signal("flag_pop")
+			emit_signal("tile_flagged")
 			if check_win():
 				state = "WIN"
 				active(false)
@@ -132,7 +132,7 @@ func _on_tile_flagged(pos):
 func _on_tile_unflagged(pos):
 	match state:
 		"GAME":
-			emit_signal("flag_push")
+			emit_signal("tile_unflagged")
 
 
 func check_win():

@@ -15,7 +15,8 @@ func push_flag():
 	$Flags.add_child(flag)
 
 func pop_flag():
-	pass
+	if $Flags.get_child_count() > 0:
+		$Flags.get_child(0).queue_free()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

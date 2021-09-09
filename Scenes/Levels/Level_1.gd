@@ -11,7 +11,7 @@ func _ready():
 	init_field()
 	init_hud()
 	show_intro_message()
-	while (get_node("Message")):
+	while (get_node_or_null("Message")):
 		yield(get_tree().create_timer(0.5), "timeout")
 	$Field.active(true)
 
@@ -19,7 +19,8 @@ func _ready():
 func init_field():
 	$Field.connect("win", self, "_on_win")
 	$Field.connect("fail", self, "_on_fail")
-	$Field.connect("flag_push", self, "_on_flag_push")
+	$Field.connect("tile_flagged", self, "_on_tile_flagged")
+	$Field.connect("tile_unflagged", self, "_on_tile_unflagged")
 	$Field.active(false)
 	
 func init_hud():
@@ -35,12 +36,14 @@ func _on_fail():
 	yield(get_tree().create_timer(1), "timeout")
 	show_fail_message()
 
-
 func _on_win():
 	yield(get_tree().create_timer(1), "timeout")
 	show_win_message()
 
-func _on_flag_push():
+func _on_tile_flagged():
+	$HUD.pop_flag()
+
+func _on_tile_unflagged():
 	$HUD.push_flag()
 
 
