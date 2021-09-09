@@ -8,8 +8,6 @@ extends TextureButton
 var mine = false 
 var mines_around = 0
 
-var is_active = true
-
 const text_color = [
 	Color("0000ff"),
 	Color("008000"),
@@ -21,41 +19,32 @@ const text_color = [
 	Color("808080")
 ]
 	
-signal open
-signal flagged
-signal unflagged
+signal lmb(tile)
+signal rmb(tile)
 
 var state = "NORMAL";
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	add_to_group("tiles")
 
 func _input(ev):
-	if is_active and is_hovered() and ev is InputEventMouseButton:
-		if ev.button_index == 2 and ev.pressed:
-			flag()
+	if is_hovered() and ev is InputEventMouseButton:
 		if ev.button_index == 1 and ev.pressed:
-			open()
-
-func active(val):
-	is_active = val
+			emit_signal("lmb", self)
+		if ev.button_index == 2 and ev.pressed:
+			emit_signal("rmb", self)
 
 func flag():
 	match state:
 		"NORMAL":
 			$Text.set_text("F")
 			state = "FLAGGED"
-			emit_signal("flagged")
 		"FLAGGED":
 			$Text.set_text("")
 			state = "NORMAL"
-			emit_signal("unflagged")
 								
 func open():
-	match state:
-		"FLAGGED", "NORMAL":
 			state = "OPEN"
 			if self.mine:
 				$Text.set_text("X")
@@ -65,7 +54,6 @@ func open():
 			else:
 				$Text.set_text("")
 			set_texture(preload("res://Assets/tile_open.png"))
-			emit_signal("open")
 	
 func set_texture(texture):
 	set_normal_texture(texture)
@@ -73,7 +61,3 @@ func set_texture(texture):
 	set_pressed_texture(texture)
 	set_focused_texture(texture)	
 		
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass

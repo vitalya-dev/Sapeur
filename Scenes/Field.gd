@@ -2,17 +2,18 @@ extends Control
 
 export var size : Vector2
 export var mines : int
+export var flags : int
 
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 
 
-signal win
-signal fail
-
 signal tile_flagged
+signal tile_open
 signal tile_unflagged
+
+
 
 var state = "GAME"
 var debug_font = make_font(24)
@@ -51,9 +52,8 @@ func make_tiles():
 	for y in range(size.y):
 		for x in range(size.x):
 			var tile = preload('res://Scenes/Tile.tscn').instance()
-			tile.connect("open", self, '_on_tile_open', [Vector2(x, y)])
-			tile.connect("flagged", self, "_on_tile_flagged", [Vector2(x, y)])
-			tile.connect("unflagged", self, "_on_tile_unflagged", [Vector2(x, y)])
+			tile.connect("lmb", self, "_on_tile_open", [Vector2(x, y)])
+			tile.connect("rmb", self, "_on_tile_flagged", [Vector2(x, y)])
 			$Panel/Grid.add_child(tile)
 			
 func distribute_mines():
@@ -104,48 +104,36 @@ func switch_full_screen():
 func active(val):
 	get_tree().call_group("tiles", "active", val)
 
-func _on_tile_open(pos):
+func _on_tile_open(tile, tile_pos):
 	match state:
 		"GAME":
-			var tile = get_tile(pos)
-			if tile.mine:
-				state = "FAIL"
-				active(false)
-				emit_signal("fail")
-			elif check_win():
-				state = "WIN"
-				active(false)
-				emit_signal("win")
-			elif tile.mines_around == 0:
-				for neighbor in get_neighbors(pos):
-					get_tile(neighbor).open()
+			match tile.state:
+				"FLAGGED", "NORMAL":
+					tile.open()
+					if tile.mine:
+						state = "FAIL"
+					elif tile.mines_around == 0:
+						for neighbor in get_neighbors(pos):
+							_on_tile_open(get_tile(neighbor), neighbor)
 
-func _on_tile_flagged(pos):
+func _on_tile_flagged(tile, tile_pos):
 	match state:
 		"GAME":
-			emit_signal("tile_flagged")
-			if check_win():
-				state = "WIN"
-				active(false)
-				emit_signal("win")
-
-func _on_tile_unflagged(pos):
-	match state:
-		"GAME":
-			emit_signal("tile_unflagged")
+			match tile.state:
+				"NORMAL":
+					if flags > 0:
+						flags -= 1
+						else:
+				get_tile(pos).flag()	
 
 
 func check_win():
 	var opened_tiles = 0
-	var flagged_tiles = 0
 	for y in range(size.y):
 		for x in range(size.x):
-			var pos = Vector2(x, y)
-			if get_tile(pos).state == "OPEN":
+			if get_tile(Vector2(x, y)).state == "OPEN":
 				opened_tiles += 1
-			elif get_tile(pos).state == "FLAGGED":
-				flagged_tiles += 1
-	return opened_tiles == size.x * size.y - mines and flagged_tiles == mines
+	return opened_tiles == size.x * size.y - mines and flags == 0
 
 
 func make_font(font_size):

@@ -21,7 +21,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 size = Vector2( 10, 10 )
-mines = 1
+mines = 5
+flags = 1
 
 [node name="Panel" type="PanelContainer" parent="."]
 margin_left = 251.0
