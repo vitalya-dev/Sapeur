@@ -38,11 +38,13 @@ func _input(ev):
 func flag():
 	$Text.set_text("F")
 	state = "FLAGGED"
+	add_to_group("flagged")
 	set_texture(preload("res://Assets/tile_normal.png"))
 
 func unflag():
 	$Text.set_text("")
 	state = "NORMAL"
+	remove_from_group("flagged")
 	set_texture(preload("res://Assets/tile_normal.png"))
 								
 func open():

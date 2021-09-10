@@ -29,6 +29,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	print(check_win())
 	match state:
 		"GAME":
 			pass
@@ -140,7 +141,12 @@ func _on_tile_flag(tile, tile_pos):
 			emit_signal("tile_unflagged")
 
 func check_win():
-	pass
+	if flags > 0:
+		return false
+	for tile in get_tree().get_nodes_in_group("flagged"):
+		if not tile.mine:
+			return false
+	return true
 
 
 func make_font(font_size):
