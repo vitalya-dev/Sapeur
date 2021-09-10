@@ -52,8 +52,8 @@ func make_tiles():
 	for y in range(size.y):
 		for x in range(size.x):
 			var tile = preload('res://Scenes/Tile.tscn').instance()
-			tile.connect("lmb", self, "_on_tile_open", [Vector2(x, y)])
-			tile.connect("rmb", self, "_on_tile_flagged", [Vector2(x, y)])
+			tile.connect("lmb", self, "_on_tile_lmb", [Vector2(x, y)])
+			tile.connect("rmb", self, "_on_tile_rmb", [Vector2(x, y)])
 			$Panel/Grid.add_child(tile)
 			
 func distribute_mines():
@@ -104,36 +104,43 @@ func switch_full_screen():
 func active(val):
 	get_tree().call_group("tiles", "active", val)
 
+func _on_tile_lmb(tile, tile_pos):
+	if state == "GAME":
+		_on_tile_open(tile, tile_pos)
+
 func _on_tile_open(tile, tile_pos):
-	match state:
-		"GAME":
-			match tile.state:
-				"FLAGGED", "NORMAL":
-					tile.open()
-					if tile.mine:
-						state = "FAIL"
-					elif tile.mines_around == 0:
-						for neighbor in get_neighbors(pos):
-							_on_tile_open(get_tile(neighbor), neighbor)
+	match tile.state:
+		"FLAGGED":
+			_on_tile_rmb(tile, tile_pos)
+			continue
+		"FLAGGED", "NORMAL":
+			tile.open()
+			emit_signal("tile_open")
+			if tile.mine:
+				state = "FAIL"
+			elif tile.mines_around == 0:
+				for neighbor in get_neighbors(tile_pos):
+					_on_tile_open(get_tile(neighbor), neighbor)
 
-func _on_tile_flagged(tile, tile_pos):
-	match state:
-		"GAME":
-			match tile.state:
-				"NORMAL":
-					if flags > 0:
-						flags -= 1
-						else:
-				get_tile(pos).flag()	
+func _on_tile_rmb(tile, tile_pos):
+	if state == "GAME":
+		_on_tile_flag(tile, tile_pos)
+			
 
+func _on_tile_flag(tile, tile_pos):
+	match tile.state:
+		"NORMAL":
+			if flags > 0:
+				flags -= 1
+				tile.flag()
+				emit_signal("tile_flagged")
+		"FLAGGED":
+			flags += 1
+			tile.unflag()
+			emit_signal("tile_unflagged")
 
 func check_win():
-	var opened_tiles = 0
-	for y in range(size.y):
-		for x in range(size.x):
-			if get_tile(Vector2(x, y)).state == "OPEN":
-				opened_tiles += 1
-	return opened_tiles == size.x * size.y - mines and flags == 0
+	pass
 
 
 func make_font(font_size):

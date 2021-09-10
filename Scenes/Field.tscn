@@ -22,7 +22,7 @@ __meta__ = {
 }
 size = Vector2( 10, 10 )
 mines = 5
-flags = 1
+flags = 2
 
 [node name="Panel" type="PanelContainer" parent="."]
 margin_left = 251.0

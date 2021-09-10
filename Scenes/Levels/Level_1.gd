@@ -24,7 +24,7 @@ func init_field():
 	$Field.active(false)
 	
 func init_hud():
-	for i in range($Field.mines):
+	for i in range($Field.flags):
 		$HUD.push_flag()	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

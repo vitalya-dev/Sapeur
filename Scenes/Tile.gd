@@ -36,24 +36,25 @@ func _input(ev):
 			emit_signal("rmb", self)
 
 func flag():
-	match state:
-		"NORMAL":
-			$Text.set_text("F")
-			state = "FLAGGED"
-		"FLAGGED":
-			$Text.set_text("")
-			state = "NORMAL"
+	$Text.set_text("F")
+	state = "FLAGGED"
+	set_texture(preload("res://Assets/tile_normal.png"))
+
+func unflag():
+	$Text.set_text("")
+	state = "NORMAL"
+	set_texture(preload("res://Assets/tile_normal.png"))
 								
 func open():
-			state = "OPEN"
-			if self.mine:
-				$Text.set_text("X")
-			elif mines_around > 0:
-				$Text.set_text(str(mines_around))
-				$Text.set("custom_colors/font_color", text_color[mines_around - 1])
-			else:
-				$Text.set_text("")
-			set_texture(preload("res://Assets/tile_open.png"))
+	state = "OPEN"
+	if self.mine:
+		$Text.set_text("X")
+	elif mines_around > 0:
+		$Text.set_text(str(mines_around))
+		$Text.set("custom_colors/font_color", text_color[mines_around - 1])
+	else:
+		$Text.set_text("")
+	set_texture(preload("res://Assets/tile_open.png"))
 	
 func set_texture(texture):
 	set_normal_texture(texture)
