@@ -24,6 +24,7 @@ margin_top = 144.0
 margin_right = 255.0
 margin_bottom = 144.0
 use_top_left = true
-mines = 2
+mines = 10
+flags = 10
 
 [node name="HUD" parent="." instance=ExtResource( 3 )]

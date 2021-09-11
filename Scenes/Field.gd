@@ -9,11 +9,9 @@ export var flags : int
 # var b = "text"
 
 
-signal tile_flagged
-signal tile_open
-signal tile_unflagged
-
-
+signal tile_flagged(tile)
+signal tile_open(tile)
+signal tile_unflagged(tile)
 
 var state = "GAME"
 var debug_font = make_font(24)
@@ -24,30 +22,17 @@ func _ready():
 	make_tiles()
 	distribute_mines()
 	set_neighbors()
-	switch_full_screen();
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	print(check_win())
 	match state:
 		"GAME":
 			pass
-		"WIN":
-			pass
-		"FAIL":
-			pass
-
 
 func _draw():
 	#draw_string(debug_font, Vector2(0, 24), state, Color(1.0, 1.0, 1.0))
 	pass
 	
-
-func _input(ev):
-	if ev.is_action_pressed("ui_cancel"):
-		get_tree().quit()
-
 func make_tiles():
 	$Panel/Grid.set_columns(size.x)
 	for y in range(size.y):
@@ -93,17 +78,6 @@ func get_neighbors(pos):
 			neighbors.append(neighbor)
 	return neighbors;
 				
-func adjust_window_size():
-	yield(get_tree(), "idle_frame")
-	OS.set_window_size($Panel.rect_size)
-	
-	
-func switch_full_screen():
-	yield(get_tree(), "idle_frame")
-	OS.window_fullscreen = true
-
-func active(val):
-	get_tree().call_group("tiles", "active", val)
 
 func _on_tile_lmb(tile, tile_pos):
 	if state == "GAME":
@@ -116,10 +90,8 @@ func _on_tile_open(tile, tile_pos):
 			continue
 		"FLAGGED", "NORMAL":
 			tile.open()
-			emit_signal("tile_open")
-			if tile.mine:
-				state = "FAIL"
-			elif tile.mines_around == 0:
+			emit_signal("tile_open", tile)
+			if tile.mines_around == 0:
 				for neighbor in get_neighbors(tile_pos):
 					_on_tile_open(get_tile(neighbor), neighbor)
 
@@ -134,20 +106,11 @@ func _on_tile_flag(tile, tile_pos):
 			if flags > 0:
 				flags -= 1
 				tile.flag()
-				emit_signal("tile_flagged")
+				emit_signal("tile_flagged", tile)
 		"FLAGGED":
 			flags += 1
 			tile.unflag()
-			emit_signal("tile_unflagged")
-
-func check_win():
-	if flags > 0:
-		return false
-	for tile in get_tree().get_nodes_in_group("flagged"):
-		if not tile.mine:
-			return false
-	return true
-
+			emit_signal("tile_unflagged", tile)
 
 func make_font(font_size):
 	var font = DynamicFont.new()
