@@ -4,7 +4,7 @@
 [ext_resource path="res://Scenes/Levels/Level_1.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=3]
 
-[node name="Level_1" type="CenterContainer"]
+[node name="Level_1" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 0.943878
@@ -12,17 +12,26 @@ margin_top = -0.471939
 margin_right = 0.943848
 margin_bottom = -0.471924
 script = ExtResource( 2 )
+
+[node name="BG" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.360784, 0.356863, 0.356863, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Field" parent="." instance=ExtResource( 1 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 255.0
-margin_top = 144.0
-margin_right = 255.0
-margin_bottom = 144.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -5.00002
+margin_top = 11.0
+margin_right = 5.00002
+margin_bottom = 21.0
 use_top_left = true
 mines = 10
 flags = 10

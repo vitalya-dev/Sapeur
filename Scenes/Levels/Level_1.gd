@@ -1,4 +1,4 @@
-extends CenterContainer
+extends Control
 
 
 # Declare member variables here. Examples:
@@ -41,14 +41,17 @@ func init_hud():
 
 func _on_tile_open(tile):
 	if tile.mine:
+		$Field.state = "FAIL"
+		$BG.color = Color("#000000")
+		yield(get_tree().create_timer(2), "timeout")
 		show_fail_message()
-		wait_for_message("quit")
 				
 func _on_tile_flagged(tile):
 	$HUD.pop_flag()
 	if is_win():
+		$Field.state = "WIN"
+		$Field.show_white_background()
 		show_win_message()
-		wait_for_message("quit")
 
 func _on_tile_unflagged(tile):
 	$HUD.push_flag()
@@ -77,16 +80,12 @@ func show_fail_message():
 	message.avatar_2 = preload("res://Assets/avatar_sergeant.png")
 	add_child(message);
 
-func wait_for_message(call_after_func=""):
+func wait_for_message():
 	var field_previous_state = $Field.state
 	$Field.state = "WAIT"
 	while (get_node_or_null("Message")):
 		yield(get_tree().create_timer(0.5), "timeout")
-	if call_after_func != "":
-		yield(get_tree().create_timer(1), "timeout")
-		call(call_after_func)
-	else:
-		$Field.state = field_previous_state
+	$Field.state = field_previous_state
 
 func is_win():
 	if $Field.flags > 0:

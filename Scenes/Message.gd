@@ -24,6 +24,11 @@ func _process(delta):
 	if current_message >= messages.size() - 1:
 		$Button/ButtonText.text = "Выход"
 
+func _input(ev):
+	if ev is InputEventMouseButton:
+		if ev.button_index == 1 and ev.pressed:
+			print("click")
+
 func _on_Button_pressed():
 	if $Text.percent_visible < 1:
 		$Text.percent_visible = 1

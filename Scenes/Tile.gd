@@ -36,13 +36,14 @@ func _input(ev):
 			emit_signal("rmb", self)
 
 func flag():
-	$Text.set_text("F")
+	$Image.set_texture(preload("res://Assets/flag.png"))
 	state = "FLAGGED"
 	add_to_group("flagged")
 	set_texture(preload("res://Assets/tile_normal.png"))
 
+
 func unflag():
-	$Text.set_text("")
+	$Image.set_texture(null)
 	state = "NORMAL"
 	remove_from_group("flagged")
 	set_texture(preload("res://Assets/tile_normal.png"))

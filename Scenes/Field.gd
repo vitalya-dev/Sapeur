@@ -18,7 +18,6 @@ var debug_font = make_font(24)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Panel.rect_size = Vector2(0, 0)
 	make_tiles()
 	distribute_mines()
 	set_neighbors()
@@ -32,7 +31,7 @@ func _process(delta):
 func _draw():
 	#draw_string(debug_font, Vector2(0, 24), state, Color(1.0, 1.0, 1.0))
 	pass
-	
+
 func make_tiles():
 	$Panel/Grid.set_columns(size.x)
 	for y in range(size.y):
