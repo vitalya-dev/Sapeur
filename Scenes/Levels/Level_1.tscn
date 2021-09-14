@@ -24,6 +24,8 @@ __meta__ = {
 }
 
 [node name="Field" parent="." instance=ExtResource( 1 )]
+margin_left = 0.943909
+margin_right = 0.943878
 mines = 10
 flags = 10
 
