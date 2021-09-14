@@ -50,7 +50,8 @@ func _on_tile_flagged(tile):
 	$HUD.pop_flag()
 	if is_win():
 		$Field.state = "WIN"
-		$Field.show_white_background()
+		$BG.color = Color("#ffffff")
+		yield(get_tree().create_timer(2), "timeout")
 		show_win_message()
 
 func _on_tile_unflagged(tile):
