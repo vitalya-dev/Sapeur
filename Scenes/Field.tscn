@@ -12,13 +12,12 @@ border_color = Color( 0, 0, 0, 1 )
 [node name="Field" type="CenterContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 0.471924
-margin_right = 0.471924
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.0
 script = ExtResource( 1 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 size = Vector2( 10, 10 )
