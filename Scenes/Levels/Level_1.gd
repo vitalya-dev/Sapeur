@@ -96,11 +96,6 @@ func is_win():
 			return false
 	return true
 
-func is_fail():
-	for tile in get_tree().get_nodes_in_group("open"):
-		if tile.mine:
-			return true
-	return false
 
 
 

@@ -25,10 +25,10 @@ mines = 5
 flags = 2
 
 [node name="Panel" type="PanelContainer" parent="."]
-margin_left = 251.0
-margin_top = 139.0
-margin_right = 261.0
-margin_bottom = 149.0
+margin_left = 208.0
+margin_top = 115.0
+margin_right = 218.0
+margin_bottom = 125.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.0

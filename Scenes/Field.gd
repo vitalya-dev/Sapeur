@@ -16,6 +16,9 @@ signal tile_unflagged(tile)
 var state = "GAME"
 var debug_font = make_font(24)
 
+var lmb_enabled = true
+var rmb_enabled = true
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	make_tiles()
@@ -79,7 +82,7 @@ func get_neighbors(pos):
 				
 
 func _on_tile_lmb(tile, tile_pos):
-	if state == "GAME":
+	if state == "GAME" and lmb_enabled:
 		_on_tile_open(tile, tile_pos)
 
 func _on_tile_open(tile, tile_pos):
@@ -95,7 +98,7 @@ func _on_tile_open(tile, tile_pos):
 					_on_tile_open(get_tile(neighbor), neighbor)
 
 func _on_tile_rmb(tile, tile_pos):
-	if state == "GAME":
+	if state == "GAME" and rmb_enabled:
 		_on_tile_flag(tile, tile_pos)
 			
 
