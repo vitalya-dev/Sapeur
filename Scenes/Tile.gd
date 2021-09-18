@@ -40,6 +40,7 @@ func flag():
 	state = "FLAGGED"
 	add_to_group("flagged")
 	set_texture(preload("res://Assets/tile_normal.png"))
+	$FlagSFX.play()
 
 
 func unflag():
@@ -47,6 +48,8 @@ func unflag():
 	state = "NORMAL"
 	remove_from_group("flagged")
 	set_texture(preload("res://Assets/tile_normal.png"))
+	if not $FlagSFX.is_playing():
+		$FlagSFX.play()
 								
 func open():
 	state = "OPEN"
@@ -59,6 +62,9 @@ func open():
 		$Text.set_text("")
 	add_to_group("open")
 	set_texture(preload("res://Assets/tile_open.png"))
+	if not $OpenSFX.is_playing():
+		$OpenSFX.play()
+		print("play")
 	
 func set_texture(texture):
 	set_normal_texture(texture)
