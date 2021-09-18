@@ -40,6 +40,8 @@ func init_hud():
 #pass
 
 func _on_tile_open(tile):
+	$OpenSFX.stop()
+	$OpenSFX.play()
 	if tile.mine:
 		$Field.state = "FAIL"
 		$BG.color = Color("#000000")
@@ -48,6 +50,7 @@ func _on_tile_open(tile):
 				
 func _on_tile_flagged(tile):
 	$HUD.pop_flag()
+	$FlagSFX.play()
 	if is_win():
 		$Field.state = "WIN"
 		$BG.color = Color("#ffffff")
@@ -56,6 +59,7 @@ func _on_tile_flagged(tile):
 
 func _on_tile_unflagged(tile):
 	$HUD.push_flag()
+	$FlagSFX.play()
 
 func show_intro_message():
 	var message = preload('res://Scenes/Message.tscn').instance()
