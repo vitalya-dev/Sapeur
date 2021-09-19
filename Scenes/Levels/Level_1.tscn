@@ -1,11 +1,13 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scenes/Field.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Levels/Level_1.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/flag.wav" type="AudioStream" id=4]
-[ext_resource path="res://Assets/open.wav" type="AudioStream" id=5]
+[ext_resource path="res://Assets/correct_match_card.wav" type="AudioStream" id=5]
 [ext_resource path="res://Assets/night_forest.png" type="Texture" id=6]
+[ext_resource path="res://Assets/fire.wav" type="AudioStream" id=7]
+[ext_resource path="res://Assets/victory.wav" type="AudioStream" id=8]
 
 [node name="Level_1" type="Control"]
 anchor_right = 1.0
@@ -29,7 +31,7 @@ margin_top = -195.0
 margin_right = 3.05176e-05
 margin_bottom = -1.52588e-05
 mines = 10
-flags = 10
+flags = 1
 
 [node name="HUD" parent="." instance=ExtResource( 3 )]
 
@@ -38,3 +40,9 @@ stream = ExtResource( 5 )
 
 [node name="FlagSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
+
+[node name="FireSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[node name="VictorySFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )

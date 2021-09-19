@@ -40,21 +40,25 @@ func init_hud():
 #pass
 
 func _on_tile_open(tile):
-	$OpenSFX.stop()
-	$OpenSFX.play()
 	if tile.mine:
+		$FireSFX.play()
 		$Field.state = "FAIL"
-		$BG.color = Color("#000000")
+		$BG.texture = preload("res://Assets/explosion.png")
 		yield(get_tree().create_timer(2), "timeout")
 		show_fail_message()
+	else:
+		$OpenSFX.stop()
+		$OpenSFX.play()
+
 				
 func _on_tile_flagged(tile):
 	$HUD.pop_flag()
 	$FlagSFX.play()
 	if is_win():
+		$VictorySFX.play()
 		$Field.state = "WIN"
-		$BG.color = Color("#ffffff")
-		yield(get_tree().create_timer(2), "timeout")
+		$BG.texture = preload("res://Assets/war_victory.png")
+		yield(get_tree().create_timer(8), "timeout")
 		show_win_message()
 
 func _on_tile_unflagged(tile):

@@ -3,10 +3,10 @@
 [ext_resource path="res://Scenes/Field.gd" type="Script" id=1]
 
 [sub_resource type="StyleBoxFlat" id=1]
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
 border_color = Color( 0.341176, 0.203922, 0.313726, 1 )
 
 [node name="Field" type="CenterContainer"]
@@ -25,10 +25,10 @@ mines = 5
 flags = 2
 
 [node name="Panel" type="PanelContainer" parent="."]
-margin_left = 208.0
-margin_top = 115.0
-margin_right = 218.0
-margin_bottom = 125.0
+margin_left = 210.0
+margin_top = 117.0
+margin_right = 216.0
+margin_bottom = 123.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.0
@@ -38,10 +38,10 @@ __meta__ = {
 }
 
 [node name="Grid" type="GridContainer" parent="Panel"]
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 5.0
-margin_bottom = 5.0
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 3.0
+margin_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
