@@ -11,9 +11,9 @@ func _ready():
 	switch_full_screen()
 	init_field()
 	init_hud()
-	$Music.play()
 	show_intro_message()
 	wait_for_message()
+	play_music()
 
 func _input(ev):
 	if ev.is_action_pressed("ui_cancel"):
@@ -64,7 +64,7 @@ func _on_tile_flagged(tile):
 		$VictorySFX.play()
 		$Field.state = "WIN"
 		$BG.texture = preload("res://Assets/war_victory.png")
-		yield(get_tree().create_timer(8), "timeout")
+		yield(get_tree().create_timer(1.5), "timeout")
 		show_win_message()
 
 func _on_tile_unflagged(tile):
@@ -101,6 +101,12 @@ func wait_for_message():
 	while (get_node_or_null("Message")):
 		yield(get_tree().create_timer(0.5), "timeout")
 	$Field.state = field_previous_state
+
+func play_music():
+	while $Field.state == "WAIT":
+		yield(get_tree().create_timer(0.5), "timeout")
+	$Music.play()
+	
 
 func is_win():
 	if $Field.flags > 0:

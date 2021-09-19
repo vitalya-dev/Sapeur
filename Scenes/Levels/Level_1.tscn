@@ -7,7 +7,7 @@
 [ext_resource path="res://Assets/correct_match_card.wav" type="AudioStream" id=5]
 [ext_resource path="res://Assets/night_forest.png" type="Texture" id=6]
 [ext_resource path="res://Assets/fire.wav" type="AudioStream" id=7]
-[ext_resource path="res://Assets/Fancy Feast.wav" type="AudioStream" id=8]
+[ext_resource path="res://Assets/Powerup.wav" type="AudioStream" id=8]
 [ext_resource path="res://Assets/warp.wav" type="AudioStream" id=9]
 [ext_resource path="res://Assets/8 Bit Adventure.mp3" type="AudioStream" id=10]
 
@@ -33,7 +33,7 @@ margin_top = -195.0
 margin_right = 3.05176e-05
 margin_bottom = -1.52588e-05
 mines = 10
-flags = 3
+flags = 10
 
 [node name="HUD" parent="." instance=ExtResource( 3 )]
 
