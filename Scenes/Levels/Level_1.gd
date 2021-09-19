@@ -11,6 +11,7 @@ func _ready():
 	switch_full_screen()
 	init_field()
 	init_hud()
+	$Music.play()
 	show_intro_message()
 	wait_for_message()
 
@@ -53,7 +54,10 @@ func _on_tile_open(tile):
 				
 func _on_tile_flagged(tile):
 	$HUD.pop_flag()
-	$FlagSFX.play()
+	if $Field.flags == 1:
+		$LastFlagSFX.play()
+	else:
+		$FlagSFX.play()
 	if is_win():
 		$VictorySFX.play()
 		$Field.state = "WIN"
