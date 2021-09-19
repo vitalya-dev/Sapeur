@@ -42,6 +42,7 @@ func init_hud():
 
 func _on_tile_open(tile):
 	if tile.mine:
+		$Music.stop()
 		$FireSFX.play()
 		$Field.state = "FAIL"
 		$BG.texture = preload("res://Assets/explosion.png")
@@ -59,6 +60,7 @@ func _on_tile_flagged(tile):
 	else:
 		$FlagSFX.play()
 	if is_win():
+		$Music.stop()
 		$VictorySFX.play()
 		$Field.state = "WIN"
 		$BG.texture = preload("res://Assets/war_victory.png")
