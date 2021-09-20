@@ -51,14 +51,17 @@ func _on_tile_open(tile):
 	else:
 		$OpenSFX.stop()
 		$OpenSFX.play()
+		$Voice.talk()
 
 				
 func _on_tile_flagged(tile):
 	$HUD.pop_flag()
 	if $Field.flags == 1:
 		$LastFlagSFX.play()
+		$Voice.talk()
 	else:
 		$FlagSFX.play()
+		$Voice.talk()
 	if is_win():
 		$Music.stop()
 		$VictorySFX.play()
@@ -70,6 +73,7 @@ func _on_tile_flagged(tile):
 func _on_tile_unflagged(tile):
 	$HUD.push_flag()
 	$FlagSFX.play()
+	$Voice.talk()
 
 func show_intro_message():
 	var message = preload('res://Scenes/Message.tscn').instance()
