@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/powerup.wav-15af57be3f09d106b7647c5500f36e0f.sample"
+path="res://.import/typewriter.wav-1f87389e0062025737cfa05d98202105.sample"
 
 [deps]
 
-source_file="res://Assets/powerup.wav"
-dest_files=[ "res://.import/powerup.wav-15af57be3f09d106b7647c5500f36e0f.sample" ]
+source_file="res://Assets/typewriter.wav"
+dest_files=[ "res://.import/typewriter.wav-1f87389e0062025737cfa05d98202105.sample" ]
 
 [params]
 

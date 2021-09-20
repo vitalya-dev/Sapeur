@@ -52,5 +52,7 @@ func show_current_message():
 	$Text.text = messages[current_message].right(1)
 	$Text.percent_visible = 0;		
 	while $Text.percent_visible < 1:
+		if not $TypewriterSFX.is_playing():
+			$TypewriterSFX.play()
 		$Text.percent_visible += frame_delta
 		yield(get_tree(), "idle_frame")
