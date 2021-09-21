@@ -5,7 +5,7 @@
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/flag.wav" type="AudioStream" id=4]
 [ext_resource path="res://Assets/correct_match_card.wav" type="AudioStream" id=5]
-[ext_resource path="res://Assets/night_forest.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/BG.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Assets/fire.wav" type="AudioStream" id=7]
 [ext_resource path="res://Assets/powerup.wav" type="AudioStream" id=8]
 [ext_resource path="res://Assets/warp.wav" type="AudioStream" id=9]
@@ -24,9 +24,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BG" type="Sprite" parent="."]
-texture = ExtResource( 6 )
-centered = false
+[node name="BG" parent="." instance=ExtResource( 6 )]
+stars_count = 200
 
 [node name="Field" parent="." instance=ExtResource( 1 )]
 anchor_top = 1.0

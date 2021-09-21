@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/BG.gd" type="Script" id=1]
+[ext_resource path="res://Assets/night_forest.png" type="Texture" id=2]
+
+[node name="BG" type="Sprite"]
+texture = ExtResource( 2 )
+centered = false
+script = ExtResource( 1 )
+
+[node name="SkyPolygon" type="Polygon2D" parent="."]
+position = Vector2( 0.174004, 0.531463 )
+scale = Vector2( 1.02279, 1.04544 )
+color = Color( 1, 1, 0.67, 0 )
+polygon = PoolVector2Array( -0.170128, -0.508362, 416.34, -0.508362, 392.108, 15.0516, 375.275, 14.7962, 359.632, 37.753, 336.166, 45.4053, 304.879, 68.3621, 265.77, 106.623, 256.428, 123.104, 242.305, 114.276, 217.202, 115.959, 187.553, 91.3189, 173.895, 86.9482, 140.622, 98.9711, 117.157, 121.928, 101.513, 129.58, 92.7489, 146.231, 46.7605, 183.146, -0.170128, 213.755 )

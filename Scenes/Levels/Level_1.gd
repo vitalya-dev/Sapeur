@@ -14,6 +14,7 @@ func _ready():
 	show_intro_message()
 	wait_for_message()
 	play_music()
+	start_blink()
 
 func _input(ev):
 	if ev.is_action_pressed("ui_cancel"):
@@ -51,9 +52,9 @@ func _on_tile_open(tile):
 		wait_for_message()
 		reload()
 	else:
-		$OpenSFX.stop()
-		$OpenSFX.play()
-		$Voice.talk()
+		if not $OpenSFX.is_playing():
+			$OpenSFX.play()
+			$Voice.talk()
 
 				
 func _on_tile_flagged(tile):
@@ -120,6 +121,11 @@ func play_music():
 	while $Field.state == "WAIT":
 		yield(get_tree().create_timer(0.5), "timeout")
 	$Music.play()
+
+func start_blink():
+	while $Field.state == "WAIT":
+		yield(get_tree().create_timer(0.5), "timeout")
+	$BG.start_blinking_routine()
 	
 
 func is_win():
