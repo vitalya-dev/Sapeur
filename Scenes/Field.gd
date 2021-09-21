@@ -93,7 +93,7 @@ func _on_tile_open(tile, tile_pos):
 		"FLAGGED", "NORMAL":
 			tile.open()
 			emit_signal("tile_open", tile)
-			if tile.mines_around == 0:
+			if tile.mines_around == 0 and not tile.mine:
 				for neighbor in get_neighbors(tile_pos):
 					_on_tile_open(get_tile(neighbor), neighbor)
 

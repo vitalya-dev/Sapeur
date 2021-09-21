@@ -48,6 +48,8 @@ func _on_tile_open(tile):
 		$BG.texture = preload("res://Assets/explosion.png")
 		yield(get_tree().create_timer(2), "timeout")
 		show_fail_message()
+		wait_for_message()
+		reload()
 	else:
 		$OpenSFX.stop()
 		$OpenSFX.play()
@@ -94,7 +96,10 @@ func show_fail_message():
 	message.messages = [
 		"@Черт возьми, сержант.",
 		"@Ты просто позор наших славных вооруженых сил.",
-		"#Прошу меня извенить, товарищ полковник."]
+		"#Прошу меня извенить, товарищ полковник.",
+		"@Еще раз, сержант.",
+		"#Так точно, товарищ полковник."
+	]
 	message.avatar_1 = preload("res://Assets/avatar_colonel.png")
 	message.avatar_2 = preload("res://Assets/avatar_sergeant.png")
 	add_child(message);
@@ -105,6 +110,11 @@ func wait_for_message():
 	while (get_node_or_null("Message")):
 		yield(get_tree().create_timer(0.5), "timeout")
 	$Field.state = field_previous_state
+
+func reload():
+	while $Field.state == "WAIT":
+		yield(get_tree().create_timer(0.5), "timeout")
+	get_tree().reload_current_scene()
 
 func play_music():
 	while $Field.state == "WAIT":
@@ -119,7 +129,4 @@ func is_win():
 		if not tile.mine:
 			return false
 	return true
-
-
-
 
