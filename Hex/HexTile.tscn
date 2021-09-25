@@ -27,5 +27,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Polygon" type="Polygon2D" parent="."]
-polygon = PoolVector2Array( -7, -4, 0, -11, 7, -4, 7, 4, 0, 11, -7, 4 )
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PoolVector2Array( 0, 11, -7, 4, -7, -4, 0, -11, 7, -4, 7, 4 )
