@@ -29,7 +29,7 @@ func set_neighbors(tile):
 	if tile.x > 0:
 		tile.neighbors[tile.HexDirection.W] = tiles[tile.y][tile.x-1]
 	if tile.y > 0:
-		if tile.y % 2 == 1:
+		if tile.y % 2:
 			tile.neighbors[tile.HexDirection.NW] = tiles[tile.y - 1][tile.x]
 			if tile.x < len(tiles[tile.y - 1]) - 1:
 				tile.neighbors[tile.HexDirection.NE] = tiles[tile.y - 1][tile.x + 1]

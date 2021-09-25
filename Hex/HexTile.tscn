@@ -9,6 +9,7 @@ size = 6
 font_data = ExtResource( 3 )
 
 [node name="HexTile" type="Sprite"]
+position = Vector2( 85.5091, 97.3926 )
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
 
@@ -25,3 +26,6 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Polygon" type="Polygon2D" parent="."]
+polygon = PoolVector2Array( -7, -4, 0, -11, 7, -4, 7, 4, 0, 11, -7, 4 )
