@@ -18,19 +18,33 @@ signal rmb(tile)
 
 var is_hover = false
 
+var mine = false
+
+var state = "NORMAL";
+
+const text_color = [
+	Color("0000ff"),
+	Color("008000"),
+	Color("ff0000"),
+	Color("000080"),
+	Color("800000"),
+	Color("008080"),
+	Color("000000"),
+	Color("808080")
+]
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Text.text = "%d\n%d" % [x, y]
+	#$Text.text = "%d\n%d" % [x, y]
 	$Area2D.connect("mouse_entered", self, "on_mouse_entered")
 	$Area2D.connect("mouse_exited", self, "on_mouse_exited")
 
 func _input(ev):
 	if is_hover and ev is InputEventMouseButton:
 		if ev.button_index == 1 and ev.pressed:
-			print("lmb click")
+			emit_signal("lmb", self)
 		if ev.button_index == 2 and ev.pressed:
-			print("rmb click")
-
+			emit_signal("rmb", self)
 
 
 func connect_neighbors():
@@ -60,7 +74,26 @@ func on_mouse_entered():
 
 func on_mouse_exited():
 	is_hover = false
+
+func open():
+	state = "OPEN"
+	if self.mine:
+		$Text.set_text("X")
+	elif mines_around() > 0:
+		$Text.set_text(str(mines_around()))
+		$Text.set("custom_colors/font_color", text_color[mines_around() - 1])
+	else:
+		$Text.set_text("")
+	add_to_group("open_tiles")
+	set_texture(preload("res://hextile_open.png"))
 	
+func mines_around():
+	var mines = 0
+	for neighbor in neighbors:
+		if neighbor and neighbor.mine:
+			mines += 1
+	return mines
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

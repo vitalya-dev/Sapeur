@@ -5,25 +5,36 @@ extends Control
 # var a = 2
 # var b = "text"
 
-var tiles = []
+export var mines = 10
+export var field_size = 11
 
+var tiles = []
 onready var tile_start_position = rect_size / 2 - Vector2(5 * 16, 5 * 16)
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	for y in range(0, 11):
+	init_tiles()
+	connect_neighbors()
+	distribute_mines()
+
+func init_tiles():
+	for y in range(0, field_size):
 		tiles.append([])
-		for x in range(0, 11):
+		for x in range(0, field_size):
 			var tile = create_tile(x, y)
 			add_tile(tile)
+			connect_tile(tile)
 			set_neighbors(tile)
-	connect_neighbors()
+
+
+func connect_tile(tile):
+	tile.connect("lmb", self, "_on_tile_lmb")
 
 func connect_neighbors():
-	for tile_row in tiles:
-		for tile in tile_row:
-			tile.connect_neighbors()
+	for y in range(0, field_size):
+		for x in range(0, field_size):
+			tiles[y][x].connect_neighbors()
 
 func set_neighbors(tile):
 	if tile.x > 0:
@@ -51,6 +62,26 @@ func create_tile(x, y):
 	tile.position = tile_start_position + Vector2(x * 16 + y % 2 * 8, y * 16)
 	return tile
 				
+
+func distribute_mines():
+	randomize()
+	var mines_count = mines
+	while mines_count > 0:
+		var x = randi() % field_size
+		var y = randi() % field_size
+		if not tiles[y][x].mine:
+			tiles[y][x].mine = true
+			mines_count -= 1
+
+func _on_tile_lmb(tile):
+	match tile.state:
+		"NORMAL":
+			tile.open()
+			if tile.mines_around() == 0 and not tile.mine:
+				for neighbor in tile.neighbors:
+					if neighbor:
+						_on_tile_lmb(neighbor)
+
 
 
 func _input(ev):
