@@ -20,9 +20,9 @@ var mines_around = 0
 var state = "NORMAL";
 
 const text_color = [
-	Color("0000ff"),
-	Color("008000"),
-	Color("ff0000"),
+	Color("89cff0"),
+	Color("fd8d00"),
+	Color("3b5c0a"),
 	Color("000080"),
 	Color("800000"),
 	Color("008080"),
