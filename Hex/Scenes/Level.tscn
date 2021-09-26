@@ -1,0 +1,40 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Scenes/Level.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Sounds/warp.wav" type="AudioStream" id=2]
+[ext_resource path="res://Assets/Sounds/Dixie.mp3" type="AudioStream" id=3]
+[ext_resource path="res://Assets/Graphics/Kanyen.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Sounds/flag.wav" type="AudioStream" id=5]
+[ext_resource path="res://Assets/Sounds/correct_match_card.wav" type="AudioStream" id=6]
+[ext_resource path="res://Scenes/HexField.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Voice.tscn" type="PackedScene" id=8]
+
+[node name="Level" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Kanyen" type="Sprite" parent="."]
+texture = ExtResource( 4 )
+centered = false
+
+[node name="HexField" parent="." instance=ExtResource( 7 )]
+
+[node name="OpenSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+
+[node name="FlagSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
+
+[node name="LastFlagSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 2 )
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+
+[node name="Voice" parent="." instance=ExtResource( 8 )]
+volume_db = 15.0

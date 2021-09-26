@@ -1,0 +1,17 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Scenes/Voice.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleGo0000.wav" type="AudioStream" id=2]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleStop0000.wav" type="AudioStream" id=3]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleGo0100.wav" type="AudioStream" id=4]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleStop0100.wav" type="AudioStream" id=5]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleStop0200.wav" type="AudioStream" id=6]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleStop0300.wav" type="AudioStream" id=7]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleGo0400.wav" type="AudioStream" id=8]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleGo0300.wav" type="AudioStream" id=9]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleGo0200.wav" type="AudioStream" id=10]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleStop0400.wav" type="AudioStream" id=11]
+
+[node name="Voice" type="AudioStreamPlayer"]
+script = ExtResource( 1 )
+voices = [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 11 ) ]
