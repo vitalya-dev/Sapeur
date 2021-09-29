@@ -35,6 +35,7 @@ stream = ExtResource( 2 )
 
 [node name="Music" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 3 )
+volume_db = -5.0
 
 [node name="Voice" parent="." instance=ExtResource( 8 )]
-volume_db = 15.0
+volume_db = 20.0

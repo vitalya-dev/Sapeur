@@ -13,16 +13,14 @@ export var flags = 10
 var tiles = []
 onready var tile_start_position = rect_size / 2 - Vector2(field_size / 2 * 16, field_size / 2 * 16)
 
-signal tile_flagged(tile)
+signal tile_demine(tile)
 signal tile_open(tile)
-signal tile_unflagged(tile)
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	yield(get_tree(), "idle_frame")
 	init_tiles()
-	distribute_mines()
+	distribute_mines(mines)
 
 func init_tiles():
 	for y in range(0, field_size):
@@ -65,43 +63,32 @@ func create_tile(x, y):
 	return tile
 				
 
-func distribute_mines():
+func distribute_mines(mines_count):
 	randomize()
-	var mines_count = mines
 	while mines_count > 0:
 		var x = randi() % field_size
 		var y = randi() % field_size
 		var tile = tiles[y][x]
-		if not tile.mine:
-			tile.mine = true
+		if not tile.is_mined():
+			tile.mine()
 			mines_count -= 1
 			for neighbor in get_neighbors(tile):
 				neighbor.mines_around += 1
 
 func _on_tile_lmb(tile):
 	match tile.state:
-		"FLAGGED":
-			_on_tile_rmb(tile)
-			continue
-		"FLAGGED", "NORMAL":
+		"NORMAL":
 			tile.open()
 			emit_signal("tile_open", tile)
-			if tile.mines_around == 0 and not tile.mine:
+			if tile.mines_around == 0 and not tile.is_mined():
 				for neighbor in get_neighbors(tile):
 					_on_tile_lmb(neighbor)
 
 func _on_tile_rmb(tile):
 	match tile.state:
 		"NORMAL":
-			if flags > 0:
-				flags -= 1
-				tile.flag()
-				emit_signal("tile_flagged", tile)
-		"FLAGGED":
-			flags += 1
-			tile.unflag()
-			emit_signal("tile_unflagged", tile)
-
+			tile.demine()
+			emit_signal("tile_demine", tile)
 
 
 func _input(ev):

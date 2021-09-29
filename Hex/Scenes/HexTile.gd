@@ -14,8 +14,8 @@ signal rmb(tile)
 
 var is_hover = false
 
-var mine = false
-var mines_around = 0
+var _mine = false 
+var mines_around = 0 setget mines_around_setter
 
 var state = "NORMAL";
 
@@ -53,27 +53,44 @@ func on_mouse_exited():
 
 func open():
 	state = "OPEN"
-	if self.mine:
-		$Text.set_text("X")
-	elif mines_around > 0:
-		$Text.set_text(str(mines_around))
-		$Text.set("custom_colors/font_color", text_color[mines_around - 1])
-	else:
-		$Text.set_text("")
-	add_to_group("open_tiles")
-	set_texture(preload("res://Assets/Graphics/hextile_open.png"))
+	adapt()
 	
-
-func flag():
-	$Image.set_texture(preload("res://Assets/Graphics/flag.png"))
-	state = "FLAGGED"
-	add_to_group("flagged_tiles")
-
-
-func unflag():
-	$Image.set_texture(null)
+func mine():
+	self._mine = true
 	state = "NORMAL"
-	remove_from_group("flagged_tiles")
+	adapt()
+
+func demine():
+	state = "DEMINED"
+	adapt()
+
+func mines_around_setter(value):
+	mines_around = value
+	adapt()
+
+
+func adapt():
+	match state:
+		"OPEN":
+			if self._mine:
+				$Text.set_text("")
+				$Image.set_texture(preload("res://Assets/Graphics/mine.png"))
+			elif mines_around > 0:
+				$Text.set_text(str(mines_around))
+				$Text.set("custom_colors/font_color", text_color[mines_around - 1])
+			else:
+				$Text.set_text("")
+			set_texture(preload("res://Assets/Graphics/hextile_open.png"))
+		"NORMAL":
+			$Text.set_text("")
+			set_texture(preload("res://Assets/Graphics/hextile_normal.png"))
+		"DEMINED":
+			$Text.set_text("")
+			$Image.set_texture(preload("res://Assets/Graphics/demine.png"))
+			set_texture(preload("res://Assets/Graphics/hextile_normal.png"))
+
+func is_mined():
+	return self._mine
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

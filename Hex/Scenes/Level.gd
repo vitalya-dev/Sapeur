@@ -17,12 +17,12 @@ func play_music():
 
 func init_field():
 	$HexField.connect("tile_open", self, "_on_tile_open")
-	$HexField.connect("tile_flagged", self, "_on_tile_flagged")
-	$HexField.connect("tile_unflagged", self, "_on_tile_unflagged") 
+	$HexField.connect("tile_demine", self, "_on_tile_demine")
 
 func _on_tile_open(tile):
-	if tile.mine:
-		pass
+	if tile.is_mined():
+		$OpenSFX.play()
+		$Voice.talk()
 		# $Music.stop()
 		# $FireSFX.play()
 		# $Field.state = "FAIL"
@@ -36,15 +36,10 @@ func _on_tile_open(tile):
 		$OpenSFX.play()
 		$Voice.talk()
 				
-func _on_tile_flagged(tile):
-	# $HUD.pop_flag()
-	if $HexField.flags == 1:
-		$LastFlagSFX.play()
-		$Voice.talk()
-	else:
-		$FlagSFX.stop()
-		$FlagSFX.play()
-		$Voice.talk()
+func _on_tile_demine(tile):
+	$FlagSFX.stop()
+	$FlagSFX.play()
+	$Voice.talk()
 	# if is_win():
 	# 	$Music.stop()
 	# 	$VictorySFX.play()
@@ -53,10 +48,6 @@ func _on_tile_flagged(tile):
 	# 	yield(get_tree().create_timer(1.5), "timeout")
 	# 	show_win_message()
 
-func _on_tile_unflagged(tile):
-	# $HUD.push_flag()
-	$FlagSFX.play()
-	$Voice.talk() 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
