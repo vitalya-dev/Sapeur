@@ -84,6 +84,7 @@ func _on_tile_lmb(tile):
 				for neighbor in get_neighbors(tile):
 					_on_tile_lmb(neighbor)
 
+
 func _on_tile_rmb(tile):
 	match tile.state:
 		"NORMAL":

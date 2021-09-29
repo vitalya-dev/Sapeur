@@ -5,6 +5,8 @@ extends Control
 # var a = 2
 # var b = "text"
 
+var state = "GAME"
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,35 +21,38 @@ func init_field():
 	$HexField.connect("tile_open", self, "_on_tile_open")
 	$HexField.connect("tile_demine", self, "_on_tile_demine")
 
+func fail():
+	$Music.stop()
+	$FireSFX.play() 
+	$BG.texture = preload("res://Assets/Graphics/explosion.png") 
+	mouse_filter = Control.MOUSE_FILTER_STOP
+	yield(get_tree().create_timer(1), "timeout")
+	state = "FAIL"
+
 func _on_tile_open(tile):
 	if tile.is_mined():
-		$Music.stop()
-		$FireSFX.play() 
-		$BG.texture = preload("res://Assets/Graphics/explosion.png") 
-		mouse_filter = Control.MOUSE_FILTER_STOP
+		fail()
 	else:
 		$OpenSFX.stop()
 		$OpenSFX.play()
 		$Voice.talk()
 				
 func _on_tile_demine(tile):
-	$FlagSFX.stop()
-	$FlagSFX.play()
-	$Voice.talk()
-	# if is_win():
-	# 	$Music.stop()
-	# 	$VictorySFX.play()
-	# 	$Field.state = "WIN"
-	# 	$BG.texture = preload("res://Assets/war_victory.png")
-	# 	yield(get_tree().create_timer(1.5), "timeout")
-	# 	show_win_message()
+	if not tile.is_mined():
+		fail()
+	else:
+		$FlagSFX.stop()
+		$FlagSFX.play()
+		$Voice.talk()
 
 func _input(ev):
-	if ev is InputEventMouseButton:
-		if ev.button_index == 1 and ev.pressed:
-			print("lmb clicked")
-		if ev.button_index == 2 and ev.pressed:
-			print("rmb clicked")
+	match state:
+		"GAME":
+			pass
+		"FAIL":
+			if ev is InputEventMouseButton and (ev.button_index == 1 or ev.button_inde == 2) and ev.pressed:
+				get_tree().reload_current_scene()
+			
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

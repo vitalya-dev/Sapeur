@@ -87,9 +87,12 @@ func adapt():
 			$Text.set_text("")
 			set_texture(preload("res://Assets/Graphics/hextile_normal.png"))
 		"DEMINED":
-			$Text.set_text("")
-			$Image.set_texture(preload("res://Assets/Graphics/demine.png"))
-			set_texture(preload("res://Assets/Graphics/hextile_normal.png"))
+			if self._mine:
+				$Image.set_texture(preload("res://Assets/Graphics/demine.png"))
+			else:
+				$Text.set_text("X")
+				$Text.set("custom_colors/font_color", Color.white)
+				set_texture(preload("res://Assets/Graphics/hextile_open.png"))
 
 func is_mined():
 	return self._mine
