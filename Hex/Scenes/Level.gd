@@ -21,16 +21,10 @@ func init_field():
 
 func _on_tile_open(tile):
 	if tile.is_mined():
-		$OpenSFX.play()
-		$Voice.talk()
-		# $Music.stop()
-		# $FireSFX.play()
-		# $Field.state = "FAIL"
-		# $BG.texture = preload("res://Assets/explosion.png")
-		# yield(get_tree().create_timer(2), "timeout")
-		# show_fail_message()
-		# wait_for_message()
-		# reload()
+		$Music.stop()
+		$FireSFX.play() 
+		$BG.texture = preload("res://Assets/Graphics/explosion.png") 
+		mouse_filter = Control.MOUSE_FILTER_STOP
 	else:
 		$OpenSFX.stop()
 		$OpenSFX.play()
@@ -47,6 +41,13 @@ func _on_tile_demine(tile):
 	# 	$BG.texture = preload("res://Assets/war_victory.png")
 	# 	yield(get_tree().create_timer(1.5), "timeout")
 	# 	show_win_message()
+
+func _input(ev):
+	if ev is InputEventMouseButton:
+		if ev.button_index == 1 and ev.pressed:
+			print("lmb clicked")
+		if ev.button_index == 2 and ev.pressed:
+			print("rmb clicked")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
