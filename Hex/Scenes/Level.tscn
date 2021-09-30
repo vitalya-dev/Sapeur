@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scenes/Level.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Sounds/warp.wav" type="AudioStream" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Scenes/HexField.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Voice.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Assets/Sounds/fire.wav" type="AudioStream" id=9]
+[ext_resource path="res://Assets/Sounds/powerup.wav" type="AudioStream" id=10]
 
 [node name="Level" type="Control"]
 anchor_right = 1.0
@@ -31,6 +32,9 @@ stream = ExtResource( 5 )
 
 [node name="FireSFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 9 )
+
+[node name="VictorySFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 10 )
 
 [node name="LastFlagSFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 2 )

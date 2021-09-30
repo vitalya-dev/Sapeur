@@ -37,6 +37,8 @@ func _ready():
 	#$Text.text = "%d\n%d" % [x, y]
 	$Area2D.connect("mouse_entered", self, "on_mouse_entered")
 	$Area2D.connect("mouse_exited", self, "on_mouse_exited")
+	add_to_group("normal_tiles")
+
 
 func _input(ev):
 	if is_hover and ev is InputEventMouseButton:
@@ -53,7 +55,7 @@ func on_mouse_exited():
 
 func open():
 	state = "OPEN"
-	add_to_group("open_tiles")
+	remove_from_group("normal_tiles")
 	adapt()
 	
 func mine():
@@ -63,7 +65,7 @@ func mine():
 
 func demine():
 	state = "DEMINED"
-	add_to_group("demine_tiles")
+	remove_from_group("normal_tiles")
 	adapt()
 
 func mines_around_setter(value):

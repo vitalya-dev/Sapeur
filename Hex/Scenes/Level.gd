@@ -32,6 +32,8 @@ func fail():
 func _on_tile_open(tile):
 	if tile.is_mined():
 		fail()
+	elif no_more_normal_tiles():
+		victory()
 	else:
 		$OpenSFX.stop()
 		$OpenSFX.play()
@@ -40,17 +42,30 @@ func _on_tile_open(tile):
 func _on_tile_demine(tile):
 	if not tile.is_mined():
 		fail()
+	elif no_more_normal_tiles():
+		victory()
 	else:
 		$FlagSFX.stop()
 		$FlagSFX.play()
 		$Voice.talk()
 
+func no_more_normal_tiles():
+	return len(get_tree().get_nodes_in_group("normal_tiles")) == 0
+
+func victory():
+	$Music.stop()
+	$VictorySFX.play() 
+	$BG.texture = preload("res://Assets/Graphics/war_victory.png") 
+	mouse_filter = Control.MOUSE_FILTER_STOP
+	yield(get_tree().create_timer(1), "timeout")
+	state = "WIN"
+
 func _input(ev):
 	match state:
 		"GAME":
 			pass
-		"FAIL":
-			if ev is InputEventMouseButton and (ev.button_index == 1 or ev.button_inde == 2) and ev.pressed:
+		"FAIL", "WIN":
+			if ev is InputEventMouseButton and ev.pressed and (ev.button_index == 1 or ev.button_index == 2):
 				get_tree().reload_current_scene()
 			
 
