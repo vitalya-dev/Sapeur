@@ -58,10 +58,15 @@ func open():
 	remove_from_group("normal_tiles")
 	add_to_group("open_tiles")
 	adapt()
-	
+
+func close():
+	state = "NORMAL"
+	remove_from_group("open_tiles")
+	add_to_group("normal_tiles")
+	adapt()
+
 func mine():
 	self._mine = true
-	state = "NORMAL"
 	adapt()
 
 func demine():

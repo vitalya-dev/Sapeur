@@ -25,7 +25,7 @@ func _on_tile_open(tile):
 	if tile.is_mined():
 		fail()
 	elif no_more_normal_tiles():
-		victory()
+		new_round()
 	else:
 		$OpenSFX.stop()
 		$OpenSFX.play()
@@ -35,7 +35,7 @@ func _on_tile_demine(tile):
 	if not tile.is_mined():
 		fail()
 	elif no_more_normal_tiles():
-		victory()
+		new_round()
 	else:
 		$FlagSFX.stop()
 		$FlagSFX.play()
@@ -59,6 +59,13 @@ func victory():
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	yield(get_tree().create_timer(1), "timeout")
 	state = "WIN"
+
+func new_round():
+	$VictorySFX.play()
+	yield(get_tree().create_timer(1.5), "timeout")
+	for tile in get_tree().get_nodes_in_group("open_tiles"):
+		tile.close()
+	$HexField.distribute_mines($HexField.mines)
 
 func _input(ev):
 	match state:
