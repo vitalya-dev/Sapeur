@@ -21,14 +21,6 @@ func init_field():
 	$HexField.connect("tile_open", self, "_on_tile_open")
 	$HexField.connect("tile_demine", self, "_on_tile_demine")
 
-func fail():
-	$Music.stop()
-	$FireSFX.play() 
-	$BG.texture = preload("res://Assets/Graphics/explosion.png") 
-	mouse_filter = Control.MOUSE_FILTER_STOP
-	yield(get_tree().create_timer(1), "timeout")
-	state = "FAIL"
-
 func _on_tile_open(tile):
 	if tile.is_mined():
 		fail()
@@ -51,6 +43,14 @@ func _on_tile_demine(tile):
 
 func no_more_normal_tiles():
 	return len(get_tree().get_nodes_in_group("normal_tiles")) == 0
+
+func fail():
+	$Music.stop()
+	$FireSFX.play() 
+	$BG.texture = preload("res://Assets/Graphics/explosion.png") 
+	mouse_filter = Control.MOUSE_FILTER_STOP
+	yield(get_tree().create_timer(1), "timeout")
+	state = "FAIL"
 
 func victory():
 	$Music.stop()

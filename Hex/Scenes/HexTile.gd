@@ -56,6 +56,7 @@ func on_mouse_exited():
 func open():
 	state = "OPEN"
 	remove_from_group("normal_tiles")
+	add_to_group("open_tiles")
 	adapt()
 	
 func mine():
@@ -66,6 +67,7 @@ func mine():
 func demine():
 	state = "DEMINED"
 	remove_from_group("normal_tiles")
+	add_to_group("demine_tiles")
 	adapt()
 
 func mines_around_setter(value):
