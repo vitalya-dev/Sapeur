@@ -9,8 +9,12 @@ size = 6
 font_data = ExtResource( 3 )
 
 [node name="HexTile" type="Sprite"]
+position = Vector2( 176, 88 )
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Text" type="Label" parent="."]
 anchor_right = 1.0

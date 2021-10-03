@@ -7,14 +7,13 @@ extends Control
 
 export var mines = 10
 export var field_size = 11
-export var flags = 10
-
 
 var tiles = []
 onready var tile_start_position = rect_size / 2 - Vector2(field_size / 2 * 16, field_size / 2 * 16)
 
 signal tile_demine(tile)
 signal tile_open(tile)
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -69,27 +68,46 @@ func distribute_mines(mines_count):
 		var x = randi() % field_size
 		var y = randi() % field_size
 		var tile = tiles[y][x]
-		if not tile.is_mined():
-			tile.mine()
+		if not tile.mine:
+			tile.mine = true
 			mines_count -= 1
 			for neighbor in get_neighbors(tile):
 				neighbor.mines_around += 1
 
+func close_all_execept_mines():
+	for tile_row in tiles:
+		for tile in tile_row:
+			if tile.is_open and !tile.mine:
+				tile.close()
+
+
+func reset_all_tiles_except_demined():
+	for tile_row in tiles:
+		for tile in tile_row:
+			if !(tile.is_open and tile.mine):
+				tile.reset()
+
+func no_more_closed_mines():
+	for tile_row in tiles:
+		for tile in tile_row:
+			if !tile.is_open and tile.mine:
+				return false
+	return true
+
+
 func _on_tile_lmb(tile):
-	match tile.state:
-		"NORMAL":
-			tile.open()
-			emit_signal("tile_open", tile)
-			if tile.mines_around == 0 and not tile.is_mined():
-				for neighbor in get_neighbors(tile):
-					_on_tile_lmb(neighbor)
+	if not tile.is_open:
+		tile.open()
+		emit_signal("tile_open", tile)
+		if tile.mines_around == 0 and not tile.mine:
+			for neighbor in get_neighbors(tile):
+				_on_tile_lmb(neighbor)
 
 
 func _on_tile_rmb(tile):
-	match tile.state:
-		"NORMAL":
-			tile.demine()
-			emit_signal("tile_demine", tile)
+	if not tile.is_open:
+		tile.demine()
+		emit_signal("tile_demine", tile)
 
 
 func _input(ev):

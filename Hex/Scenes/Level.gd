@@ -11,6 +11,7 @@ var state = "GAME"
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	init_field() 
+	init_hud()
 	play_music()
 
 
@@ -21,28 +22,43 @@ func init_field():
 	$HexField.connect("tile_open", self, "_on_tile_open")
 	$HexField.connect("tile_demine", self, "_on_tile_demine")
 
+func init_hud():
+	$HUD/Clock.connect("tick", self, "_on_clock_tick")
+	$HUD/MinesContainer.fill($HexField.mines)
+
 func _on_tile_open(tile):
-	if tile.is_mined():
+	if tile.mine:
 		fail()
-	elif no_more_normal_tiles():
-		new_round()
 	else:
+		$HUD/Clock.reset()
 		$OpenSFX.stop()
 		$OpenSFX.play()
 		$Voice.talk()
+		
 				
 func _on_tile_demine(tile):
-	if not tile.is_mined():
+	if not tile.mine:
 		fail()
-	elif no_more_normal_tiles():
-		new_round()
+	elif $HexField.no_more_closed_mines():
+		$HexField.mines = $HexField.mines / 2
+		if $HexField.mines > 0:
+			new_round()
+		else:
+			victory()
 	else:
+		$HUD/Clock.reset()
 		$FlagSFX.stop()
 		$FlagSFX.play()
 		$Voice.talk()
+	$HUD/MinesContainer.pop()
+	
 
-func no_more_normal_tiles():
-	return len(get_tree().get_nodes_in_group("normal_tiles")) == 0
+func _on_clock_tick(time):
+	match time:
+		2:
+			$TimeSFX.play()
+		0:
+			fail()
 
 func fail():
 	$Music.stop()
@@ -61,11 +77,14 @@ func victory():
 	state = "WIN"
 
 func new_round():
+	$HUD/Clock.stop()
 	$VictorySFX.play()
 	yield(get_tree().create_timer(1.5), "timeout")
-	for tile in get_tree().get_nodes_in_group("open_tiles"):
-		tile.close()
+	$HexField.reset_all_tiles_except_demined()
 	$HexField.distribute_mines($HexField.mines)
+	$HUD/MinesContainer.fill($HexField.mines)
+	$HUD/Clock.start()
+
 
 func _input(ev):
 	match state:

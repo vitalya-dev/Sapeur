@@ -14,10 +14,10 @@ signal rmb(tile)
 
 var is_hover = false
 
-var _mine = false 
-var mines_around = 0 setget mines_around_setter
+var mines_around = 0
 
-var state = "NORMAL";
+var mine = false
+var is_open = false
 
 const text_color = [
 	Color("0000ff"),
@@ -30,14 +30,10 @@ const text_color = [
 	Color("808080")
 ]
 
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#$Text.text = "%d\n%d" % [x, y]
 	$Area2D.connect("mouse_entered", self, "on_mouse_entered")
 	$Area2D.connect("mouse_exited", self, "on_mouse_exited")
-	add_to_group("normal_tiles")
 
 
 func _input(ev):
@@ -54,63 +50,44 @@ func on_mouse_exited():
 	is_hover = false
 
 func open():
-	state = "OPEN"
-	remove_from_group("normal_tiles")
-	add_to_group("open_tiles")
-	adapt()
+	assert(is_open == false, "HexTile: open on open tile");
+	if self.mine:
+		$Text.set_text("")
+		$Image.set_texture(preload("res://Assets/Graphics/mine.png"))
+	elif mines_around > 0:
+		$Text.set_text(str(mines_around))
+		$Text.set("custom_colors/font_color", text_color[mines_around - 1])
+	else:
+		$Text.set_text("")
+	is_open = true
+	set_texture(preload("res://Assets/Graphics/hextile_open.png"))
+	
 
 func close():
-	state = "NORMAL"
-	remove_from_group("open_tiles")
-	add_to_group("normal_tiles")
-	adapt()
+	assert(is_open == true, "HexTile: close an closed tile");
+	$Text.set_text("")
+	$Image.set_texture(null)
+	is_open = false
+	set_texture(preload("res://Assets/Graphics/hextile_normal.png"))
 
-func mine():
-	self._mine = true
-	adapt()
 
 func demine():
-	state = "DEMINED"
-	remove_from_group("normal_tiles")
-	add_to_group("demine_tiles")
-	adapt()
+	assert(is_open == false, "HexTile: demine on open tile");
+	if self.mine:
+		$Image.set_texture(preload("res://Assets/Graphics/demine.png"))
+	else:
+		$Text.set_text("X")
+		$Text.set("custom_colors/font_color", Color.white)
+		set_texture(preload("res://Assets/Graphics/hextile_open.png"))
+	is_open = true
 
-func mines_around_setter(value):
-	mines_around = value
-	adapt()
-
-
-func adapt():
-	match state:
-		"OPEN":
-			if self._mine:
-				$Text.set_text("")
-				$Image.set_texture(preload("res://Assets/Graphics/mine.png"))
-			elif mines_around > 0:
-				$Text.set_text(str(mines_around))
-				$Text.set("custom_colors/font_color", text_color[mines_around - 1])
-			else:
-				$Text.set_text("")
-			set_texture(preload("res://Assets/Graphics/hextile_open.png"))
-		"NORMAL":
-			$Text.set_text("")
-			set_texture(preload("res://Assets/Graphics/hextile_normal.png"))
-		"DEMINED":
-			if self._mine:
-				$Image.set_texture(preload("res://Assets/Graphics/demine.png"))
-			else:
-				$Text.set_text("X")
-				$Text.set("custom_colors/font_color", Color.white)
-				set_texture(preload("res://Assets/Graphics/hextile_open.png"))
-
-func is_mined():
-	return self._mine
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
+func reset():
+	is_open = false
+	mine = false
+	$Text.set_text("")
+	$Image.set_texture(null)
+	set_texture(preload("res://Assets/Graphics/hextile_normal.png"))
+	
 
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scenes/Level.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Sounds/warp.wav" type="AudioStream" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://Scenes/Voice.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Assets/Sounds/fire.wav" type="AudioStream" id=9]
 [ext_resource path="res://Assets/Sounds/powerup.wav" type="AudioStream" id=10]
+[ext_resource path="res://Scenes/Clock.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/MinesContainer.gd" type="Script" id=12]
 
 [node name="Level" type="Control"]
 anchor_right = 1.0
@@ -23,6 +25,7 @@ __meta__ = {
 [node name="BG" parent="." instance=ExtResource( 4 )]
 
 [node name="HexField" parent="." instance=ExtResource( 7 )]
+mines = 5
 
 [node name="OpenSFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 6 )
@@ -35,8 +38,9 @@ stream = ExtResource( 9 )
 
 [node name="VictorySFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 10 )
+volume_db = 5.0
 
-[node name="LastFlagSFX" type="AudioStreamPlayer2D" parent="."]
+[node name="TimeSFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 2 )
 
 [node name="Music" type="AudioStreamPlayer2D" parent="."]
@@ -45,3 +49,18 @@ volume_db = -5.0
 
 [node name="Voice" parent="." instance=ExtResource( 8 )]
 volume_db = 20.0
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Clock" parent="HUD" instance=ExtResource( 11 )]
+position = Vector2( 400, 208 )
+think_time = 10
+
+[node name="MinesContainer" type="HBoxContainer" parent="HUD"]
+anchor_right = 1.0
+margin_bottom = 16.0
+custom_constants/separation = 0
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
