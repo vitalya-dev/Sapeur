@@ -100,7 +100,7 @@ func open_one_empty_tile():
 		var x = randi() % field_size
 		var y = randi() % field_size
 		var tile = tiles[y][x]
-		if not (tile.is_open or tile.mine):
+		if !tile.is_open and !tile.mine and !tile.mines_around:
 			_on_tile_lmb(tile)
 			break
 

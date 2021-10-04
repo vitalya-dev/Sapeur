@@ -84,7 +84,7 @@ func new_round():
 	$HexField.reset_all_tiles_except_demined()
 	$HexField.distribute_mines($HexField.mines)
 	$HUD/MinesContainer.fill($HexField.mines)
-	yield(get_tree().create_timer(0.2), "timeout")
+	yield(get_tree().create_timer(0.5), "timeout")
 	$HexField.open_one_empty_tile()
 	$HUD/Clock.start()
 

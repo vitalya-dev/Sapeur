@@ -7,6 +7,9 @@ extends Sprite
 
 onready var start_position = position
 
+func _ready():
+	$Blink.play("Blink")
+	
 
 func _process(delta):
 	var offset = position - get_viewport().get_mouse_position()
