@@ -25,7 +25,6 @@ __meta__ = {
 [node name="BG" parent="." instance=ExtResource( 4 )]
 
 [node name="HexField" parent="." instance=ExtResource( 7 )]
-mines = 5
 
 [node name="OpenSFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 6 )

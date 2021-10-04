@@ -94,6 +94,16 @@ func no_more_closed_mines():
 				return false
 	return true
 
+func open_one_empty_tile():
+	randomize()
+	while true:
+		var x = randi() % field_size
+		var y = randi() % field_size
+		var tile = tiles[y][x]
+		if not (tile.is_open or tile.mine):
+			_on_tile_lmb(tile)
+			break
+
 
 func _on_tile_lmb(tile):
 	if not tile.is_open:

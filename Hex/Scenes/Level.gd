@@ -14,7 +14,6 @@ func _ready():
 	init_hud()
 	play_music()
 
-
 func play_music():
 	$Music.play()
 
@@ -61,6 +60,7 @@ func _on_clock_tick(time):
 			fail()
 
 func fail():
+	$HUD/Clock.stop()
 	$Music.stop()
 	$FireSFX.play() 
 	$BG.texture = preload("res://Assets/Graphics/explosion.png") 
@@ -69,6 +69,7 @@ func fail():
 	state = "FAIL"
 
 func victory():
+	$HUD/Clock.stop()
 	$Music.stop()
 	$VictorySFX.play() 
 	$BG.texture = preload("res://Assets/Graphics/war_victory.png") 
@@ -83,7 +84,11 @@ func new_round():
 	$HexField.reset_all_tiles_except_demined()
 	$HexField.distribute_mines($HexField.mines)
 	$HUD/MinesContainer.fill($HexField.mines)
+	yield(get_tree().create_timer(0.2), "timeout")
+	$HexField.open_one_empty_tile()
 	$HUD/Clock.start()
+
+
 
 
 func _input(ev):
