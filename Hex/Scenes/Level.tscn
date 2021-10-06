@@ -23,6 +23,7 @@ __meta__ = {
 }
 
 [node name="BG" parent="." instance=ExtResource( 4 )]
+grains_count = 80
 
 [node name="HexField" parent="." instance=ExtResource( 7 )]
 

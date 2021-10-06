@@ -9,16 +9,12 @@ extends Sprite
 var grains : Array
 export var grains_count = 20
 
-var period = 0.3
+var period = 0.1
 
 onready var start_position = position
 
-var blinking = false
-
 func _ready():
 	init_grains()
-	start_blinking_routine()
- 
 
 func init_grains():
 	var screen_size = get_viewport_rect().size 
@@ -30,15 +26,19 @@ func init_grains():
 		if Geometry.is_point_in_polygon(grain_pos, grains_polygon):
 			grains.append([grain_pos, Color("#bc8e5b")])
  
-func start_blinking_routine():
-	$Blink.play("Blink")
-	blinking = true
-	while blinking:
+func explosion():
+	$Explosion.play("Explode")
+
+func start_shining():
+	$Star.play("Shine")
+	while $Star.is_playing():
 		yield(get_tree().create_timer(period), "timeout")
 		update()	
 
-func stop_blinking_routine():
-	pass
+func stop_shining():
+	$Star.animation
+	$Star.play("Default")
+	$Star.stop()
 
 func _process(delta):
 	var offset = position - get_viewport().get_mouse_position()
@@ -47,5 +47,6 @@ func _process(delta):
 	position.y = clamp(position.y, start_position.y - 5, start_position.y + 5)
 
 func _draw():
-	for i in range(len(grains)):
-		draw_rect(Rect2(grains[i][0], Vector2(1, 1)), grains[i][1].lightened(rand_range(0, 0.5)))
+	if $Star.is_playing():
+		for i in range(len(grains)):
+			draw_rect(Rect2(grains[i][0], Vector2(1, 1)), grains[i][1].lightened(rand_range(0, 0.5)))

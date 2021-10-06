@@ -1,17 +1,39 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Assets/Graphics/Kanyen.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/BG.gd" type="Script" id=2]
-[ext_resource path="res://Assets/Graphics/Blink_2.png" type="Texture" id=3]
-[ext_resource path="res://Assets/Graphics/Blink_3.png" type="Texture" id=4]
-[ext_resource path="res://Assets/Graphics/Blink_1.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Graphics/star_shine_2.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Graphics/star_shine_3.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Graphics/star_shine_1.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Graphics/explosion_1.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Graphics/explosion_2.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Graphics/explosion_4.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Graphics/explosion_5.png" type="Texture" id=9]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 5 ), ExtResource( 3 ), ExtResource( 4 ) ],
 "loop": true,
-"name": "Blink",
+"name": "Shine",
 "speed": 5.0
+}, {
+"frames": [  ],
+"loop": false,
+"name": "Default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [  ],
+"loop": false,
+"name": "Default",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 8 ), ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": false,
+"name": "Explode",
+"speed": 24.0
 } ]
 
 [node name="BG" type="Sprite"]
@@ -21,13 +43,16 @@ texture = ExtResource( 1 )
 script = ExtResource( 2 )
 grains_count = 40
 
-[node name="Blink" type="AnimatedSprite" parent="."]
+[node name="Star" type="AnimatedSprite" parent="."]
 position = Vector2( 121.909, -93.7272 )
 scale = Vector2( 0.5, 0.32684 )
 frames = SubResource( 1 )
-animation = "Blink"
-frame = 2
+animation = "Default"
 
 [node name="GrainsPolygon" type="Polygon2D" parent="."]
 color = Color( 1, 1, 1, 0 )
 polygon = PoolVector2Array( -180.686, 62.6227, -94.5454, 50.9091, 87.2727, 43.6364, 130.909, 29.0909, 169.879, 42.2958, 138.215, 59.3916, 130.149, 74.5612, 213, 72, 213.004, 120, 0, 120, -213, 120, -213.31, 62.1405 )
+
+[node name="Explosion" type="AnimatedSprite" parent="."]
+frames = SubResource( 2 )
+animation = "Default"

@@ -10,8 +10,9 @@ var state = "GAME"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	init_field() 
+	init_field()
 	init_hud()
+	init_bg()
 	play_music()
 
 func play_music():
@@ -24,6 +25,9 @@ func init_field():
 func init_hud():
 	$HUD/Clock.connect("tick", self, "_on_clock_tick")
 	$HUD/MinesContainer.fill($HexField.mines)
+
+func init_bg():
+	$BG.start_shining()
 
 func _on_tile_open(tile):
 	if tile.mine:
@@ -63,7 +67,8 @@ func fail():
 	$HUD/Clock.stop()
 	$Music.stop()
 	$FireSFX.play() 
-	$BG.texture = preload("res://Assets/Graphics/explosion.png") 
+	$BG.stop_shining()
+	$BG.explosion()
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	yield(get_tree().create_timer(1), "timeout")
 	state = "FAIL"
@@ -71,7 +76,8 @@ func fail():
 func victory():
 	$HUD/Clock.stop()
 	$Music.stop()
-	$VictorySFX.play() 
+	$VictorySFX.play()
+	$BG.stop_shining()
 	$BG.texture = preload("res://Assets/Graphics/war_victory.png") 
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	yield(get_tree().create_timer(1), "timeout")
