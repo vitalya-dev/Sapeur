@@ -12,13 +12,16 @@ var mines_around = 0
 var mine = false
 var is_open = false 
 
+var x = -1
+var y = -1
+
 const text_color = [
-	Color("0000ff"),
-	Color("008000"),
-	Color("ff0000"),
+	Color("003f88"),
+	Color("ff7900"),
+	Color("003f88"),
 	Color("000080"),
 	Color("800000"),
-	Color("008080"),
+	Color("004e89"),
 	Color("000000"),
 	Color("808080"),
 ]
@@ -52,7 +55,7 @@ func open():
 		$Image.set_texture(preload("res://Assets/Graphics/mine.png"))
 	elif mines_around > 0:
 		$Text.set_text(str(mines_around))
-		$Text.set("custom_colors/font_color", text_color[mines_around - 1])
+		$Text.set("custom_colors/font_color", text_color[mines_around-1])
 	else:
 		$Text.set_text("")
 	is_open = true
@@ -72,9 +75,9 @@ func demine():
 		$Image.set_texture(preload("res://Assets/Graphics/demine.png"))
 	else:
 		$Text.set_text("X")
-		$Text.set("custom_colors/font_color", text_color[mines_around - 1])
+		$Text.set("custom_colors/font_color", text_color[mines_around-1])
+		set_texture(preload("res://Assets/Graphics/tile_open.png"))
 	is_open = true
-	set_texture(preload("res://Assets/Graphics/tile_open.png"))
 
 
 
