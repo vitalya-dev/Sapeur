@@ -15,6 +15,7 @@ signal tile_demine(tile)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	yield(get_tree(), "idle_frame")
 	create_tiles()
 	distribute_mines(mines) 
 
@@ -39,7 +40,6 @@ func _on_tile_lmb(tile):
 	if not tile.is_open:
 		tile.open()
 		emit_signal("tile_open", tile)
-		yield(get_tree().create_timer(0.01), "timeout")
 		if tile.mines_around == 0 and not tile.mine:
 			for neighbor in get_neighbors(tile):
 				_on_tile_lmb(neighbor)

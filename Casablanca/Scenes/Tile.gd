@@ -1,4 +1,4 @@
-extends Sprite
+extends AnimatedSprite
 
 
 # Declare member variables here. Examples:
@@ -33,6 +33,7 @@ signal rmb(tile)
 func _ready():
 	$Area2D.connect("mouse_entered", self, "on_mouse_entered")
 	$Area2D.connect("mouse_exited", self, "on_mouse_exited")
+	play("Close")
 
 func _input(ev):
 	if is_hover and ev is InputEventMouseButton:
@@ -50,6 +51,9 @@ func on_mouse_exited():
 
 func open():
 	assert(is_open == false, "Tile: open on open tile");
+	is_open = true
+	play("Open")
+	yield(self, "animation_finished")
 	if self.mine:
 		$Text.set_text("")
 		$Image.set_texture(preload("res://Assets/Graphics/mine.png"))
@@ -58,26 +62,28 @@ func open():
 		$Text.set("custom_colors/font_color", text_color[mines_around-1])
 	else:
 		$Text.set_text("")
-	is_open = true
-	set_texture(preload("res://Assets/Graphics/tile_open.png"))
 
 func close():
 	assert(is_open == true, "Tile: close an closed tile")
+	is_open = false
+	play("Close")
+	yield(self, "animation_finished")
 	$Text.set_text("")
 	$Image.set_texture(null)
-	is_open = false
-	set_texture(preload("res://Assets/Graphics/tile_close.png"))
 
 
 func demine():
 	assert(is_open == false, "Tile: demine on open tile")
 	if self.mine:
 		$Image.set_texture(preload("res://Assets/Graphics/demine.png"))
+		is_open = true
 	else:
+		is_open = true
+		play("Open")
+		yield(self, "animation_finished")
 		$Text.set_text("X")
 		$Text.set("custom_colors/font_color", text_color[mines_around-1])
-		set_texture(preload("res://Assets/Graphics/tile_open.png"))
-	is_open = true
+
 
 
 

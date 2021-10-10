@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="Casablanca"
-run/main_scene="res://Scenes/Field.tscn"
+run/main_scene="res://Scenes/Level.tscn"
 config/icon="res://icon.png"
 
 [display]
