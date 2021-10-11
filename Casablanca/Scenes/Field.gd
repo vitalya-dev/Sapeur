@@ -43,13 +43,11 @@ func _on_tile_lmb(tile):
 		if tile.mines_around == 0 and not tile.mine:
 			for neighbor in get_neighbors(tile):
 				_on_tile_lmb(neighbor)
-				
 
 func _on_tile_rmb(tile):
 	if not tile.is_open:
 		tile.demine()
 		emit_signal("tile_demine", tile)
-
 
 func distribute_mines(mines_count):
 	randomize()
