@@ -66,6 +66,30 @@ func open_field():
 		for tile in tiles_row:
 			tile.open()
 	
+func open_empty_tile():
+	randomize()
+	while true:
+		var x = randi() % field_size
+		var y = randi() % (field_size * 2)
+		var tile = _tiles[y][x]
+		if !tile.is_open and !tile.mine and !tile.mines_around:
+			_on_tile_lmb(tile)
+			break 
+
+func is_demined():
+	for tiles_row in _tiles:
+		for tile in tiles_row:
+			if !tile.is_open and tile.mine:
+				return false
+	return true
+
+
+func close_empty_tiles():
+	for tiles_row in _tiles:
+		for tile in tiles_row:
+			if tile.is_open and not tile.mine:
+				tile.close()
+ 
 
 
 func get_neighbors(tile):

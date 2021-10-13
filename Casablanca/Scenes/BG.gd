@@ -11,6 +11,15 @@ onready var start_position = position
 func _ready():
 	pass # Replace with function body.
 
+func show_explosion():
+	play("Explosion")
+
+func show_glory():
+	play("Glory")
+
+func show_normal():
+	play("Normal")
+
 func _process(delta):
 	var offset = position - get_viewport().get_mouse_position()
 	position = lerp(position, position + offset, 0.1)
