@@ -7,12 +7,23 @@ extends Control
 
 var state = "GAME"
 
+signal _complete
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	disable_mouse_propagate()
 	init_field()
 	init_bg()
+	fill_mines_bar()
+	yield(self, "_complete")
 	play_music()
+	enable_mouse_propagate()
+
+func disable_mouse_propagate():
+	mouse_filter = Control.MOUSE_FILTER_STOP
+
+func enable_mouse_propagate():
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func init_field():
 	$Field.connect("tile_open", self, "_on_tile_open")
@@ -20,6 +31,13 @@ func init_field():
 
 func init_bg():
 	$BG.show_normal()
+
+func fill_mines_bar():
+	for i in range($Field.mines):
+		$HUD/MinesBar.add_mine()
+		yield(get_tree().create_timer(0.1), "timeout")
+		$DemineSFX.play()
+	emit_signal("_complete")
 
 func play_music():
 	$Music.play()
@@ -45,12 +63,13 @@ func _on_tile_demine(tile):
 		$DemineSFX.stop()
 		$DemineSFX.play()
 		$Voice.talk()
+	$HUD/MinesBar.sub_mine()			
 
 func fail():
 	$Music.stop()
 	$FireSFX.play()  
 	$BG.show_explosion()
-	mouse_filter = Control.MOUSE_FILTER_STOP
+	disable_mouse_propagate()
 	yield(get_tree().create_timer(1), "timeout")
 	state = "FAIL"
 
@@ -58,17 +77,26 @@ func victory():
 	$Music.stop()
 	$VictorySFX.play()
 	$BG.show_glory()
-	mouse_filter = Control.MOUSE_FILTER_STOP
+	disable_mouse_propagate()
 	yield(get_tree().create_timer(1), "timeout")
 	state = "WIN"
 
 func new_round():
+	disable_mouse_propagate()
+	#######################################################
 	$VictorySFX.play()
 	yield(get_tree().create_timer(1.5), "timeout")
 	$Field.close_empty_tiles()
-	$Field.distribute_mines($Field.mines) 
-	yield(get_tree().create_timer(0.5), "timeout")
+	$Field.distribute_mines($Field.mines)
+	#######################################################
+	fill_mines_bar()
+	yield(self, "_complete")
+	#######################################################
+	yield(get_tree().create_timer(1), "timeout")
 	$Field.open_empty_tile()
+	#######################################################
+	enable_mouse_propagate()
+	
 
 
 func _input(ev):
