@@ -17,6 +17,8 @@ func _ready():
 	fill_mines_bar()
 	yield(self, "_complete")
 	play_music()
+	yield(get_tree().create_timer(3.5), "timeout")
+	start_shining()
 	enable_mouse_propagate()
 
 func disable_mouse_propagate():
@@ -24,6 +26,9 @@ func disable_mouse_propagate():
 
 func enable_mouse_propagate():
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+func start_shining():
+	$BG.shining()
 
 func init_field():
 	$Field.connect("tile_open", self, "_on_tile_open")
@@ -69,6 +74,7 @@ func fail():
 	$Music.stop()
 	$FireSFX.play()  
 	$BG.show_explosion()
+	$BG.stop_shining()
 	disable_mouse_propagate()
 	yield(get_tree().create_timer(1), "timeout")
 	state = "FAIL"
@@ -77,6 +83,7 @@ func victory():
 	$Music.stop()
 	$VictorySFX.play()
 	$BG.show_glory()
+	$BG.stop_shining()
 	disable_mouse_propagate()
 	yield(get_tree().create_timer(1), "timeout")
 	state = "WIN"
