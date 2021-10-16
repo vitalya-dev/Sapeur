@@ -11,7 +11,12 @@ config_version=4
 [application]
 
 config/name="Akira"
+run/main_scene="res://Field.tscn"
 config/icon="res://icon.png"
+
+[global]
+
+unit=true
 
 [physics]
 
