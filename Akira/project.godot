@@ -11,8 +11,17 @@ config_version=4
 [application]
 
 config/name="Akira"
-run/main_scene="res://Scenes/Tile.tscn"
+run/main_scene="res://Scenes/Field.tscn"
+boot_splash/fullsize=false
+boot_splash/use_filter=false
 config/icon="res://icon.png"
+
+[display]
+
+window/size/width=426
+window/size/height=240
+window/size/fullscreen=true
+window/stretch/mode="2d"
 
 [global]
 
