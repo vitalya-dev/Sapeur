@@ -18,7 +18,6 @@ var _tiles = []
 func _ready():
 	yield(get_tree(), "idle_frame")
 	_create_tiles()
-	distribute_mines(mines) 
 
 
 func _create_tiles():
@@ -26,19 +25,35 @@ func _create_tiles():
 		_tiles.append([])
 		for x in range(0, field_size.x):
 			var tile = _create_tile(x, y)
-			tile.connect("lmb", self, "_on_tile_lmb")
-			tile.connect("rmb", self, "_on_tile_rmb")
+			tile.connect("lmb", self, "_on_first_move")
+			tile.connect("rmb", self, "_on_first_move")
 			add_child(tile)
 			_tiles[y].append(tile)
 
 
-func create_tile(x, y):
+func _create_tile(x, y):
 	var tile = preload('res://Scenes/Tile.tscn').instance()
 	tile.x = x
 	tile.y = y
 	tile.position = rect_size / 2 - Vector2(field_size.x / 2 * 16, field_size.y / 2 * 16)
 	tile.position += Vector2(x * 16 + y % 2 * 8, y * 16)
 	return tile
+
+
+func _on_first_move(tile):
+	tile.mine = true
+	distribute_mines(mines)
+	tile.mine = false
+	############################################################################################################
+	_on_tile_lmb(tile)
+	############################################################################################################
+	for y in range(0, field_size.y):
+		for x in range(0, field_size.x):
+			_tiles[y][x].disconnect("lmb", self, "_on_first_move")
+			_tiles[y][x].connect("lmb", self, "_on_tile_lmb")
+			_tiles[y][x].disconnect("rmb", self, "_on_first_move")
+			_tiles[y][x].connect("rmb", self, "_on_tile_rmb")
+	
 
 func _on_tile_lmb(tile):
 	if not tile.is_open:
@@ -47,7 +62,6 @@ func _on_tile_lmb(tile):
 		if tile.mines_around == 0 and not tile.mine:
 			for neighbor in _get_neighbors(tile):
 				_on_tile_lmb(neighbor)
-
 
 func _on_tile_rmb(tile):
 	if not tile.is_open:
@@ -58,8 +72,8 @@ func _on_tile_rmb(tile):
 func distribute_mines(mines_count):
 	randomize()
 	while mines_count > 0:
-		var x = randi() % field_size.x
-		var y = randi() % field_size.y
+		var x = randi() % int(field_size.x)
+		var y = randi() % int(field_size.y)
 		var tile = _tiles[y][x]
 		if not tile.mine:
 			tile.mine = true
@@ -92,7 +106,3 @@ func _get_neighbors(tile):
 
 
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
