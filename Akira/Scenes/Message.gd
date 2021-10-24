@@ -11,8 +11,6 @@ export var avatar_3: Texture
 export var avatar_4: Texture
 
 var current_message = 0
-var frame_delta = 0
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Button.connect("pressed", self, "_on_button_pressed")
@@ -21,7 +19,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	frame_delta = delta
 	if current_message >= messages.size() - 1:
 		$Button/ButtonText.text = "Выход"
 
@@ -51,7 +48,6 @@ func show_current_message():
 	$Text.percent_visible = 0
 	############################################################################################################
 	while $Text.percent_visible < 1:
-		if not $TypewriterSFX.is_playing():
-			$TypewriterSFX.play()
-		$Text.percent_visible += frame_delta
-		yield(get_tree(), "idle_frame")
+		$Text.visible_characters += 1
+		$TypewriterSFX.play()
+		yield($TypewriterSFX, "finished")

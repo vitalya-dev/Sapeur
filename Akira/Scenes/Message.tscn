@@ -46,7 +46,7 @@ __meta__ = {
 "_edit_group_": true,
 "_edit_use_anchors_": false
 }
-messages = PoolStringArray( "@Тест", "#Тест", "$Тест" )
+messages = PoolStringArray( "@Test Test Test Test Test Test Test Test Test Test Test Test", "#Тест", "$Тест" )
 avatar_1 = ExtResource( 8 )
 avatar_2 = ExtResource( 7 )
 avatar_3 = ExtResource( 9 )
@@ -110,4 +110,4 @@ __meta__ = {
 
 [node name="TypewriterSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
-pitch_scale = 4.0
+pitch_scale = 2.0
