@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/pancakes.mp3-be69768312dee5390d7e9cb8dfccf4ea.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sounds/pancakes.mp3"
+dest_files=[ "res://.import/pancakes.mp3-be69768312dee5390d7e9cb8dfccf4ea.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
