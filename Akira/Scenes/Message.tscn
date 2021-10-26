@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Assets/Fonts/PressStart2P-vaV7.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Assets/Graphics/Avatars/avatar_background.png" type="Texture" id=2]
@@ -6,9 +6,6 @@
 [ext_resource path="res://Assets/Graphics/message_button_normal.png" type="Texture" id=4]
 [ext_resource path="res://Scenes/Message.gd" type="Script" id=5]
 [ext_resource path="res://Assets/Sounds/typewriter.wav" type="AudioStream" id=6]
-[ext_resource path="res://Assets/Graphics/Avatars/avatar_sergeant.png" type="Texture" id=7]
-[ext_resource path="res://Assets/Graphics/Avatars/avatar_colonel.png" type="Texture" id=8]
-[ext_resource path="res://Assets/Graphics/Avatars/avatar_doctor.png" type="Texture" id=9]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.00392157, 0.203922, 0.168627, 1 )
@@ -46,10 +43,6 @@ __meta__ = {
 "_edit_group_": true,
 "_edit_use_anchors_": false
 }
-messages = PoolStringArray( "@Test Test Test Test Test Test Test Test Test Test Test Test", "#Тест", "$Тест" )
-avatar_1 = ExtResource( 8 )
-avatar_2 = ExtResource( 7 )
-avatar_3 = ExtResource( 9 )
 
 [node name="Avatar" type="Sprite" parent="."]
 position = Vector2( 35, 39 )
