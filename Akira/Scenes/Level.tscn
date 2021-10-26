@@ -17,6 +17,7 @@ __meta__ = {
 }
 
 [node name="Field" parent="." instance=ExtResource( 1 )]
+mines = 1
 
 [node name="OpenSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
