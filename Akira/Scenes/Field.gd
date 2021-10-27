@@ -54,6 +54,15 @@ func _on_first_move(tile):
 			_tiles[y][x].disconnect("rmb", self, "_on_first_move")
 			_tiles[y][x].connect("rmb", self, "_on_tile_rmb")
 	
+func open_random_tile():
+	randomize()
+	while true:
+		var x = randi() % int(field_size.x)
+		var y = randi() % int(field_size.y)
+		var tile = _tiles[y][x]
+		if not tile.is_open:
+			tile.emit_signal("lmb", tile)
+			break
 
 func _on_tile_lmb(tile):
 	if not tile.is_open:
@@ -80,6 +89,23 @@ func distribute_mines(mines_count):
 			mines_count -= 1
 			for neighbor in _get_neighbors(tile):
 				neighbor.mines_around += 1
+
+
+func open_field():
+	for tiles_row in _tiles:
+		for tile in tiles_row:
+			tile.open()
+
+func hide_text():
+	for tiles_row in _tiles:
+		for tile in tiles_row:
+			tile.hide_text()
+	
+func show_text():
+	for tiles_row in _tiles:
+		for tile in tiles_row:
+			tile.show_text()
+
 
 
 func _get_neighbors(tile):

@@ -80,6 +80,12 @@ func demine():
 		$Text.set("custom_colors/font_color", text_color[mines_around-1] if mines_around > 0 else 0)
 
 
+func hide_text():
+	$Text.visible = false
+
+func show_text():
+	$Text.visible = true
+
 
 func _on_mouse_entered():
 	is_hover = true
