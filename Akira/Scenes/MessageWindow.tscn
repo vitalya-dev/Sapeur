@@ -15,3 +15,6 @@ __meta__ = {
 [node name="Message" parent="." instance=ExtResource( 1 )]
 margin_left = -160.0
 margin_right = 160.0
+
+[node name="TopRight" type="Position2D" parent="."]
+position = Vector2( 104, 158 )

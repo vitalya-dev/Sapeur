@@ -11,6 +11,11 @@ export var avatar_3: Texture
 export var avatar_4: Texture
 
 var current_message = 0
+
+
+signal current_message_change(i)
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Button.connect("pressed", self, "_on_button_pressed")
@@ -32,6 +37,8 @@ func _on_button_pressed():
 		return
 	current_message += 1
 	show_current_message()
+	emit_signal("current_message_change", current_message)
+
 	
 func show_current_message():
 	match messages[current_message][0]:

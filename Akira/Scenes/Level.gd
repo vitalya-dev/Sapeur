@@ -44,8 +44,15 @@ func _show_tutorial_message(step):
 	]
 	message_window.get_node("Message").avatar_1 = preload("res://Assets/Graphics/Avatars/avatar_doctor.png")
 	message_window.get_node("Message").avatar_2 = preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
+	############################################################################################################
+	message_window.get_node("Message").connect("current_message_change", self, "_tutorial_message_change")
+	############################################################################################################
 	add_child(message_window, true);
 	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _tutorial_message_change(i):
+	match(i):
+		1:
+			$MessageWindow.get_node("Message").rect_position = $MessageWindow.get_node("TopRight").position
+				
+
+			
