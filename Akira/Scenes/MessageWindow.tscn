@@ -18,3 +18,6 @@ margin_right = 160.0
 
 [node name="TopRight" type="Position2D" parent="."]
 position = Vector2( 104, 158 )
+
+[node name="Center" type="Position2D" parent="."]
+position = Vector2( 53, 80 )
