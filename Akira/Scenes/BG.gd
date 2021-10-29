@@ -12,7 +12,7 @@ func _ready():
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	var offset = position - get_viewport().get_mouse_position()
 	position = lerp(position, position + offset, 0.1)
 	position.x = clamp(position.x, start_position.x - 5, start_position.x + 5)

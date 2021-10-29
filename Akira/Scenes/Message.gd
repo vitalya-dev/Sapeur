@@ -23,7 +23,7 @@ func _ready():
 		show_current_message()	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if current_message >= messages.size() - 1:
 		$Button/ButtonText.text = "Выход"
 

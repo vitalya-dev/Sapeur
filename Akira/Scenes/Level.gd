@@ -9,7 +9,7 @@ extends Control
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	connect_field()
-	_show_tutorial_message(0)
+	_show_tutorial_message_1()
 
 
 func connect_field():
@@ -17,16 +17,16 @@ func connect_field():
 	$Field.connect("tile_demine", self, "_on_tile_demine")
 
 
-func _on_tile_open(tile):
+func _on_tile_open(_tile):
 	$OpenSFX.stop()
 	$OpenSFX.play()
 
 
-func _on_tile_demine(tile):
+func _on_tile_demine(_tile):
 	$DemineSFX.stop()
 	$DemineSFX.play()
 
-func _show_tutorial_message(step):
+func _show_tutorial_message_1():
 	var message_window = preload('res://Scenes/MessageWindow.tscn').instance()
 	message_window.get_node("Message").messages = [
 		"@Добро пожаловать в симуляцию, сержант.",
@@ -42,14 +42,14 @@ func _show_tutorial_message(step):
 	message_window.get_node("Message").avatar_1 = preload("res://Assets/Graphics/Avatars/avatar_doctor.png")
 	message_window.get_node("Message").avatar_2 = preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
 	############################################################################################################
-	message_window.get_node("Message").connect("showing_current_message", self, "_tutorial_message_showing")
-	message_window.get_node("Message").connect("tree_exited", self, "_tutorial_message_exited")
+	message_window.get_node("Message").connect("showing_current_message", self, "_tutorial_message_1_showing")
+	message_window.get_node("Message").connect("tree_exited", self, "_tutorial_message_1_exited")
 	############################################################################################################
 	add_child(message_window, true);
 
 
 	
-func _tutorial_message_showing(i):
+func _tutorial_message_1_showing(i):
 	match(i):
 		1:
 			$MessageWindow.get_node("Message").rect_position = $MessageWindow.get_node("TopRight").position
@@ -64,7 +64,22 @@ func _tutorial_message_showing(i):
 		8:
 			$MessageWindow.get_node("Message").rect_position = $MessageWindow.get_node("Center").position
 				
-func _tutorial_message_exited():
-	print("time to say goodbay")
+func _tutorial_message_1_exited():
+	$Field.mines = 1
+	yield(get_tree().create_timer(1), "timeout")
+	$Field.reset()
+	$OpenSFX.play()
+	yield(get_tree().create_timer(0.5), "timeout")
+	_show_tutorial_message_2()
 
+func _show_tutorial_message_2():
+	var message_window = preload('res://Scenes/MessageWindow.tscn').instance()
+	message_window.get_node("Message").messages = [
+		"@Мы спрятали мину на учебном полигоне, сержант.",
+		"@Найди её!"
+	]
+	message_window.get_node("Message").avatar_1 = preload("res://Assets/Graphics/Avatars/avatar_doctor.png")
+	message_window.get_node("Message").avatar_2 = preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
+	############################################################################################################
+	add_child(message_window, true);
 			

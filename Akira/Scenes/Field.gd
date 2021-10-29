@@ -94,7 +94,8 @@ func distribute_mines(mines_count):
 func open_field():
 	for tiles_row in _tiles:
 		for tile in tiles_row:
-			tile.open()
+			if not tile.is_open:
+				tile.open()
 
 func hide_text():
 	for tiles_row in _tiles:
@@ -107,6 +108,13 @@ func show_text():
 			tile.show_text()
 
 
+func reset():
+	for tiles_row in _tiles:
+		for tile in tiles_row:
+			tile.queue_free()
+	_tiles.resize(0)
+	_create_tiles()
+	
 
 func _get_neighbors(tile):
 	var neighbors_pos_1 = []

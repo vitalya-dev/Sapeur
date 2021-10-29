@@ -44,6 +44,12 @@ func _input(ev):
 		if ev.button_index == 2 and ev.pressed:
 			emit_signal("rmb", self) 
 
+func reset():
+	if is_open:
+		close()
+	self.mine = false
+	self.mines_around = 0
+
 
 func open():
 	assert(is_open == false, "Tile: open on open tile");
