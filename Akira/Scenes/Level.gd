@@ -62,10 +62,12 @@ func _start_tutorial():
 				yield(message_window, "tree_exited")
 				break
 	############################################################################################################
-	$Field.mines = 1
 	yield(get_tree().create_timer(1), "timeout")
+	############################################################################################################
 	$Field.reset()
+	$Field.distribute_mines(1)
 	$OpenSFX.play()
+	############################################################################################################
 	yield(get_tree().create_timer(0.5), "timeout")
 	############################################################################################################
 	message_window = preload('res://Scenes/MessageWindow.tscn').instance()
@@ -79,4 +81,32 @@ func _start_tutorial():
 	add_child(message_window, true);
 	############################################################################################################
 	yield(message_window, "tree_exited")
+	############################################################################################################
+	while true:
+		var event = yield($Field, "change")
+		if event["name"] == "tile_demine" and event["tile"].mine:
+			message_window = preload('res://Scenes/MessageWindow.tscn').instance()
+			message_window.get_node("Message").messages = [
+				"@Прекрасная работа, сержант.",
+			]
+			message_window.get_node("Message").avatar_1 = preload("res://Assets/Graphics/Avatars/avatar_doctor.png")
+			message_window.get_node("Message").avatar_2 = preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
+			add_child(message_window, true);
+			############################################################################################################
+			yield(message_window, "tree_exited")
+			############################################################################################################
+			break;
+		if event["name"] == "tile_demine" and not event["tile"].mine:
+			message_window = preload('res://Scenes/MessageWindow.tscn').instance()
+			message_window.get_node("Message").messages = [
+				"@Вы идиот, сержант.",
+			]
+			message_window.get_node("Message").avatar_1 = preload("res://Assets/Graphics/Avatars/avatar_doctor.png")
+			message_window.get_node("Message").avatar_2 = preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
+			add_child(message_window, true);
+			############################################################################################################
+			yield(message_window, "tree_exited")
+			############################################################################################################
+			break;
+
 			

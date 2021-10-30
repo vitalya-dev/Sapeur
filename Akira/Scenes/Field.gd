@@ -5,13 +5,15 @@ extends Control
 # var a = 2
 # var b = "text"
 
-export var mines = 10
 export var field_size = Vector2(11, 11)
 
 signal tile_open(tile)
 signal tile_demine(tile)
+signal change(event)
 
 var _tiles = []
+
+var _first_move = true
 
 
 # Called when the node enters the scene tree for the first time.
@@ -25,8 +27,8 @@ func _create_tiles():
 		_tiles.append([])
 		for x in range(0, field_size.x):
 			var tile = _create_tile(x, y)
-			tile.connect("lmb", self, "_on_first_move")
-			tile.connect("rmb", self, "_on_first_move")
+			tile.connect("lmb", self, "_on_tile_lmb")
+			tile.connect("rmb", self, "_on_tile_rmb")
 			add_child(tile)
 			_tiles[y].append(tile)
 
@@ -40,20 +42,6 @@ func _create_tile(x, y):
 	return tile
 
 
-func _on_first_move(tile):
-	tile.mine = true
-	distribute_mines(mines)
-	tile.mine = false
-	############################################################################################################
-	_on_tile_lmb(tile)
-	############################################################################################################
-	for y in range(0, field_size.y):
-		for x in range(0, field_size.x):
-			_tiles[y][x].disconnect("lmb", self, "_on_first_move")
-			_tiles[y][x].connect("lmb", self, "_on_tile_lmb")
-			_tiles[y][x].disconnect("rmb", self, "_on_first_move")
-			_tiles[y][x].connect("rmb", self, "_on_tile_rmb")
-	
 func open_random_tile():
 	randomize()
 	while true:
@@ -65,17 +53,38 @@ func open_random_tile():
 			break
 
 func _on_tile_lmb(tile):
+	if _first_move:
+		if tile.mine:
+			distribute_mines(1)
+			tile.mine = false
+		_first_move = false
 	if not tile.is_open:
 		tile.open()
 		emit_signal("tile_open", tile)
+		emit_signal("change", {"name": "tile_open", "tile": tile})
+		############################################################################################################
 		if tile.mines_around == 0 and not tile.mine:
 			for neighbor in _get_neighbors(tile):
 				_on_tile_lmb(neighbor)
 
 func _on_tile_rmb(tile):
+	if _first_move:
+		_on_tile_lmb(tile)
+		return
 	if not tile.is_open:
 		tile.demine()
 		emit_signal("tile_demine", tile)
+		emit_signal("change", {"name": "tile_demine", "tile": tile})
+
+
+
+func demined_tiles():
+	var demined = 0
+	for tiles_row in _tiles:
+		for tile in tiles_row:
+			if tile.is_open and tile.mine:
+				demined += 1
+	return demined
 
 
 func distribute_mines(mines_count):
@@ -111,9 +120,9 @@ func show_text():
 func reset():
 	for tiles_row in _tiles:
 		for tile in tiles_row:
-			tile.queue_free()
-	_tiles.resize(0)
-	_create_tiles()
+			tile.reset()
+	_first_move = true
+
 	
 
 func _get_neighbors(tile):
