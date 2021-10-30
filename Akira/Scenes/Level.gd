@@ -9,7 +9,7 @@ extends Control
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	connect_field()
-	_show_tutorial_message_1()
+	_start_tutorial()
 
 
 func connect_field():
@@ -26,7 +26,7 @@ func _on_tile_demine(_tile):
 	$DemineSFX.stop()
 	$DemineSFX.play()
 
-func _show_tutorial_message_1():
+func _start_tutorial():
 	var message_window = preload('res://Scenes/MessageWindow.tscn').instance()
 	message_window.get_node("Message").messages = [
 		"@Добро пожаловать в симуляцию, сержант.",
@@ -42,38 +42,33 @@ func _show_tutorial_message_1():
 	message_window.get_node("Message").avatar_1 = preload("res://Assets/Graphics/Avatars/avatar_doctor.png")
 	message_window.get_node("Message").avatar_2 = preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
 	############################################################################################################
-	message_window.get_node("Message").connect("showing_current_message", self, "_tutorial_message_1_showing")
-	message_window.get_node("Message").connect("tree_exited", self, "_tutorial_message_1_exited")
-	############################################################################################################
 	add_child(message_window, true);
-
-
-	
-func _tutorial_message_1_showing(i):
-	match(i):
-		1:
-			$MessageWindow.get_node("Message").rect_position = $MessageWindow.get_node("TopRight").position
-		2:
-			$Field.distribute_mines(5)
-			$Field.open_field()
-			$Field.hide_text()
-			$OpenSFX.play()
-		4:
-			$Field.show_text()
-			$OpenSFX.play()
-		8:
-			$MessageWindow.get_node("Message").rect_position = $MessageWindow.get_node("Center").position
-				
-func _tutorial_message_1_exited():
+	############################################################################################################
+	while true:
+		yield(message_window.get_node("Message"), "change")
+		match(message_window.get_node("Message").current_message):
+			1:
+				$MessageWindow.get_node("Message").rect_position = $MessageWindow.get_node("TopRight").position
+			2:
+				$Field.distribute_mines(5)
+				$Field.open_field()
+				$Field.hide_text()
+				$OpenSFX.play()
+			4:
+				$Field.show_text()
+				$OpenSFX.play()
+			8:
+				$MessageWindow.get_node("Message").rect_position = $MessageWindow.get_node("Center").position
+				yield(message_window, "tree_exited")
+				break
+	############################################################################################################
 	$Field.mines = 1
 	yield(get_tree().create_timer(1), "timeout")
 	$Field.reset()
 	$OpenSFX.play()
 	yield(get_tree().create_timer(0.5), "timeout")
-	_show_tutorial_message_2()
-
-func _show_tutorial_message_2():
-	var message_window = preload('res://Scenes/MessageWindow.tscn').instance()
+	############################################################################################################
+	message_window = preload('res://Scenes/MessageWindow.tscn').instance()
 	message_window.get_node("Message").messages = [
 		"@Мы спрятали мину на учебном полигоне, сержант.",
 		"@Найди её!"
@@ -82,4 +77,6 @@ func _show_tutorial_message_2():
 	message_window.get_node("Message").avatar_2 = preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
 	############################################################################################################
 	add_child(message_window, true);
+	############################################################################################################
+	yield(message_window, "tree_exited")
 			
