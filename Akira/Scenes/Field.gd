@@ -60,7 +60,6 @@ func _on_tile_lmb(tile):
 		_first_move = false
 	if not tile.is_open:
 		tile.open()
-		emit_signal("tile_open", tile)
 		emit_signal("change", {"name": "tile_open", "tile": tile})
 		############################################################################################################
 		if tile.mines_around == 0 and not tile.mine:
@@ -73,7 +72,6 @@ func _on_tile_rmb(tile):
 		return
 	if not tile.is_open:
 		tile.demine()
-		emit_signal("tile_demine", tile)
 		emit_signal("change", {"name": "tile_demine", "tile": tile})
 
 

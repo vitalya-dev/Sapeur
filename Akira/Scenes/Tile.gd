@@ -45,10 +45,14 @@ func _input(ev):
 			emit_signal("rmb", self) 
 
 func reset():
-	if is_open:
-		close()
+	self.frame = 0
+	self.is_open = false
 	self.mine = false
 	self.mines_around = 0
+	$Text.set_text("")
+	$Image.set_texture(null)
+	play("Close")
+
 
 
 func open():
@@ -68,8 +72,6 @@ func open():
 func close():
 	assert(is_open == true, "Tile: close an closed tile")
 	is_open = false
-	if self.animation == "Close":
-		self.frame = 0
 	play("Close")
 	yield(self, "animation_finished")
 	$Text.set_text("")

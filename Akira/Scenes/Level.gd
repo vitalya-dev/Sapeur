@@ -8,23 +8,7 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	connect_field()
 	_start_tutorial()
-
-
-func connect_field():
-	$Field.connect("tile_open", self, "_on_tile_open")
-	$Field.connect("tile_demine", self, "_on_tile_demine")
-
-
-func _on_tile_open(_tile):
-	$OpenSFX.stop()
-	$OpenSFX.play()
-
-
-func _on_tile_demine(_tile):
-	$DemineSFX.stop()
-	$DemineSFX.play()
 
 func _start_tutorial():
 	$Field.reset()
@@ -84,6 +68,9 @@ func _start_tutorial():
 	############################################################################################################
 	while true:
 		var event = yield($Field, "change")
+		############################################################################################################
+		_play_sfx(event)
+		############################################################################################################
 		if event["name"] == "tile_demine" and event["tile"].mine:
 			_message_window(
 				[
@@ -116,12 +103,24 @@ func _start_tutorial():
 	############################################################################################################
 	while true:
 		var event = yield($Field, "change")
+		############################################################################################################
+		_play_sfx(event)
+		############################################################################################################
 		if event["name"] == "tile_demine" and not event["tile"].mine:
 			_show_fail_message_and_restart()
 			return
 		if event["name"] == "tile_open" and event["tile"].mine:
 			_show_fail_message_and_restart()
 			return
+		
+
+func _play_sfx(event):
+	if event["name"] == "tile_open":
+		$OpenSFX.stop()
+		$OpenSFX.play()
+	elif event["name"] == "tile_demine":
+		$DemineSFX.stop()
+		$DemineSFX.play()
 		
 		
 func _message_window(messages, avatar_1=null, avatar_2=null, avatar_3=null):
