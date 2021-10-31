@@ -28,6 +28,7 @@ func _on_tile_demine(_tile):
 
 func _start_tutorial():
 	$Field.reset()
+	$OpenSFX.play()
 	############################################################################################################
 	_message_window(
 		[
@@ -95,18 +96,7 @@ func _start_tutorial():
 			yield(get_tree().create_timer(1), "timeout")
 			break;
 		if event["name"] == "tile_demine" and not event["tile"].mine:
-			_message_window(
-				[
-					"@Вы идиот, сержант.",
-					"@Еще раз, сержант.",
-					"@И постарайтесь не быть большим идиотом чем вы есть, сержант."
-				],
-				preload("res://Assets/Graphics/Avatars/avatar_doctor.png"),
-				preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
-			)
-			yield($MessageWindow, "tree_exited")
-			yield(get_tree().create_timer(1), "timeout")
-			_start_tutorial()
+			_show_fail_message_and_restart()
 			return
 	############################################################################################################
 	$Field.reset()
@@ -127,21 +117,13 @@ func _start_tutorial():
 	while true:
 		var event = yield($Field, "change")
 		if event["name"] == "tile_demine" and not event["tile"].mine:
-			_message_window(
-				[
-					"@Вы просто неисправимые дегенират, сержант.",
-					"@Еще раз, сержант.",
-					"@И постарайтесь в этот раз, сержант."
-				],
-				preload("res://Assets/Graphics/Avatars/avatar_doctor.png"),
-				preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
-			)
-			yield($MessageWindow, "tree_exited")
-			############################################################################################################
-			yield(get_tree().create_timer(1), "timeout")
-			_start_tutorial()
+			_show_fail_message_and_restart()
 			return
-			
+		if event["name"] == "tile_open" and event["tile"].mine:
+			_show_fail_message_and_restart()
+			return
+		
+		
 func _message_window(messages, avatar_1=null, avatar_2=null, avatar_3=null):
 	var message_window = preload('res://Scenes/MessageWindow.tscn').instance()
 	message_window.get_node("Message").messages = messages
@@ -150,3 +132,16 @@ func _message_window(messages, avatar_1=null, avatar_2=null, avatar_3=null):
 	message_window.get_node("Message").avatar_3 = avatar_3
 	add_child(message_window, true);
 
+func _show_fail_message_and_restart():
+	_message_window(
+		[
+			"@Вы идиот, сержант.",
+			"@Еще раз, сержант.",
+			"@И постарайтесь не быть большим идиотом чем вы есть, сержант."
+		],
+		preload("res://Assets/Graphics/Avatars/avatar_doctor.png"),
+		preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
+	)
+	yield($MessageWindow, "tree_exited")
+	yield(get_tree().create_timer(1), "timeout")
+	_start_tutorial()
