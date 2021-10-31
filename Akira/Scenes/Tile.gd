@@ -68,10 +68,13 @@ func open():
 func close():
 	assert(is_open == true, "Tile: close an closed tile")
 	is_open = false
+	if self.animation == "Close":
+		self.frame = 0
 	play("Close")
 	yield(self, "animation_finished")
 	$Text.set_text("")
 	$Image.set_texture(null)
+
 
 
 func demine():
