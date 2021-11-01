@@ -52,6 +52,7 @@ func _start_tutorial():
 	############################################################################################################
 	$Field.reset()
 	$Field.distribute_mines(1)
+	$Field.get_safty_tile().swing()
 	$OpenSFX.play()
 	############################################################################################################
 	yield(get_tree().create_timer(0.5), "timeout")
@@ -59,7 +60,9 @@ func _start_tutorial():
 	_message_window(
 		[
 			"@Мы спрятали мину на учебном полигоне, сержант.",
-			"@Найди её!"
+			"@Найди её!",
+			"@Первая безопасная мина отличается от других",
+			"@Всегда начинай с нее!",
 		],
 		preload("res://Assets/Graphics/Avatars/avatar_doctor.png"),
 		preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")

@@ -13,9 +13,6 @@ signal change(event)
 
 var _tiles = []
 
-var _first_move = true
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	yield(get_tree(), "idle_frame")
@@ -42,24 +39,16 @@ func _create_tile(x, y):
 	return tile
 
 
-func open_random_tile():
+func get_safty_tile():
 	randomize()
 	while true:
 		var x = randi() % int(field_size.x)
-		var y = randi() % int(field_size.y)
+		var y = randi() % int(field_size.y * 2)
 		var tile = _tiles[y][x]
-		if not tile.is_open:
-			tile.emit_signal("lmb", tile)
-			break
+		if !tile.is_open and !tile.mine and !tile.mines_around:
+			return tile
 
 func _on_tile_lmb(tile):
-	if _first_move:
-		if tile.mine:
-			distribute_mines(1)
-			tile.mine = false
-			for neighbor in _get_neighbors(tile):
-				tile.mines_around -= 1
-		_first_move = false
 	if not tile.is_open:
 		tile.open()
 		emit_signal("change", {"name": "tile_open", "tile": tile})
@@ -69,9 +58,6 @@ func _on_tile_lmb(tile):
 				_on_tile_lmb(neighbor)
 
 func _on_tile_rmb(tile):
-	if _first_move:
-		_on_tile_lmb(tile)
-		return
 	if not tile.is_open:
 		tile.demine()
 		emit_signal("change", {"name": "tile_demine", "tile": tile})
@@ -121,8 +107,6 @@ func reset():
 	for tiles_row in _tiles:
 		for tile in tiles_row:
 			tile.reset()
-	_first_move = true
-
 	
 
 func _get_neighbors(tile):

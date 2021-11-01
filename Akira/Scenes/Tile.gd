@@ -90,6 +90,9 @@ func demine():
 		$Text.set_text("X")
 		$Text.set("custom_colors/font_color", text_color[mines_around-1] if mines_around > 0 else 0)
 
+func swing():
+	play("Swing")
+
 
 func hide_text():
 	$Text.visible = false
