@@ -92,9 +92,9 @@ func _start_tutorial():
 	############################################################################################################
 	_message_window(
 		[
-			"@Усложняем, сержант.",
-			"@В этот раз мы спрятали 3 мины, сержант.",
-			"@Найди их!"
+			"@Усложняем.",
+			"@В этот раз мы спрятали 3 мины.",
+			"@Найди их, сержант!"
 		],
 		preload("res://Assets/Graphics/Avatars/avatar_doctor.png"),
 		preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
@@ -112,7 +112,52 @@ func _start_tutorial():
 		if event["name"] == "tile_open" and event["tile"].mine:
 			_show_fail_message_and_restart()
 			return
-		
+		if $Field.demined_tiles() == 3:
+			break
+	############################################################################################################
+	$Field.reset()
+	$Field.distribute_mines(5)
+	$OpenSFX.play()
+	############################################################################################################
+	_message_window(
+		[
+			"@Неплохо.",
+			"@В этот раз на поле расположено 5 мин.",
+			"@Найди их, Сержант!"
+		],
+		preload("res://Assets/Graphics/Avatars/avatar_doctor.png"),
+		preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
+	)
+	yield($MessageWindow, "tree_exited")
+	############################################################################################################
+	while true:
+		var event = yield($Field, "change")
+		############################################################################################################
+		_play_sfx(event)
+		############################################################################################################
+		if event["name"] == "tile_demine" and not event["tile"].mine:
+			_show_fail_message_and_restart()
+			return
+		if event["name"] == "tile_open" and event["tile"].mine:
+			_show_fail_message_and_restart()
+			return
+		if $Field.demined_tiles() == 5:
+			break
+	############################################################################################################
+	_message_window(
+		[
+			"@На этом все, сержант.",
+			"@Не думаю что ты долго протянешь на настоящем поле.",
+			"@Легкой смерти!",
+			"#Знаешь, тренер по мотивации из тебя так себе..."
+		],
+		preload("res://Assets/Graphics/Avatars/avatar_doctor.png"),
+		preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
+	)
+	yield($MessageWindow, "tree_exited")
+	############################################################################################################
+	yield(get_tree().create_timer(2), "timeout")
+	get_tree().quit()
 
 func _play_sfx(event):
 	if event["name"] == "tile_open":

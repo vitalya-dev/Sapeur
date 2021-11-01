@@ -57,6 +57,8 @@ func _on_tile_lmb(tile):
 		if tile.mine:
 			distribute_mines(1)
 			tile.mine = false
+			for neighbor in _get_neighbors(tile):
+				tile.mines_around -= 1
 		_first_move = false
 	if not tile.is_open:
 		tile.open()
