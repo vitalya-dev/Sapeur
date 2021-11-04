@@ -41,11 +41,25 @@ func _create_tile(x, y):
 
 func get_safty_tile():
 	randomize()
+	var attempt = 0
 	while true:
+		attempt += 1
 		var x = randi() % int(field_size.x)
-		var y = randi() % int(field_size.y * 2)
+		var y = randi() % int(field_size.y)
 		var tile = _tiles[y][x]
-		if !tile.is_open and !tile.mine and !tile.mines_around:
+		if !tile.is_open and !tile.mine and tile.mines_around == 0:
+			return tile
+		if !tile.is_open and !tile.mine and tile.mines_around == 1 and attempt > 1000:
+			return tile
+		if !tile.is_open and !tile.mine and tile.mines_around == 2 and attempt > 2000:
+			return tile
+		if !tile.is_open and !tile.mine and tile.mines_around == 3 and attempt > 3000:
+			return tile
+		if !tile.is_open and !tile.mine and tile.mines_around == 4 and attempt > 4000:
+			return tile
+		if !tile.is_open and !tile.mine and tile.mines_around == 5 and attempt < 5000:
+			return tile
+		if !tile.is_open and !tile.mine and tile.mines_around == 6 and attempt < 6000:
 			return tile
 
 func _on_tile_lmb(tile):

@@ -8,12 +8,11 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	yield(get_tree().create_timer(0.5), "timeout")
 	_start_tutorial()
 
 func _start_tutorial():
-	$Field.reset()
-	$OpenSFX.play()
-	############################################################################################################
+	_prepare_field(5)
 	_message_window(
 		[
 			"@Добро пожаловать в симуляцию, сержант.",
@@ -26,8 +25,7 @@ func _start_tutorial():
 			"@Любая ошибка недопустима.",
 			"@Вперед!"
 		],
-		preload("res://Assets/Graphics/Avatars/avatar_doctor.png"),
-		preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
+		false
 	)
 	############################################################################################################
 	while true:
@@ -36,7 +34,6 @@ func _start_tutorial():
 			1:
 				$MessageWindow.get_node("Message").rect_position = $MessageWindow.get_node("TopRight").position
 			2:
-				$Field.distribute_mines(5)
 				$Field.open_field()
 				$Field.hide_text()
 				$OpenSFX.play()
@@ -46,120 +43,95 @@ func _start_tutorial():
 			8:
 				$MessageWindow.get_node("Message").rect_position = $MessageWindow.get_node("Center").position
 				yield($MessageWindow, "tree_exited")
+				yield(get_tree().create_timer(0.5), "timeout")
 				break
 	############################################################################################################
-	yield(get_tree().create_timer(1), "timeout")
-	############################################################################################################
-	$Field.reset()
-	$Field.distribute_mines(1)
-	$Field.get_safty_tile().swing()
-	$OpenSFX.play()
-	############################################################################################################
-	yield(get_tree().create_timer(0.5), "timeout")
-	############################################################################################################
-	_message_window(
-		[
-			"@Мы спрятали мину на учебном полигоне, сержант.",
-			"@Найди её!",
-			"@Первая безопасная мина отличается от других",
-			"@Всегда начинай с нее!",
-		],
-		preload("res://Assets/Graphics/Avatars/avatar_doctor.png"),
-		preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
+	_prepare_field(1)
+	yield(
+		_message_window(
+			[
+				"@Мы спрятали мину на учебном полигоне, сержант.",
+				"@Найди её!",
+				"@Первая безопасная ячейка крутится.",
+				"@Всегда начинай с нее!",
+			]
+		),
+		"completed"
 	)
-	yield($MessageWindow, "tree_exited")
 	############################################################################################################
 	while true:
 		var event = yield($Field, "change")
-		############################################################################################################
+		####################################
 		_play_sfx(event)
-		############################################################################################################
-		if event["name"] == "tile_demine" and event["tile"].mine:
-			_message_window(
-				[
-					"@Прекрасная работа, сержант."
-				],
-				preload("res://Assets/Graphics/Avatars/avatar_doctor.png"),
-				preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
-			)
-			yield($MessageWindow, "tree_exited")
-			yield(get_tree().create_timer(1), "timeout")
-			break;
-		if event["name"] == "tile_demine" and not event["tile"].mine:
-			_show_fail_message_and_restart()
+		####################################
+		if _fail(event):
+			yield(_show_fail_message(), "completed")
+			_start_tutorial()
 			return
+		if $Field.demined_tiles() == 1:
+			yield(get_tree().create_timer(0.5), "timeout")
+			break
 	############################################################################################################
-	$Field.reset()
-	$Field.distribute_mines(3)
-	$OpenSFX.play()
-	############################################################################################################
-	_message_window(
-		[
-			"@Усложняем.",
-			"@В этот раз мы спрятали 3 мины.",
-			"@Найди их, сержант!"
-		],
-		preload("res://Assets/Graphics/Avatars/avatar_doctor.png"),
-		preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
+	_prepare_field(3)
+	yield(
+		_message_window(
+			[
+				"@Прекрасная работа, сержант.",
+				"@Усложняем.",
+				"@В этот раз мы спрятали 3 мины.",
+				"@Найди их, сержант!"
+			]
+		),
+		"completed"
 	)
-	yield($MessageWindow, "tree_exited")
 	############################################################################################################
 	while true:
 		var event = yield($Field, "change")
-		############################################################################################################
 		_play_sfx(event)
-		############################################################################################################
-		if event["name"] == "tile_demine" and not event["tile"].mine:
-			_show_fail_message_and_restart()
-			return
-		if event["name"] == "tile_open" and event["tile"].mine:
-			_show_fail_message_and_restart()
+		if _fail(event):
+			yield(_show_fail_message(), "completed")
+			_start_tutorial()
 			return
 		if $Field.demined_tiles() == 3:
+			yield(get_tree().create_timer(0.5), "timeout")
 			break
 	############################################################################################################
-	$Field.reset()
-	$Field.distribute_mines(5)
-	$OpenSFX.play()
-	############################################################################################################
-	_message_window(
-		[
-			"@Неплохо.",
-			"@В этот раз на поле расположено 5 мин.",
-			"@Найди их, Сержант!"
-		],
-		preload("res://Assets/Graphics/Avatars/avatar_doctor.png"),
-		preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
+	_prepare_field(5)
+	yield(
+		_message_window(
+			[
+				"@Неплохо.",
+				"@В этот раз на поле расположено 4 мины.",
+				"@Найди их, Сержант!"
+			]
+		),
+		"completed"
 	)
-	yield($MessageWindow, "tree_exited")
 	############################################################################################################
 	while true:
 		var event = yield($Field, "change")
-		############################################################################################################
 		_play_sfx(event)
-		############################################################################################################
-		if event["name"] == "tile_demine" and not event["tile"].mine:
-			_show_fail_message_and_restart()
+		if _fail(event):
+			yield(_show_fail_message(), "completed")
+			_start_tutorial()
 			return
-		if event["name"] == "tile_open" and event["tile"].mine:
-			_show_fail_message_and_restart()
-			return
-		if $Field.demined_tiles() == 5:
+		if $Field.demined_tiles() == 4:
+			yield(get_tree().create_timer(0.5), "timeout")
 			break
 	############################################################################################################
-	_message_window(
-		[
-			"@На этом все, сержант.",
-			"@Не думаю что ты долго протянешь на настоящем поле.",
-			"@Легкой смерти!",
-			"#Знаешь, тренер по мотивации из тебя так себе..."
-		],
-		preload("res://Assets/Graphics/Avatars/avatar_doctor.png"),
-		preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
+	yield(
+		_message_window(
+			[
+				"@Прекрасно.",
+				"@На этом все, сержант.",
+				"@Не думаю что ты долго протянешь на настоящем поле.",
+				"@Легкой смерти!",
+				"#Знаешь, тренер по мотивации из тебя так себе."
+			]
+		),
+		"completed"
 	)
-	yield($MessageWindow, "tree_exited")
 	############################################################################################################
-	yield(get_tree().create_timer(2), "timeout")
 	get_tree().quit()
 
 func _play_sfx(event):
@@ -170,25 +142,37 @@ func _play_sfx(event):
 		$DemineSFX.stop()
 		$DemineSFX.play()
 		
-		
-func _message_window(messages, avatar_1=null, avatar_2=null, avatar_3=null):
+func _message_window(messages, wait=true):
 	var message_window = preload('res://Scenes/MessageWindow.tscn').instance()
 	message_window.get_node("Message").messages = messages
-	message_window.get_node("Message").avatar_1 = avatar_1
-	message_window.get_node("Message").avatar_2 = avatar_2
-	message_window.get_node("Message").avatar_3 = avatar_3
+	message_window.get_node("Message").avatar_1 = preload("res://Assets/Graphics/Avatars/avatar_doctor.png")
+	message_window.get_node("Message").avatar_2 = preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
+	message_window.get_node("Message").avatar_3 = null
 	add_child(message_window, true);
+	if wait:
+		yield($MessageWindow, "tree_exited")
 
-func _show_fail_message_and_restart():
+func _show_fail_message():
 	_message_window(
 		[
 			"@Вы идиот, сержант.",
 			"@Еще раз, сержант.",
 			"@И постарайтесь не быть большим идиотом чем вы есть, сержант."
-		],
-		preload("res://Assets/Graphics/Avatars/avatar_doctor.png"),
-		preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
+		]
 	)
 	yield($MessageWindow, "tree_exited")
-	yield(get_tree().create_timer(1), "timeout")
-	_start_tutorial()
+	yield(get_tree().create_timer(0.5), "timeout")
+
+
+func _fail(event):
+	if event["name"] == "tile_demine" and not event["tile"].mine:
+		return true
+	if event["name"] == "tile_open" and event["tile"].mine:
+		return true
+	return false
+
+func _prepare_field(mines):
+	$Field.reset()
+	$Field.distribute_mines(mines)
+	$Field.get_safty_tile().swing()
+	$OpenSFX.play()
