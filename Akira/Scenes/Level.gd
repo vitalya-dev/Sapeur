@@ -9,130 +9,134 @@ extends Control
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	yield(get_tree().create_timer(0.5), "timeout")
-	_start_tutorial()
+	_start_tutorial(0)
 
-func _start_tutorial():
-	_prepare_field(5)
-	_message_window(
-		[
-			"@Добро пожаловать в симуляцию, сержант.",
-			"@Пространство поделено на ячейки.",
-			"@Есть ячейки в которых установлена взрывчатка.",
-			"@Твоя работа - найти эти ячейки и обезвредить.",
-			"@Ячейка в которой нет взрывчатки покажет тебе количество соседних ячеек в которых есть взрывчатка.",
-			"@Используя эту информацию даже такой идиот как ты сможет все сделать правильно.",
-			"@Используй левую кнопку мыши что бы открыть ячейку, используй правую кнопку что бы обезвредить ячейку.",
-			"@Любая ошибка недопустима.",
-			"@Вперед!"
-		],
-		false
-	)
-	############################################################################################################
-	while true:
-		yield($MessageWindow.get_node("Message"), "change")
-		match($MessageWindow.get_node("Message").current_message):
-			1:
-				$MessageWindow.get_node("Message").rect_position = $MessageWindow.get_node("TopRight").position
-			2:
-				$Field.open_field()
-				$Field.hide_text()
-				$OpenSFX.play()
-			4:
-				$Field.show_text()
-				$OpenSFX.play()
-			8:
-				$MessageWindow.get_node("Message").rect_position = $MessageWindow.get_node("Center").position
-				yield($MessageWindow, "tree_exited")
-				yield(get_tree().create_timer(0.5), "timeout")
-				break
-	############################################################################################################
-	_prepare_field(1)
-	yield(
-		_message_window(
-			[
-				"@Мы спрятали мину на учебном полигоне, сержант.",
-				"@Найди её!",
-				"@Первая безопасная ячейка крутится.",
-				"@Всегда начинай с нее!",
-			]
-		),
-		"completed"
-	)
-	############################################################################################################
-	while true:
-		var event = yield($Field, "change")
-		####################################
-		_play_sfx(event)
-		####################################
-		if _fail(event):
-			yield(_show_fail_message(), "completed")
-			_start_tutorial()
-			return
-		if $Field.demined_tiles() == 1:
-			yield(get_tree().create_timer(0.5), "timeout")
-			break
-	############################################################################################################
-	_prepare_field(3)
-	yield(
-		_message_window(
-			[
-				"@Прекрасная работа, сержант.",
-				"@Усложняем.",
-				"@В этот раз мы спрятали 3 мины.",
-				"@Найди их, сержант!"
-			]
-		),
-		"completed"
-	)
-	############################################################################################################
-	while true:
-		var event = yield($Field, "change")
-		_play_sfx(event)
-		if _fail(event):
-			yield(_show_fail_message(), "completed")
-			_start_tutorial()
-			return
-		if $Field.demined_tiles() == 3:
-			yield(get_tree().create_timer(0.5), "timeout")
-			break
-	############################################################################################################
-	_prepare_field(5)
-	yield(
-		_message_window(
-			[
-				"@Неплохо.",
-				"@В этот раз на поле расположено 4 мины.",
-				"@Найди их, Сержант!"
-			]
-		),
-		"completed"
-	)
-	############################################################################################################
-	while true:
-		var event = yield($Field, "change")
-		_play_sfx(event)
-		if _fail(event):
-			yield(_show_fail_message(), "completed")
-			_start_tutorial()
-			return
-		if $Field.demined_tiles() == 4:
-			yield(get_tree().create_timer(0.5), "timeout")
-			break
-	############################################################################################################
-	yield(
-		_message_window(
-			[
-				"@Прекрасно.",
-				"@На этом все, сержант.",
-				"@Не думаю что ты долго протянешь на настоящем поле.",
-				"@Легкой смерти!",
-				"#Знаешь, тренер по мотивации из тебя так себе."
-			]
-		),
-		"completed"
-	)
-	############################################################################################################
-	get_tree().quit()
+func _start_tutorial(part):
+	match part:
+		0:
+			_prepare_field(5)
+			_message_window(
+				[
+					"@Добро пожаловать в симуляцию, сержант.",
+					"@Пространство поделено на ячейки.",
+					"@Есть ячейки в которых установлена взрывчатка.",
+					"@Твоя работа - найти эти ячейки и обезвредить.",
+					"@Ячейка в которой нет взрывчатки покажет тебе количество соседних ячеек в которых есть взрывчатка.",
+					"@Используя эту информацию даже такой идиот как ты сможет все сделать правильно.",
+					"@Используй левую кнопку мыши что бы открыть ячейку, используй правую кнопку что бы обезвредить ячейку.",
+					"@Любая ошибка недопустима.",
+					"@Надеюсь все ясно?"
+				],
+				false
+			)
+			while true:
+				yield($MessageWindow.get_node("Message"), "change")
+				match($MessageWindow.get_node("Message").current_message):
+					1:
+						$MessageWindow.get_node("Message").rect_position = $MessageWindow.get_node("TopRight").position
+					2:
+						$Field.open_field()
+						$Field.hide_text()
+						$OpenSFX.play()
+					4:
+						$Field.show_text()
+						$OpenSFX.play()
+					8:
+						$MessageWindow.get_node("Message").rect_position = $MessageWindow.get_node("Center").position
+						yield($MessageWindow, "tree_exited")
+						yield(get_tree().create_timer(0.5), "timeout")
+						break
+			part += 1
+			continue
+		0, 1:
+			print("1")
+			_prepare_field(1)
+			yield(
+				_message_window(
+					[
+						"@Мы спрятали мину на учебном полигоне, сержант.",
+						"@Найди её!",
+						"@Первая безопасная ячейка крутится.",
+						"@Всегда начинай с нее!",
+					]
+				),
+				"completed"
+			)
+			while true:
+				var event = yield($Field, "change")
+				_play_sfx(event)
+				####################################
+				if _fail(event):
+					yield(_show_fail_message(), "completed")
+					_start_tutorial(part)
+					return
+				if $Field.demined_tiles() == 1:
+					yield(get_tree().create_timer(1.0), "timeout")
+					break
+			part += 1
+			continue
+		0, 1, 2:
+			_prepare_field(3)
+			yield(
+				_message_window(
+					[
+						"@Прекрасная работа, сержант.",
+						"@Усложняем.",
+						"@В этот раз мы спрятали 3 мины.",
+						"@Найди их, сержант!"
+					]
+				),
+				"completed"
+			)
+			while true:
+				var event = yield($Field, "change")
+				_play_sfx(event)
+				if _fail(event):
+					yield(_show_fail_message(), "completed")
+					_start_tutorial(part)
+					return
+				if $Field.demined_tiles() == 3:
+					yield(get_tree().create_timer(1.0), "timeout")
+					break
+			part += 1
+			continue
+		0, 1, 2, 3:
+			_prepare_field(4)
+			yield(
+				_message_window(
+					[
+						"@Неплохо.",
+						"@Посмотрим как ты справишься с 4"
+					]
+				),
+				"completed"
+			)
+			while true:
+				var event = yield($Field, "change")
+				_play_sfx(event)
+				if _fail(event):
+					yield(_show_fail_message(), "completed")
+					_start_tutorial(part)
+					return
+				if $Field.demined_tiles() == 4:
+					yield(get_tree().create_timer(1.0), "timeout")
+					break
+			part += 1
+			continue
+		0, 1, 2, 3, 4:
+			yield(
+				_message_window(
+					[
+						"@Прекрасно.",
+						"@На этом все, сержант.",
+						"@Не думаю что ты долго протянешь на настоящем поле.",
+						"@Легкой смерти!",
+						"#Тебе бы только тренером по мотивации работать."
+					]
+				),
+				"completed"
+			)
+			get_tree().quit()
 
 func _play_sfx(event):
 	if event["name"] == "tile_open":
