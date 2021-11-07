@@ -9,6 +9,7 @@ extends Control
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	yield(get_tree().create_timer(0.5), "timeout")
+	$Music.play()
 	_start_tutorial(0)
 
 func _start_tutorial(part):
@@ -26,8 +27,7 @@ func _start_tutorial(part):
 					"@Используй левую кнопку мыши что бы открыть ячейку, используй правую кнопку что бы обезвредить ячейку.",
 					"@Любая ошибка недопустима.",
 					"@Надеюсь все ясно?"
-				],
-				false
+				]
 			)
 			while true:
 				yield($MessageWindow.get_node("Message"), "change")
@@ -44,12 +44,10 @@ func _start_tutorial(part):
 					8:
 						$MessageWindow.get_node("Message").rect_position = $MessageWindow.get_node("Center").position
 						yield($MessageWindow, "tree_exited")
-						yield(get_tree().create_timer(0.5), "timeout")
 						break
-			part += 1
-			continue
-		0, 1:
-			print("1")
+			_start_tutorial(part+1)
+			return
+		1:
 			_prepare_field(1)
 			yield(
 				_message_window(
@@ -62,25 +60,15 @@ func _start_tutorial(part):
 				),
 				"completed"
 			)
-			while true:
-				var event = yield($Field, "change")
-				_play_sfx(event)
-				####################################
-				if _fail(event):
-					yield(_show_fail_message(), "completed")
-					_start_tutorial(part)
-					return
-				if $Field.demined_tiles() == 1:
-					yield(get_tree().create_timer(1.0), "timeout")
-					break
-			part += 1
-			continue
-		0, 1, 2:
+			if (yield(_lust_for_demine(1), "completed")):
+				_start_tutorial(part+1)
+			else:
+				_start_tutorial(part)
+		2:
 			_prepare_field(3)
 			yield(
 				_message_window(
 					[
-						"@Прекрасная работа, сержант.",
 						"@Усложняем.",
 						"@В этот раз мы спрятали 3 мины.",
 						"@Найди их, сержант!"
@@ -88,47 +76,29 @@ func _start_tutorial(part):
 				),
 				"completed"
 			)
-			while true:
-				var event = yield($Field, "change")
-				_play_sfx(event)
-				if _fail(event):
-					yield(_show_fail_message(), "completed")
-					_start_tutorial(part)
-					return
-				if $Field.demined_tiles() == 3:
-					yield(get_tree().create_timer(1.0), "timeout")
-					break
-			part += 1
-			continue
-		0, 1, 2, 3:
+			if (yield(_lust_for_demine(3), "completed")):
+				_start_tutorial(part+1)
+			else:
+				_start_tutorial(part)
+		3:
 			_prepare_field(4)
 			yield(
 				_message_window(
 					[
-						"@Неплохо.",
 						"@Посмотрим как ты справишься с 4"
 					]
 				),
 				"completed"
 			)
-			while true:
-				var event = yield($Field, "change")
-				_play_sfx(event)
-				if _fail(event):
-					yield(_show_fail_message(), "completed")
-					_start_tutorial(part)
-					return
-				if $Field.demined_tiles() == 4:
-					yield(get_tree().create_timer(1.0), "timeout")
-					break
-			part += 1
-			continue
-		0, 1, 2, 3, 4:
+			if (yield(_lust_for_demine(4), "completed")):
+				_start_tutorial(part+1)
+			else:
+				_start_tutorial(part)
+		4:
 			yield(
 				_message_window(
 					[
-						"@Прекрасно.",
-						"@На этом все, сержант.",
+						"@На этом все.",
 						"@Не думаю что ты долго протянешь на настоящем поле.",
 						"@Легкой смерти!",
 						"#Тебе бы только тренером по мотивации работать."
@@ -146,26 +116,36 @@ func _play_sfx(event):
 		$DemineSFX.stop()
 		$DemineSFX.play()
 		
-func _message_window(messages, wait=true):
+func _message_window(messages):
 	var message_window = preload('res://Scenes/MessageWindow.tscn').instance()
 	message_window.get_node("Message").messages = messages
 	message_window.get_node("Message").avatar_1 = preload("res://Assets/Graphics/Avatars/avatar_doctor.png")
 	message_window.get_node("Message").avatar_2 = preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
 	message_window.get_node("Message").avatar_3 = null
 	add_child(message_window, true);
-	if wait:
-		yield($MessageWindow, "tree_exited")
+	yield($MessageWindow, "tree_exited")
 
 func _show_fail_message():
-	_message_window(
-		[
-			"@Вы идиот, сержант.",
-			"@Еще раз, сержант.",
-			"@И постарайтесь не быть большим идиотом чем вы есть, сержант."
-		]
+	yield(
+		_message_window(
+			[
+				"@Вы идиот, сержант.",
+				"@Еще раз, сержант.",
+				"@И постарайтесь не быть большим идиотом чем вы есть, сержант."
+			]
+		),
+		"completed"
 	)
-	yield($MessageWindow, "tree_exited")
-	yield(get_tree().create_timer(0.5), "timeout")
+
+func _show_success_message():
+	yield(
+		_message_window(
+			[
+				"@Очень хорошо, сержант."
+			]
+		),
+		"completed"
+	)
 
 
 func _fail(event):
@@ -180,3 +160,28 @@ func _prepare_field(mines):
 	$Field.distribute_mines(mines)
 	$Field.get_safty_tile().swing()
 	$OpenSFX.play()
+
+func _lust_for_demine(demine_counter):
+	var _result = false
+	##################################
+	$Music.fade_in()
+	while true:
+		var event = yield($Field, "change")
+		_play_sfx(event)
+		if _fail(event):
+			_result = false
+			break
+		if $Field.demined_tiles() == demine_counter:
+			_result = true
+			break
+	$Music.fade_out()
+	##################################
+	if _result:
+		yield(get_tree().create_timer(1.0), "timeout")
+		yield(_show_success_message(), "completed")
+	else:
+		yield(get_tree().create_timer(1.0), "timeout")
+		yield(_show_fail_message(), "completed")
+	##################################
+	return _result
+	
