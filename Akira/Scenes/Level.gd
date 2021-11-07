@@ -13,6 +13,7 @@ func _ready():
 	_start_tutorial(0)
 
 func _start_tutorial(part):
+	$BG.show_default()
 	match part:
 		0:
 			_prepare_field(5)
@@ -168,6 +169,7 @@ func _lust_for_demine(demine_counter):
 	while true:
 		var event = yield($Field, "change")
 		_play_sfx(event)
+		$Voice.talk()
 		if _fail(event):
 			_result = false
 			break
@@ -177,11 +179,17 @@ func _lust_for_demine(demine_counter):
 	$Music.fade_out()
 	##################################
 	if _result:
-		yield(get_tree().create_timer(1.0), "timeout")
+		$VictorySFX.play()
+		yield($VictorySFX, "finished")
 		yield(_show_success_message(), "completed")
 	else:
-		yield(get_tree().create_timer(1.0), "timeout")
+		$BG.show_explosion()
+		$FireSFX.play()
+		yield($FireSFX, "finished")
 		yield(_show_fail_message(), "completed")
 	##################################
 	return _result
 	
+func _input(ev):
+	if ev.is_action_pressed("ui_cancel"):
+		get_tree().quit()

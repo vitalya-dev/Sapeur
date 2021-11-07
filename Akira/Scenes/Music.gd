@@ -14,12 +14,12 @@ func _ready():
 
 func fade_out():
 	$Tween.remove_all()
-	$Tween.interpolate_property(self, "volume_db", volume_db, initial_volume - 20, 5)
+	$Tween.interpolate_property(self, "volume_db", volume_db, initial_volume - 20, 3)
 	$Tween.start()
 
 func fade_in():
 	$Tween.remove_all()
-	$Tween.interpolate_property(self, "volume_db", volume_db, initial_volume + 20, 5)
+	$Tween.interpolate_property(self, "volume_db", volume_db, initial_volume + 20, 3)
 	$Tween.start()
 
 
