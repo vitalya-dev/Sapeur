@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/Message.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/MessageWindow.gd" type="Script" id=2]
+
+[node name="MessageWindow" type="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0313726, 0.372549, 0.0705882, 0.0784314 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Message" parent="." instance=ExtResource( 1 )]
+margin_left = -160.0
+margin_right = 160.0
+
+[node name="TopRight" type="Position2D" parent="."]
+position = Vector2( 104, 158 )
+
+[node name="Center" type="Position2D" parent="."]
+position = Vector2( 53, 80 )
