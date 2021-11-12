@@ -7,8 +7,6 @@ extends Control
 
 export var field_size = Vector2(11, 11)
 
-signal tile_open(tile)
-signal tile_demine(tile)
 signal change(event)
 
 var _tiles = []
@@ -34,8 +32,8 @@ func _create_tile(x, y):
 	var tile = preload('res://Scenes/Tile.tscn').instance()
 	tile.x = x
 	tile.y = y
-	tile.position = rect_size / 2 - Vector2(field_size.x / 2 * 16, field_size.y / 2 * 16)
-	tile.position += Vector2(x * 16 + y % 2 * 8, y * 16)
+	tile.position = rect_size / 2 - Vector2(int(field_size.x / 2) * 32, int(field_size.y / 2) * 8)
+	tile.position += Vector2(x * 32 + y % 2 * 16, y * 8)
 	return tile
 
 
@@ -49,17 +47,17 @@ func get_safty_tile():
 		var tile = _tiles[y][x]
 		if !tile.is_open and !tile.mine and tile.mines_around == 0:
 			return tile
-		if !tile.is_open and !tile.mine and tile.mines_around == 1 and attempt > 1000:
+		if !tile.is_open and !tile.mine and tile.mines_around == 1 and attempt > 100:
 			return tile
-		if !tile.is_open and !tile.mine and tile.mines_around == 2 and attempt > 2000:
+		if !tile.is_open and !tile.mine and tile.mines_around == 2 and attempt > 200:
 			return tile
-		if !tile.is_open and !tile.mine and tile.mines_around == 3 and attempt > 3000:
+		if !tile.is_open and !tile.mine and tile.mines_around == 3 and attempt > 300:
 			return tile
-		if !tile.is_open and !tile.mine and tile.mines_around == 4 and attempt > 4000:
+		if !tile.is_open and !tile.mine and tile.mines_around == 4 and attempt > 400:
 			return tile
-		if !tile.is_open and !tile.mine and tile.mines_around == 5 and attempt < 5000:
+		if !tile.is_open and !tile.mine and tile.mines_around == 5 and attempt > 500:
 			return tile
-		if !tile.is_open and !tile.mine and tile.mines_around == 6 and attempt < 6000:
+		if !tile.is_open and !tile.mine and tile.mines_around == 6 and attempt > 600:
 			return tile
 
 func _on_tile_lmb(tile):
@@ -106,17 +104,11 @@ func open_field():
 			if not tile.is_open:
 				tile.open()
 
-func hide_text():
+func text_visible(value):
 	for tiles_row in _tiles:
 		for tile in tiles_row:
-			tile.hide_text()
+			tile.text_visible(value)
 	
-func show_text():
-	for tiles_row in _tiles:
-		for tile in tiles_row:
-			tile.show_text()
-
-
 func reset():
 	for tiles_row in _tiles:
 		for tile in tiles_row:

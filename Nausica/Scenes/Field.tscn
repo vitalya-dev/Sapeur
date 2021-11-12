@@ -10,4 +10,4 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-field_size = Vector2( 5, 5 )
+field_size = Vector2( 5, 13 )

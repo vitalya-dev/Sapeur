@@ -93,13 +93,8 @@ func demine():
 func swing():
 	play("Swing")
 
-
-func hide_text():
-	$Text.visible = false
-
-func show_text():
-	$Text.visible = true
-
+func text_visible(value):
+	$Text.visible = value
 
 func _on_mouse_entered():
 	is_hover = true
