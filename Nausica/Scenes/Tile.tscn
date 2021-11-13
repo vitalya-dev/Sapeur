@@ -1,95 +1,107 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://Assets/Graphics/tile.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Graphics/Tile.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Fonts/PressStart2P-vaV7.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Scenes/Tile.gd" type="Script" id=3]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
-region = Rect2( 128, 0, 32, 32 )
+region = Rect2( 0, 0, 23, 16 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 1 )
-region = Rect2( 96, 0, 32, 32 )
+region = Rect2( 23, 0, 23, 16 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 1 )
-region = Rect2( 64, 0, 32, 32 )
+region = Rect2( 46, 0, 23, 16 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 1 )
-region = Rect2( 32, 0, 32, 32 )
+region = Rect2( 69, 0, 23, 16 )
 
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 32, 32 )
+region = Rect2( 92, 0, 23, 16 )
 
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 32, 32 )
+region = Rect2( 115, 0, 23, 16 )
 
 [sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 1 )
-region = Rect2( 32, 0, 32, 32 )
+region = Rect2( 0, 0, 23, 16 )
 
 [sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 1 )
-region = Rect2( 64, 0, 32, 32 )
+region = Rect2( 23, 0, 23, 16 )
 
 [sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 1 )
-region = Rect2( 96, 0, 32, 32 )
+region = Rect2( 46, 0, 23, 16 )
 
 [sub_resource type="AtlasTexture" id=10]
 atlas = ExtResource( 1 )
-region = Rect2( 128, 0, 32, 32 )
+region = Rect2( 69, 0, 23, 16 )
 
 [sub_resource type="AtlasTexture" id=11]
 atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 32, 32 )
+region = Rect2( 92, 0, 23, 16 )
 
 [sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 1 )
-region = Rect2( 32, 0, 32, 32 )
+region = Rect2( 115, 0, 23, 16 )
 
 [sub_resource type="AtlasTexture" id=13]
 atlas = ExtResource( 1 )
-region = Rect2( 64, 0, 32, 32 )
+region = Rect2( 115, 0, 23, 16 )
 
 [sub_resource type="AtlasTexture" id=14]
 atlas = ExtResource( 1 )
-region = Rect2( 96, 0, 32, 32 )
+region = Rect2( 92, 0, 23, 16 )
 
 [sub_resource type="AtlasTexture" id=15]
 atlas = ExtResource( 1 )
-region = Rect2( 128, 0, 32, 32 )
+region = Rect2( 69, 0, 23, 16 )
 
-[sub_resource type="SpriteFrames" id=16]
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 1 )
+region = Rect2( 46, 0, 23, 16 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 1 )
+region = Rect2( 23, 0, 23, 16 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 23, 16 )
+
+[sub_resource type="SpriteFrames" id=19]
 animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ) ],
 "loop": false,
-"name": "Close",
+"name": "Open",
 "speed": 30.0
 }, {
-"frames": [ SubResource( 6 ), SubResource( 6 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 10 ), SubResource( 10 ), SubResource( 9 ), SubResource( 8 ), SubResource( 7 ) ],
+"frames": [ SubResource( 7 ), SubResource( 7 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 12 ), SubResource( 12 ), SubResource( 11 ), SubResource( 10 ), SubResource( 9 ), SubResource( 8 ) ],
 "loop": true,
 "name": "Swing",
 "speed": 30.0
 }, {
-"frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ) ],
+"frames": [ SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
 "loop": false,
-"name": "Open",
+"name": "Close",
 "speed": 30.0
 } ]
 
-[sub_resource type="DynamicFont" id=17]
+[sub_resource type="DynamicFont" id=20]
 size = 8
 font_data = ExtResource( 2 )
 
 [node name="Tile" type="AnimatedSprite"]
 position = Vector2( 224, 120 )
-frames = SubResource( 16 )
-animation = "Open"
+frames = SubResource( 19 )
+animation = "Close"
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
@@ -98,7 +110,7 @@ __meta__ = {
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
-polygon = PoolVector2Array( -3, 8, -10.5, 0.5, -3.5, -6.5, 4.5, -6.5, 11.5, 0.5, 4, 8 )
+polygon = PoolVector2Array( -5, 8, -12, 0, -5, -8, 5, -8, 12, 0, 5, 8 )
 
 [node name="Image" type="Sprite" parent="."]
 
@@ -111,7 +123,7 @@ margin_left = -20.0
 margin_top = -23.0
 margin_right = -10.0
 margin_bottom = -8.0
-custom_fonts/font = SubResource( 17 )
+custom_fonts/font = SubResource( 20 )
 align = 1
 valign = 1
 __meta__ = {
