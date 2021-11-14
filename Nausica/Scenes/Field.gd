@@ -32,7 +32,7 @@ func _create_tile(x, y):
 	var tile = preload('res://Scenes/Tile.tscn').instance()
 	tile.x = x
 	tile.y = y
-	tile.position = rect_size / 2 - Vector2(int(field_size.x / 2) * 32, int(field_size.y / 2) * 8)
+	tile.position = rect_size / 2 - Vector2(int(field_size.x / 2) * 32 + 8, int(field_size.y / 2) * 8)
 	tile.position += Vector2(x * 32 + y % 2 * 16, y * 8)
 	return tile
 
@@ -118,11 +118,11 @@ func reset():
 func _get_neighbors(tile):
 	var neighbors_pos_1 = []
 	if tile.y % 2 == 1:
-		neighbors_pos_1 = [Vector2(tile.x-1, tile.y), Vector2(tile.x, tile.y-1), Vector2(tile.x+1, tile.y-1),
-						   Vector2(tile.x+1, tile.y), Vector2(tile.x+1, tile.y+1), Vector2(tile.x, tile.y+1)]
+		neighbors_pos_1 = [Vector2(tile.x, tile.y-1), Vector2(tile.x, tile.y-2), Vector2(tile.x+1, tile.y-1),
+						   Vector2(tile.x+1, tile.y+1), Vector2(tile.x, tile.y+2), Vector2(tile.x, tile.y+1)]
 	else:
-		neighbors_pos_1 = [Vector2(tile.x-1, tile.y), Vector2(tile.x-1, tile.y-1), Vector2(tile.x, tile.y-1),
-						   Vector2(tile.x+1, tile.y), Vector2(tile.x, tile.y+1), Vector2(tile.x-1, tile.y+1)]
+		neighbors_pos_1 = [Vector2(tile.x-1, tile.y-1), Vector2(tile.x, tile.y-2), Vector2(tile.x, tile.y-1),
+						   Vector2(tile.x, tile.y+1), Vector2(tile.x, tile.y+2), Vector2(tile.x-1, tile.y+1)]
 	############################################################################################################
 	var neighbors_pos_2 = []
 	for neighbor_pos in neighbors_pos_1:

@@ -16,93 +16,37 @@ func _start_tutorial(part):
 	$BG.show_default()
 	match part:
 		0:
-			_prepare_field(5)
-			_message_window(
-				[
-					"@Добро пожаловать в симуляцию, сержант.",
-					"@Пространство поделено на ячейки.",
-					"@Есть ячейки в которых установлена взрывчатка.",
-					"@Твоя работа - найти эти ячейки и обезвредить.",
-					"@Ячейка в которой нет взрывчатки покажет тебе количество соседних ячеек в которых есть взрывчатка.",
-					"@Используя эту информацию даже такой идиот как ты сможет все сделать правильно.",
-					"@Используй левую кнопку мыши что бы открыть ячейку, используй правую кнопку что бы обезвредить ячейку.",
-					"@Любая ошибка недопустима.",
-					"@Надеюсь все ясно?"
-				]
+			_prepare_field(10)
+			yield(
+				_message_window(
+					[
+						"@Доброе утро Сержант.",
+						"@В Алжир съежаются важные шишки.",
+						"@Их задача - закопать радиоактивный мусор в пустыне.",
+						"@Президенту Ранаяну пообещали приз если он пойдет на это.",
+						"@Терористам из группировки \"черный баклажан\" эта преспектива крайне ненравится.",
+						"@Они заминировали часть Сахары на подьезде к Алжиру.",
+						"@Задача нашей ЧВК - не один толстосум не должен превратиться в мокрое место на песочке.",
+						"@Вопросы?",
+						"#Никак нет.",
+						"#Разрешите выполнять задание?",
+						"@Разрешаю.",
+						"@Желаю удачи."
+					]
+				),
+				"completed"
 			)
-			while true:
-				yield($MessageWindow.get_node("Message"), "change")
-				match($MessageWindow.get_node("Message").current_message):
-					1:
-						$MessageWindow.get_node("Message").rect_position = $MessageWindow.get_node("TopRight").position
-					2:
-						$Field.open_field()
-						$Field.hide_text()
-						$OpenSFX.play()
-					4:
-						$Field.show_text()
-						$OpenSFX.play()
-					8:
-						$MessageWindow.get_node("Message").rect_position = $MessageWindow.get_node("Center").position
-						yield($MessageWindow, "tree_exited")
-						break
-			_start_tutorial(part+1)
-			return
+			if (yield(_lust_for_demine(10), "completed")):
+				_start_tutorial(part+1)
+			else:
+				_start_tutorial(part)
 		1:
-			_prepare_field(1)
-			yield(
-				_message_window(
-					[
-						"@Мы спрятали мину на учебном полигоне, сержант.",
-						"@Найди её!",
-						"@Первая безопасная ячейка крутится.",
-						"@Всегда начинай с нее!",
-					]
-				),
-				"completed"
-			)
-			if (yield(_lust_for_demine(1), "completed")):
-				_start_tutorial(part+1)
-			else:
-				_start_tutorial(part)
-		2:
-			_prepare_field(3)
-			yield(
-				_message_window(
-					[
-						"@Усложняем.",
-						"@В этот раз мы спрятали 3 мины.",
-						"@Найди их, сержант!"
-					]
-				),
-				"completed"
-			)
-			if (yield(_lust_for_demine(3), "completed")):
-				_start_tutorial(part+1)
-			else:
-				_start_tutorial(part)
-		3:
-			_prepare_field(4)
-			yield(
-				_message_window(
-					[
-						"@Посмотрим как ты справишься с 4"
-					]
-				),
-				"completed"
-			)
-			if (yield(_lust_for_demine(4), "completed")):
-				_start_tutorial(part+1)
-			else:
-				_start_tutorial(part)
-		4:
 			yield(
 				_message_window(
 					[
 						"@На этом все.",
 						"@Не думаю что ты долго протянешь на настоящем поле.",
 						"@Легкой смерти!",
-						"#Тебе бы только тренером по мотивации работать."
 					]
 				),
 				"completed"
@@ -120,7 +64,7 @@ func _play_sfx(event):
 func _message_window(messages):
 	var message_window = preload('res://Scenes/MessageWindow.tscn').instance()
 	message_window.get_node("Message").messages = messages
-	message_window.get_node("Message").avatar_1 = preload("res://Assets/Graphics/Avatars/avatar_doctor.png")
+	message_window.get_node("Message").avatar_1 = preload("res://Assets/Graphics/Avatars/avatar_colonel.png")
 	message_window.get_node("Message").avatar_2 = preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
 	message_window.get_node("Message").avatar_3 = null
 	add_child(message_window, true);
