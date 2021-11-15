@@ -10,7 +10,7 @@ extends Control
 func _ready():
 	yield(get_tree().create_timer(0.5), "timeout")
 	$Music.play()
-	_start_tutorial(0)
+	_start_tutorial(1)
 
 func _start_tutorial(part):
 	$BG.show_default()
@@ -41,16 +41,41 @@ func _start_tutorial(part):
 			else:
 				_start_tutorial(part)
 		1:
+			_prepare_field(10)
 			yield(
 				_message_window(
 					[
-						"@На этом все.",
-						"@Не думаю что ты долго протянешь на настоящем поле.",
-						"@Легкой смерти!",
+						"$Сержант вам входящий.",
+						"#Соединяйте.",
+						"%ТЫ ЧЕГО МНЕ НЕ ЗВОНИШЬ СКОТИНА?",
+						"#Мам!!!",
+						"#Как ты сюда дозванилась!!!",
+						"#Это закрытая линия!!!",
+						"#Вроде бы...",
+						"#А впрочем не важно.",
+						"#Я на работе Мам!!!",
+						"%Ага на работе он. Твой брат все рассказал на какой ты работе.",
+						"%Загораешь под солнцем и даже свою мать не пригласил.",
+						"%Ты ведь знаешь как мне нужен витамин D.",
+						"#Мам. Я не на курорте. Тут мины кругом. Очень опасно.",
+						"%Очень опасно было тебя рожать. Ты меня чуть не убил при родах. Безсердечное ты животное.",
+						"#Господи, я был младенцем, я же не специально.",
+						"%Из за тебя у меня было внутрнее кравотечение.",
+						"%А сейчас сердце кровью обливается от того что бывают такие неблагодарные дети.",
+						"#Мам!!!",
+						"%Сукин ты сын...",
+						"$Соеденение прервано.",
+						"#Господи...",
+						"#Ладно, продолжаем."
 					]
 				),
 				"completed"
 			)
+			if (yield(_lust_for_demine(10), "completed")):
+				_start_tutorial(part+1)
+			else:
+				_start_tutorial(part)
+		2:
 			get_tree().quit()
 
 func _play_sfx(event):
@@ -66,7 +91,8 @@ func _message_window(messages):
 	message_window.get_node("Message").messages = messages
 	message_window.get_node("Message").avatar_1 = preload("res://Assets/Graphics/Avatars/avatar_colonel.png")
 	message_window.get_node("Message").avatar_2 = preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
-	message_window.get_node("Message").avatar_3 = null
+	message_window.get_node("Message").avatar_3 = preload("res://Assets/Graphics/Avatars/avatar_operator.png")
+	message_window.get_node("Message").avatar_4 = preload("res://Assets/Graphics/Avatars/avatar_mom.png")
 	add_child(message_window, true);
 	yield($MessageWindow, "tree_exited")
 
