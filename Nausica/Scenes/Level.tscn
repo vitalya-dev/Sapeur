@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Scenes/Field.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Sounds/open_sfx.wav" type="AudioStream" id=2]
@@ -20,6 +20,7 @@
 [ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleStop0000.wav" type="AudioStream" id=18]
 [ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleStop0100.wav" type="AudioStream" id=19]
 [ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleStop0300.wav" type="AudioStream" id=20]
+[ext_resource path="res://Assets/Sounds/Scream.wav" type="AudioStream" id=21]
 
 [node name="Level" type="Control"]
 anchor_right = 1.0
@@ -52,6 +53,11 @@ stream = ExtResource( 4 )
 [node name="Music" parent="." instance=ExtResource( 8 )]
 stream = ExtResource( 7 )
 volume_db = -20.0
+
+[node name="Scream" parent="." instance=ExtResource( 8 )]
+stream = ExtResource( 21 )
+volume_db = -10.0
+script = null
 
 [node name="Voice" parent="." instance=ExtResource( 10 )]
 volume_db = 10.0

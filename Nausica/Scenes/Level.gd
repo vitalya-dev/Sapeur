@@ -16,6 +16,7 @@ func _start_tutorial(part):
 	$BG.show_default()
 	match part:
 		0:
+			$Music.fade_out()
 			_prepare_field(10)
 			yield(
 				_message_window(
@@ -36,11 +37,13 @@ func _start_tutorial(part):
 				),
 				"completed"
 			)
+			$Music.fade_in()
 			if (yield(_lust_for_demine(10), "completed")):
 				_start_tutorial(part+1)
 			else:
 				_start_tutorial(part)
 		1:
+			$Music.fade_out()
 			_prepare_field(10)
 			yield(
 				_message_window(
@@ -71,12 +74,13 @@ func _start_tutorial(part):
 				),
 				"completed"
 			)
+			$Music.fade_in()
 			if (yield(_lust_for_demine(10), "completed")):
 				_start_tutorial(part+1)
 			else:
 				_start_tutorial(part)
 		2:
-
+			$Music.fade_out()
 			_prepare_field(10)
 			yield(
 				_message_window(
@@ -94,7 +98,8 @@ func _start_tutorial(part):
 				),
 				"completed"
 			)
-			if (yield(_lust_for_demine(10), "completed")):
+			$Scream.play()
+			if (yield(_lust_for_demine(5), "completed")):
 				_start_tutorial(part+1)
 			else:
 				_start_tutorial(part)
@@ -120,28 +125,6 @@ func _message_window(messages):
 	add_child(message_window, true);
 	yield($MessageWindow, "tree_exited")
 
-func _show_fail_message():
-	yield(
-		_message_window(
-			[
-				"@Вы идиот, сержант.",
-				"@Еще раз, сержант.",
-				"@И постарайтесь не быть большим идиотом чем вы есть, сержант."
-			]
-		),
-		"completed"
-	)
-
-func _show_success_message():
-	yield(
-		_message_window(
-			[
-				"@Очень хорошо, сержант."
-			]
-		),
-		"completed"
-	)
-
 
 func _fail(event):
 	if event["name"] == "tile_demine" and not event["tile"].mine:
@@ -159,7 +142,6 @@ func _prepare_field(mines):
 func _lust_for_demine(demine_counter):
 	var _result = false
 	##################################
-	$Music.fade_in()
 	while true:
 		var event = yield($Field, "change")
 		_play_sfx(event)
@@ -170,17 +152,14 @@ func _lust_for_demine(demine_counter):
 		if $Field.demined_tiles() == demine_counter:
 			_result = true
 			break
-	$Music.fade_out()
 	##################################
 	if _result:
 		$VictorySFX.play()
 		yield($VictorySFX, "finished")
-		yield(_show_success_message(), "completed")
 	else:
 		$BG.show_explosion()
 		$FireSFX.play()
 		yield($FireSFX, "finished")
-		yield(_show_fail_message(), "completed")
 	##################################
 	return _result
 	
