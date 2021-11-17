@@ -9,6 +9,7 @@ export var avatar_1: Texture
 export var avatar_2: Texture
 export var avatar_3: Texture
 export var avatar_4: Texture
+export var avatar_5: Texture
 
 var current_message = 0
 
@@ -52,6 +53,8 @@ func show_current_message():
 			$Avatar/Picture.texture = avatar_3
 		"%":
 			$Avatar/Picture.texture = avatar_4
+		"^":
+			$Avatar/Picture.texture = avatar_5
 	############################################################################################################
 	$Text.text = messages[current_message].right(1)
 	$Text.percent_visible = 0

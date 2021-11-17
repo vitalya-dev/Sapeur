@@ -10,7 +10,7 @@ extends Control
 func _ready():
 	yield(get_tree().create_timer(0.5), "timeout")
 	$Music.play()
-	_start_tutorial(1)
+	_start_tutorial(2)
 
 func _start_tutorial(part):
 	$BG.show_default()
@@ -49,7 +49,7 @@ func _start_tutorial(part):
 						"#Соединяйте.",
 						"%ТЫ ЧЕГО МНЕ НЕ ЗВОНИШЬ СКОТИНА?",
 						"#Мам!!!",
-						"#Как ты сюда дозванилась!!!",
+						"#Как ты сюда дозвонилась!!!",
 						"#Это закрытая линия!!!",
 						"#Вроде бы...",
 						"#А впрочем не важно.",
@@ -76,6 +76,29 @@ func _start_tutorial(part):
 			else:
 				_start_tutorial(part)
 		2:
+
+			_prepare_field(10)
+			yield(
+				_message_window(
+					[
+						"$Сержант вам входящий.",
+						"#Боже, что опять. Соединяйте.",
+						"^Սատկել կապիտալիստ առնետ?",
+						"#Что? Я ничего не понял!",
+						"^Ձեռքերը շաքարավազից!!!",
+						"#????.",
+						"@Сержант у нас проблемы.",
+						"@Черный баклажан активировал таймер на минах.",
+						"@У тебя 30 секунд что бы обезвредить их всех."
+					]
+				),
+				"completed"
+			)
+			if (yield(_lust_for_demine(10), "completed")):
+				_start_tutorial(part+1)
+			else:
+				_start_tutorial(part)
+		3:
 			get_tree().quit()
 
 func _play_sfx(event):
@@ -93,6 +116,7 @@ func _message_window(messages):
 	message_window.get_node("Message").avatar_2 = preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")
 	message_window.get_node("Message").avatar_3 = preload("res://Assets/Graphics/Avatars/avatar_operator.png")
 	message_window.get_node("Message").avatar_4 = preload("res://Assets/Graphics/Avatars/avatar_mom.png")
+	message_window.get_node("Message").avatar_5 = preload("res://Assets/Graphics/Avatars/avatar_bomber.png")
 	add_child(message_window, true);
 	yield($MessageWindow, "tree_exited")
 
