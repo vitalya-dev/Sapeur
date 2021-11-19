@@ -90,7 +90,7 @@ func _start_tutorial(part):
 						"^ЬМЕЛФТЙЖЙЛБГЙС АЦОЩИ!",
 						"#Что? Я ничего не понял!",
 						"^ыЙТПЛБС!!!",
-						"#????.",
+						"#...",
 						"@Сержант у нас проблемы.",
 						"@Черный баклажан активировал таймер на минах.",
 						"@У тебя 10 секунд что бы обезвредить их всех."
@@ -100,21 +100,28 @@ func _start_tutorial(part):
 			)
 			$Scream.play()
 			$Music.fade_in()
+			$Field.get_node("Timer").play()
 			if (yield(_lust_for_demine(5), "completed")):
 				_start_tutorial(part+1)
 			else:
 				_start_tutorial(part)
 			
 		3:
+			$Music.fade_out()
+			$Field.get_node("Timer").stop()
+			yield(get_tree().create_timer(3), "timeout")
 			get_tree().quit()
 
 func _play_sfx(event):
 	if event["name"] == "tile_open":
 		$OpenSFX.stop()
 		$OpenSFX.play()
+		$Voice.talk()
 	elif event["name"] == "tile_demine":
 		$DemineSFX.stop()
 		$DemineSFX.play()
+		$Voice.talk()
+
 		
 func _message_window(messages):
 	var message_window = preload('res://Scenes/MessageWindow.tscn').instance()
@@ -133,6 +140,8 @@ func _fail(event):
 		return true
 	if event["name"] == "tile_open" and event["tile"].mine:
 		return true
+	if event["name"] == "time_over":
+		return true
 	return false
 
 func _prepare_field(mines):
@@ -147,7 +156,6 @@ func _lust_for_demine(demine_counter):
 	while true:
 		var event = yield($Field, "change")
 		_play_sfx(event)
-		$Voice.talk()
 		if _fail(event):
 			_result = false
 			break

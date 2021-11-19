@@ -14,6 +14,7 @@ var _tiles = []
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	yield(get_tree(), "idle_frame")
+	$Timer.connect("finished", self, "_on_timer_finished")
 	_create_tiles()
 
 
@@ -74,6 +75,8 @@ func _on_tile_rmb(tile):
 		tile.demine()
 		emit_signal("change", {"name": "tile_demine", "tile": tile})
 
+func _on_timer_finished():
+	emit_signal("change", {"name": "time_over"})
 
 
 func demined_tiles():
