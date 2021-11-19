@@ -14,7 +14,7 @@ export var avatar_5: Texture
 var current_message = 0
 
 
-signal change
+signal change(current_message)
 
 
 # Called when the node enters the scene tree for the first time.
@@ -38,7 +38,7 @@ func _on_button_pressed():
 		return
 	current_message += 1
 	############################################################################################################
-	emit_signal("change")
+	emit_signal("change", current_message)
 	############################################################################################################
 	show_current_message()
 
@@ -57,6 +57,8 @@ func show_current_message():
 			$Avatar/Picture.texture = avatar_5
 	############################################################################################################
 	$Text.text = messages[current_message].right(1)
+	if $Text.text == "":
+		return
 	$Text.percent_visible = 0
 	############################################################################################################
 	yield(get_tree(), "idle_frame")

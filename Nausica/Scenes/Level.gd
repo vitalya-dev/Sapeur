@@ -81,7 +81,7 @@ func _start_tutorial(part):
 				_start_tutorial(part)
 		2:
 			$Music.fade_out()
-			_prepare_field(10)
+			_prepare_field(5)
 			yield(
 				_message_window(
 					[
@@ -93,16 +93,18 @@ func _start_tutorial(part):
 						"#????.",
 						"@Сержант у нас проблемы.",
 						"@Черный баклажан активировал таймер на минах.",
-						"@У тебя 30 секунд что бы обезвредить их всех."
+						"@У тебя 10 секунд что бы обезвредить их всех."
 					]
 				),
 				"completed"
 			)
 			$Scream.play()
+			$Music.fade_in()
 			if (yield(_lust_for_demine(5), "completed")):
 				_start_tutorial(part+1)
 			else:
 				_start_tutorial(part)
+			
 		3:
 			get_tree().quit()
 
@@ -123,7 +125,7 @@ func _message_window(messages):
 	message_window.get_node("Message").avatar_4 = preload("res://Assets/Graphics/Avatars/avatar_mom.png")
 	message_window.get_node("Message").avatar_5 = preload("res://Assets/Graphics/Avatars/avatar_bomber.png")
 	add_child(message_window, true);
-	yield($MessageWindow, "tree_exited")
+	yield(message_window, "tree_exited")
 
 
 func _fail(event):

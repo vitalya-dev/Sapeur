@@ -27,6 +27,9 @@ func show_glory():
 func show_default():
 	play("default")
 
+func show_rage():
+	play("rage")
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

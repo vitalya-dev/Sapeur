@@ -20,7 +20,7 @@
 [ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleStop0000.wav" type="AudioStream" id=18]
 [ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleStop0100.wav" type="AudioStream" id=19]
 [ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleStop0300.wav" type="AudioStream" id=20]
-[ext_resource path="res://Assets/Sounds/Scream.wav" type="AudioStream" id=21]
+[ext_resource path="res://Assets/Sounds/239900__thesubber13__scream-1.ogg" type="AudioStream" id=21]
 
 [node name="Level" type="Control"]
 anchor_right = 1.0
