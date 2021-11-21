@@ -10,14 +10,14 @@ extends Control
 func _ready():
 	yield(get_tree().create_timer(0.5), "timeout")
 	$Music.play()
-	_start_tutorial(2)
+	_start_tutorial(0)
 
 func _start_tutorial(part):
 	$BG.show_default()
 	match part:
 		0:
 			$Music.fade_out()
-			_prepare_field(10)
+			_prepare_field(5)
 			yield(
 				_message_window(
 					[
@@ -38,13 +38,13 @@ func _start_tutorial(part):
 				"completed"
 			)
 			$Music.fade_in()
-			if (yield(_lust_for_demine(10), "completed")):
+			if (yield(_lust_for_demine(5), "completed")):
 				_start_tutorial(part+1)
 			else:
 				_start_tutorial(part)
 		1:
 			$Music.fade_out()
-			_prepare_field(10)
+			_prepare_field(5)
 			yield(
 				_message_window(
 					[
@@ -75,11 +75,12 @@ func _start_tutorial(part):
 				"completed"
 			)
 			$Music.fade_in()
-			if (yield(_lust_for_demine(10), "completed")):
+			if (yield(_lust_for_demine(5), "completed")):
 				_start_tutorial(part+1)
 			else:
 				_start_tutorial(part)
 		2:
+			$Field.get_node("Timer").stop()
 			$Music.fade_out()
 			_prepare_field(5)
 			yield(
@@ -93,7 +94,7 @@ func _start_tutorial(part):
 						"#...",
 						"@Сержант у нас проблемы.",
 						"@Черный баклажан активировал таймер на минах.",
-						"@У тебя 10 секунд что бы обезвредить их всех."
+						"@У тебя 10 секунд что бы обезвредить их."
 					]
 				),
 				"completed"
@@ -105,12 +106,26 @@ func _start_tutorial(part):
 				_start_tutorial(part+1)
 			else:
 				_start_tutorial(part)
-			
 		3:
 			$Music.fade_out()
 			$Field.get_node("Timer").stop()
-			yield(get_tree().create_timer(3), "timeout")
-			get_tree().quit()
+			_prepare_field(5)
+			yield(
+				_message_window(
+					[
+						"$Сержант Вам входящий.",
+						"%Надо было отдать тебя в детдом а еще лучше вообще не рожать!",
+						"$Соеденение прервано.",
+						"#...",
+						"#Господи, что за день."
+					]
+				),
+				"completed"
+			)
+			$BG.show_glory()
+			$Music.fade_out()
+			$VictorySFX.play()
+			$Field.visible = false
 
 func _play_sfx(event):
 	if event["name"] == "tile_open":
