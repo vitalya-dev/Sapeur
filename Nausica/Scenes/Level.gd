@@ -38,7 +38,7 @@ func _start_tutorial(part):
 				"completed"
 			)
 			$Music.fade_in()
-			if (yield(_lust_for_demine(5), "completed")):
+			if (yield(_solve(), "completed")):
 				_start_tutorial(part+1)
 			else:
 				_start_tutorial(part)
@@ -69,20 +69,19 @@ func _start_tutorial(part):
 						"%Сукин ты сын...",
 						"$Соеденение прервано.",
 						"#Господи...",
-						"#Ладно, продолжаем."
 					]
 				),
 				"completed"
 			)
 			$Music.fade_in()
-			if (yield(_lust_for_demine(5), "completed")):
+			if (yield(_solve(), "completed")):
 				_start_tutorial(part+1)
 			else:
 				_start_tutorial(part)
 		2:
 			$Field.get_node("Timer").stop()
 			$Music.fade_out()
-			_prepare_field(5)
+			_prepare_field(3)
 			yield(
 				_message_window(
 					[
@@ -102,14 +101,13 @@ func _start_tutorial(part):
 			$Scream.play()
 			$Music.fade_in()
 			$Field.get_node("Timer").play()
-			if (yield(_lust_for_demine(5), "completed")):
+			if (yield(_solve(), "completed")):
 				_start_tutorial(part+1)
 			else:
 				_start_tutorial(part)
 		3:
 			$Music.fade_out()
 			$Field.get_node("Timer").stop()
-			_prepare_field(5)
 			yield(
 				_message_window(
 					[
@@ -126,15 +124,23 @@ func _start_tutorial(part):
 			$Music.fade_out()
 			$VictorySFX.play()
 			$Field.visible = false
+		4:
+			_prepare_field(5)
+			$Music.fade_in()
+			if (yield(_solve(), "completed")):
+				get_tree().quit()
+			else:
+				_start_tutorial(part)
+		
 
 func _play_sfx(event):
 	if event["name"] == "tile_open":
 		$OpenSFX.stop()
 		$OpenSFX.play()
 		$Voice.talk()
-	elif event["name"] == "tile_demine":
-		$DemineSFX.stop()
-		$DemineSFX.play()
+	elif event["name"] == "tile_flag" or event["name"] == "tile_unflag":
+		$FlagSFX.stop()
+		$FlagSFX.play()
 		$Voice.talk()
 
 		
@@ -151,8 +157,6 @@ func _message_window(messages):
 
 
 func _fail(event):
-	if event["name"] == "tile_demine" and not event["tile"].mine:
-		return true
 	if event["name"] == "tile_open" and event["tile"].mine:
 		return true
 	if event["name"] == "time_over":
@@ -165,7 +169,7 @@ func _prepare_field(mines):
 	$Field.get_safty_tile().swing()
 	$OpenSFX.play()
 
-func _lust_for_demine(demine_counter):
+func _solve():
 	var _result = false
 	##################################
 	while true:
@@ -174,7 +178,7 @@ func _lust_for_demine(demine_counter):
 		if _fail(event):
 			_result = false
 			break
-		if $Field.demined_tiles() == demine_counter:
+		if $Field.solved():
 			_result = true
 			break
 	##################################

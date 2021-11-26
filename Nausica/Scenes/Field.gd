@@ -71,21 +71,25 @@ func _on_tile_lmb(tile):
 				_on_tile_lmb(neighbor)
 
 func _on_tile_rmb(tile):
-	if not tile.is_open:
-		tile.demine()
-		emit_signal("change", {"name": "tile_demine", "tile": tile})
+	if tile.is_flagged():
+		tile.unflag()
+		emit_signal("change", {"name": "tile_unflag", "tile": tile})
+	elif not tile.is_open:
+		tile.flag()
+		emit_signal("change", {"name": "tile_flag", "tile": tile})
 
 func _on_timer_finished():
 	emit_signal("change", {"name": "time_over"})
 
 
-func demined_tiles():
-	var demined = 0
+func solved():
 	for tiles_row in _tiles:
 		for tile in tiles_row:
-			if tile.is_open and tile.mine:
-				demined += 1
-	return demined
+			if tile.mine and !tile.is_flagged():
+				return false
+			if !tile.mine and !tile.is_open:
+				return false
+	return true
 
 
 func distribute_mines(mines_count):

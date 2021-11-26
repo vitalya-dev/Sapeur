@@ -28,6 +28,8 @@ const text_color = [
 	Color("808080"),
 ]
 
+const flag_texture = preload("res://Assets/Graphics/flag.png")
+
 signal lmb(tile)
 signal rmb(tile)
 
@@ -79,16 +81,16 @@ func close():
 
 
 
-func demine():
-	assert(is_open == false, "Tile: demine on open tile")
-	is_open = true
-	if self.mine:
-		$Image.set_texture(preload("res://Assets/Graphics/demine.png"))
-	else:
-		play("Open")
-		yield(self, "animation_finished")
-		$Text.set_text("X")
-		$Text.set("custom_colors/font_color", text_color[mines_around-1] if mines_around > 0 else 0)
+func flag():
+	assert(is_open == false, "Tile: flag on open tile")
+	$Image.set_texture(flag_texture)
+
+func unflag():
+	assert($Image.get_texture() == flag_texture, "Tile: unflag on nonflaged tile")
+	$Image.set_texture(null)
+
+func is_flagged():
+	return $Image.get_texture() == flag_texture
 
 func swing():
 	play("Swing")
