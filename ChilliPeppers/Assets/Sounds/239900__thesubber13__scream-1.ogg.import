@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/239900__thesubber13__scream-1.ogg-066d8fea766f438b61573919248cfb97.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/239900__thesubber13__scream-1.ogg"
+dest_files=[ "res://.import/239900__thesubber13__scream-1.ogg-066d8fea766f438b61573919248cfb97.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
