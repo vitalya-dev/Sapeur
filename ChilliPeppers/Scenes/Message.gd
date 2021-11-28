@@ -10,6 +10,7 @@ export var avatar_2: Texture
 export var avatar_3: Texture
 export var avatar_4: Texture
 export var avatar_5: Texture
+export var avatar_6: Texture
 
 var current_message = 0
 
@@ -46,15 +47,17 @@ func _on_button_pressed():
 func show_current_message():
 	match messages[current_message][0]:
 		"@":
-			$Avatar/Picture.texture = avatar_1
+			$Avatar/Picture.texture = avatar_1 #Colonel
 		"#":
-			$Avatar/Picture.texture = avatar_2
+			$Avatar/Picture.texture = avatar_2 #Sergeant
 		"$":
-			$Avatar/Picture.texture = avatar_3
+			$Avatar/Picture.texture = avatar_3 #Operator
 		"%":
-			$Avatar/Picture.texture = avatar_4
+			$Avatar/Picture.texture = avatar_4 #Mom
 		"^":
-			$Avatar/Picture.texture = avatar_5
+			$Avatar/Picture.texture = avatar_5 #Bomber
+		"&":
+			$Avatar/Picture.texture = avatar_6 #Brother
 	############################################################################################################
 	$Text.text = messages[current_message].right(1)
 	if $Text.text == "":

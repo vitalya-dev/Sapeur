@@ -6,7 +6,7 @@
 [ext_resource path="res://Assets/Sounds/SFX/victory_sfx.wav" type="AudioStream" id=4]
 [ext_resource path="res://Assets/Sounds/SFX/flag_sfx.wav" type="AudioStream" id=5]
 [ext_resource path="res://Scenes/Level.gd" type="Script" id=6]
-[ext_resource path="res://Assets/Sounds/An Unusual Battle Theme (.Box)-1159513270.mp3" type="AudioStream" id=7]
+[ext_resource path="res://Assets/Sounds/Kirby - Gourmet Race (Electro_Chiptune) remix-136724831.mp3" type="AudioStream" id=7]
 [ext_resource path="res://Scenes/Music.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/BG.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/Voice.tscn" type="PackedScene" id=10]
@@ -52,7 +52,7 @@ stream = ExtResource( 4 )
 
 [node name="Music" parent="." instance=ExtResource( 8 )]
 stream = ExtResource( 7 )
-volume_db = -20.0
+volume_db = -30.0
 
 [node name="Scream" parent="." instance=ExtResource( 8 )]
 stream = ExtResource( 21 )
