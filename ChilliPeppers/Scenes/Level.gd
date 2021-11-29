@@ -10,7 +10,7 @@ extends Control
 func _ready():
 	yield(get_tree().create_timer(0.5), "timeout")
 	$Music.play()
-	_start_tutorial(0)
+	_start_tutorial(2)
 
 func _start_tutorial(part):
 	$BG.show_default()
@@ -76,35 +76,25 @@ func _start_tutorial(part):
 			else:
 				_start_tutorial(part)
 		2:
-			$Field.get_node("Timer").stop()
 			$Music.fade_out()
-			_prepare_field(3)
+			_prepare_field(1)
 			yield(
 				_message_window(
 					[
-						"$Сержант вам входящий.",
-						"#Боже, что опять. Соединяйте.",
-						"^ЬМЕЛФТЙЖЙЛБГЙС АЦОЩИ!",
-						"#Что? Я ничего не понял!",
-						"^ыЙТПЛБС!!!",
-						"#...",
-						"@Сержант у нас проблемы.",
-						"@Черный баклажан активировал таймер на минах.",
-						"@У тебя 10 секунд что бы обезвредить их."
+						"#Фьюх. Ну и жара. Что за адская работа."
 					]
 				),
 				"completed"
 			)
-			$Scream.play()
+			$BG.set_material(preload("res://Assets/Materials/blurry.material"))
 			$Music.fade_in()
-			$Field.get_node("Timer").play()
 			if (yield(_solve(), "completed")):
 				_start_tutorial(part+1)
 			else:
 				_start_tutorial(part)
 		3:
 			$Music.fade_out()
-			$Field.get_node("Timer").stop()
+			_prepare_field(5)
 			yield(
 				_message_window(
 					[
