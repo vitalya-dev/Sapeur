@@ -1,6 +1,7 @@
 shader_type canvas_item;
 render_mode blend_mix;
 
+uniform float time = 0;
 uniform float angle_degrees ;
 uniform sampler2D noise;
 uniform int Samples = 8; //MUST BE A MULTIPLE OF 2
@@ -24,6 +25,6 @@ vec4 DirectionalBlur(in vec2 uv, in vec2 MotionVector, in sampler2D Texture)
 
 
 void fragment(){
-	vec2 blur_vector = vec2(cos(radians(angle_degrees)),sin(radians(angle_degrees)))*strength*sin(TIME);
+	vec2 blur_vector = vec2(cos(radians(angle_degrees)),sin(radians(angle_degrees)))*strength*sin(time);
 	COLOR=DirectionalBlur(UV, blur_vector*strength, TEXTURE);
 }

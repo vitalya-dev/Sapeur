@@ -5,7 +5,6 @@ extends Control
 # var a = 2
 # var b = "text"
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	yield(get_tree().create_timer(0.5), "timeout")
@@ -77,7 +76,7 @@ func _start_tutorial(part):
 				_start_tutorial(part)
 		2:
 			$Music.fade_out()
-			_prepare_field(1)
+			_prepare_field(5)
 			yield(
 				_message_window(
 					[
@@ -86,8 +85,8 @@ func _start_tutorial(part):
 				),
 				"completed"
 			)
-			$BG.set_material(preload("res://Assets/Materials/blurry.material"))
 			$Music.fade_in()
+			$BG.blurry()
 			if (yield(_solve(), "completed")):
 				_start_tutorial(part+1)
 			else:

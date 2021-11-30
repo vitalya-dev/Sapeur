@@ -4,6 +4,8 @@ extends AnimatedSprite
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
+var _blurry = false
+
 
 onready var start_position = position
 
@@ -29,6 +31,19 @@ func show_default():
 
 func show_rage():
 	play("rage")
+
+func blurry(value=true):
+	_blurry = value
+	if _blurry:
+		set_material(preload("res://Assets/Materials/blurry.material"))
+		while _blurry:
+			material.set_shader_param("time", material.get_shader_param("time") + 0.001)
+			yield(get_tree(), "idle_frame")
+	else:
+		set_material(null)
+
+
+
 
 
 
