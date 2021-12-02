@@ -9,7 +9,7 @@ extends Control
 func _ready():
 	yield(get_tree().create_timer(0.5), "timeout")
 	$Music.play()
-	_start_tutorial(2)
+	_start_tutorial(3)
 
 func _start_tutorial(part):
 	$BG.show_default()
@@ -97,19 +97,33 @@ func _start_tutorial(part):
 			yield(
 				_message_window(
 					[
-						"$Сержант Вам входящий.",
-						"%Надо было отдать тебя в детдом а еще лучше вообще не рожать!",
-						"$Соеденение прервано.",
-						"#...",
-						"#Господи, что за день."
+						"#Боже мой. что происходит?",
+						"#Оператор!!!",
+						"$Оператор.",
+						"#Свяжите меня немедленно с доктором фон Брауном.",
+						"$Соединяю.",
+						"*Фон Браун.",
+						"#Доктор, по моему меня отравили, все плывет перед глазами.",
+						"*О боже мой.",
+						"#Мама...",
+						"*Кажется я видел таракана на кухне.",
+						"#Док!!!",
+						"*Ну тише тише голубчик. Ненадо так нервничать.",
+						"*Черный баклажан распылил в воздухе Кантаридин. Он замедляет выброс адреналина в кровь.",
+						"*Без адреналина твоё сердце остановится. Ничего страшного.",
+						"#Боже мой...",
+						"*Кантаридин разлагается в организме за пару минут.",
+						"*Следите за уровнем адреналина и постарайтесь не умереть голубчик."
 					]
 				),
 				"completed"
 			)
-			$BG.show_glory()
-			$Music.fade_out()
-			$VictorySFX.play()
-			$Field.visible = false
+			$Music.fade_in()
+			$Scream.play()
+			if (yield(_solve(), "completed")):
+				_start_tutorial(part+1)
+			else:
+				_start_tutorial(part)
 		4:
 			_prepare_field(5)
 			$Music.fade_in()
@@ -139,6 +153,7 @@ func _message_window(messages):
 	message_window.get_node("Message").avatar_4 = preload("res://Assets/Graphics/Avatars/avatar_mom.png")
 	message_window.get_node("Message").avatar_5 = preload("res://Assets/Graphics/Avatars/avatar_bomber.png")
 	message_window.get_node("Message").avatar_6 = preload("res://Assets/Graphics/Avatars/avatar_brother.png")
+	message_window.get_node("Message").avatar_7 = preload("res://Assets/Graphics/Avatars/avatar_doctor.png")
 	add_child(message_window, true);
 	yield(message_window, "tree_exited")
 
