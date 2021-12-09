@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/444568__parkersenk__ticking-timer.wav-c8edfd15ee73b5cf8e2151c3d6c47d92.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/444568__parkersenk__ticking-timer.wav"
+dest_files=[ "res://.import/444568__parkersenk__ticking-timer.wav-c8edfd15ee73b5cf8e2151c3d6c47d92.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

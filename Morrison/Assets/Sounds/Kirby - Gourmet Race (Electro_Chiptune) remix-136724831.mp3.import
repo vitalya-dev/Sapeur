@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Kirby - Gourmet Race (Electro_Chiptune) remix-136724831.mp3-556d37a6635879ec78e95d8368eb11aa.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sounds/Kirby - Gourmet Race (Electro_Chiptune) remix-136724831.mp3"
+dest_files=[ "res://.import/Kirby - Gourmet Race (Electro_Chiptune) remix-136724831.mp3-556d37a6635879ec78e95d8368eb11aa.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

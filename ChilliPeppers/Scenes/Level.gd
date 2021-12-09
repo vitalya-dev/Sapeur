@@ -29,7 +29,7 @@ func _start_tutorial(part):
 				"completed"
 			)
 			$Music.fade_in()
-			if (yield(_solve(), "completed")):
+			if (yield(_solve(part), "completed")):
 				_start_tutorial(part+1)
 			else:
 				_start_tutorial(part)
@@ -70,7 +70,7 @@ func _start_tutorial(part):
 				"completed"
 			)
 			$Music.fade_in()
-			if (yield(_solve(), "completed")):
+			if (yield(_solve(part), "completed")):
 				_start_tutorial(part+1)
 			else:
 				_start_tutorial(part)
@@ -87,53 +87,53 @@ func _start_tutorial(part):
 			)
 			$Music.fade_in()
 			$BG.blurry()
-			if (yield(_solve(), "completed")):
+			if (yield(_solve(part), "completed")):
 				_start_tutorial(part+1)
 			else:
 				_start_tutorial(part)
 		3:
 			$Music.fade_out()
 			_prepare_field(5)
-			yield(
-				_message_window(
-					[
-						"#Боже мой. что происходит?",
-						"#Оператор!!!",
-						"$Оператор.",
-						"#Свяжите меня немедленно с доктором фон Брауном.",
-						"$Соединяю.",
-						"*Фон Браун.",
-						"#Доктор, по моему меня отравили, все плывет перед глазами.",
-						"*О боже мой.",
-						"#Мама...",
-						"*Кажется я видел таракана на кухне.",
-						"#Док!!!",
-						"*Ну тише тише голубчик. Ненадо так нервничать.",
-						"*Черный баклажан распылил в воздухе Кантаридин. Он замедляет выброс адреналина в кровь.",
-						"*Без адреналина твоё сердце остановится. Ничего страшного.",
-						"#Боже мой...",
-						"*Кантаридин разлагается в организме за пару минут.",
-						"*Следите за уровнем адреналина и постарайтесь не умереть голубчик."
-					]
-				),
-				"completed"
-			)
+			# yield(
+			# 	_message_window(
+			# 		[
+			# 			"#Боже мой. что происходит?",
+			# 			"#Оператор!!!",
+			# 			"$Оператор.",
+			# 			"#Свяжите меня немедленно с доктором фон Брауном.",
+			# 			"$Соединяю.",
+			# 			"*Фон Браун.",
+			# 			"#Доктор, по моему меня отравили, все плывет перед глазами.",
+			# 			"*О боже мой.",
+			# 			"#Мама...",
+			# 			"*Кажется я видел таракана на кухне.",
+			# 			"#Док!!!",
+			# 			"*Ну тише тише голубчик. Ненадо так нервничать.",
+			# 			"*Черный баклажан распылил в воздухе Кантаридин. Он замедляет выброс адреналина в кровь.",
+			# 			"*Без адреналина твоё сердце остановится. Ничего страшного.",
+			# 			"#Боже мой...",
+			# 			"*Кантаридин разлагается в организме за пару минут.",
+			# 			"*Следите за уровнем адреналина и постарайтесь не умереть голубчик."
+			# 		]
+			# 	),
+			# 	"completed"
+			# )
 			$Music.fade_in()
 			$Scream.play()
-			if (yield(_solve(), "completed")):
+			if (yield(_solve(part), "completed")):
 				_start_tutorial(part+1)
 			else:
 				_start_tutorial(part)
 		4:
 			_prepare_field(5)
 			$Music.fade_in()
-			if (yield(_solve(), "completed")):
+			if (yield(_solve(part), "completed")):
 				get_tree().quit()
 			else:
 				_start_tutorial(part)
 		
 
-func _play_sfx(event):
+func _play_sfx(event, part):
 	if event["name"] == "tile_open":
 		$OpenSFX.stop()
 		$OpenSFX.play()
@@ -142,6 +142,16 @@ func _play_sfx(event):
 		$FlagSFX.stop()
 		$FlagSFX.play()
 		$Voice.talk()
+
+func _play_gfx(event, part):
+	if (event["name"] == "tile_open" or event["name"] == "tile_flag") and part == 3:
+		var heart_beat = preload('res://Scenes/HearBeat.tscn').instance()
+		add_child(heart_beat)
+		heart_beat.rect_position = Vector2(426, 148)
+		heart_beat.rect_position -= Vector2(76, 0)
+		$Heart.frame = 0
+		$Heart.play("alive")
+
 
 		
 func _message_window(messages):
@@ -171,12 +181,13 @@ func _prepare_field(mines):
 	$Field.get_safty_tile().swing()
 	$OpenSFX.play()
 
-func _solve():
+func _solve(part):
 	var _result = false
 	##################################
 	while true:
 		var event = yield($Field, "change")
-		_play_sfx(event)
+		_play_sfx(event, part)
+		_play_gfx(event, part)
 		if _fail(event):
 			_result = false
 			break
