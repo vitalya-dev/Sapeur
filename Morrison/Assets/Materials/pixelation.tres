@@ -11,6 +11,7 @@ void fragment() {
                       delta.y * floor(pixel.y/delta.y));
  	COLOR = texture(TEXTURE, coord * TEXTURE_PIXEL_SIZE);
 }
+
 "
 
 [resource]

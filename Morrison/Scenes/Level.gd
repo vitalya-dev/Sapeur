@@ -15,13 +15,14 @@ func _start_tutorial(part):
 	$BG.show_default()
 	match part:
 		0:
-			$Music.fade_out()
-			_prepare_field(5)
 			$Music.fade_in()
-			if (yield(_solve(part), "completed")):
-				_start_tutorial(part+1)
-			else:
-				_start_tutorial(part)
+			while true:
+				_prepare_field(5)
+				if (yield(_solve(part), "completed")):
+					pass
+				else:
+					_start_tutorial(part)
+					return
 
 func _play_sfx(event, part):
 	if event["owner"] == "field" and event["name"] == "tile_open":
