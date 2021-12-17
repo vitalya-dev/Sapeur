@@ -16,7 +16,7 @@ func _start_mission(part):
 		0:
 			$BG.show_default()
 			$Music.fade_in()
-			_start_mission(1)
+			_start_mission(part+1)
 			return
 		1:
 			while $Music.is_playing():
@@ -35,6 +35,15 @@ func _start_mission(part):
 					$BG.show_default()
 					#===========================#
 					continue
+			_start_mission(part+1)
+		2:
+			$VictorySFX.play()
+			$Field.visible = false
+			$BG.show_glory()
+			while (yield(Events, "event")["owner"] != "mouse"):
+				pass
+			get_tree().quit()
+
 
 func _play_sfx(event, part):
 	if event["owner"] == "field" and event["name"] == "tile_open":
