@@ -9,20 +9,32 @@ extends Control
 func _ready():
 	yield(get_tree().create_timer(0.5), "timeout")
 	$Music.play()
-	_start_tutorial(0)
+	_start_mission(0)
 
-func _start_tutorial(part):
-	$BG.show_default()
+func _start_mission(part):
 	match part:
 		0:
+			$BG.show_default()
 			$Music.fade_in()
-			while true:
+			_start_mission(1)
+			return
+		1:
+			while $Music.is_playing():
 				_prepare_field(5)
 				if (yield(_solve(part), "completed")):
-					pass
+					$VictorySFX.play()
+					yield($VictorySFX, "finished")
+					#===========================#
+					continue
 				else:
-					_start_tutorial(part)
-					return
+					$BG.show_explosion()
+					#===========================#
+					$FireSFX.play()
+					yield($FireSFX, "finished")
+					#===========================#
+					$BG.show_default()
+					#===========================#
+					continue
 
 func _play_sfx(event, part):
 	if event["owner"] == "field" and event["name"] == "tile_open":
@@ -52,40 +64,41 @@ func _message_window(messages):
 	yield(message_window, "tree_exited")
 
 
-func _fail(event, part):
-	if event["name"] == "tile_open" and event["tile"].mine:
-		return true
-	if event["name"] == "time_over":
-		return true
-	return false
-
 func _prepare_field(mines):
 	$Field.reset()
 	$Field.distribute_mines(mines)
 	$Field.get_safty_tile().swing()
 	$OpenSFX.play()
 
+
+
+func _failed(event, part):
+	if event["name"] == "tile_open" and event["tile"].mine:
+		return true
+	else:
+		return false
+
+func _solved(event, part):
+	if event["owner"] == "music" and event["name"] == "finished":
+		return true
+	elif $Field.solved():
+		return true
+	else:
+		return false
+
 func _solve(part):
-	var _result = false
+	var _result = null
 	##################################
 	while true:
 		var event = yield(Events, "event")
 		_play_sfx(event, part)
 		_play_gfx(event, part)
-		if _fail(event, part):
+		if _failed(event, part):
 			_result = false
 			break
-		if $Field.solved():
+		if _solved(event, part):
 			_result = true
 			break
-	##################################
-	if _result:
-		$VictorySFX.play()
-		yield($VictorySFX, "finished")
-	else:
-		$BG.show_explosion()
-		$FireSFX.play()
-		yield($FireSFX, "finished")
 	##################################
 	return _result
 	

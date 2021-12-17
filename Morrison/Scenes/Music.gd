@@ -12,6 +12,13 @@ var initial_volume = 0
 func _ready():
 	initial_volume = volume_db
 
+
+func play(from_position=0.0):
+	.play(from_position)
+	yield(self, "finished")
+	Events.push({"owner": "music", "name": "finished"})
+
+
 func fade_out():
 	$Tween.remove_all()
 	$Tween.interpolate_property(self, "volume_db", volume_db, initial_volume - 20, 3)

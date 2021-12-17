@@ -11,5 +11,5 @@ dest_files=[ "res://.import/An Unusual Battle Theme (.Box)-1159513270.mp3-380efa
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

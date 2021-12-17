@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Kirby - Gourmet Race (Electro_Chiptune) remix-136724
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
