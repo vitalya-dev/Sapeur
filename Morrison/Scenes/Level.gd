@@ -37,10 +37,10 @@ func _start_mission(part):
 					continue
 			_start_mission(part+1)
 		2:
-			$VictorySFX.play()
 			$Field.visible = false
 			$BG.show_glory()
-			yield($FireSFX, "finished")
+			$VictorySFX.play()
+			yield($VictorySFX, "finished")
 			var grade = preload('res://Scenes/Grade.tscn').instance()
 			add_child(grade, true);
 			grade.position = Vector2(63, 53)
