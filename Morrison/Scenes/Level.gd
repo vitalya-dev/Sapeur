@@ -39,11 +39,15 @@ func _start_mission(part):
 		2:
 			$Field.visible = false
 			$BG.show_glory()
+			#===========================#
 			$VictorySFX.play()
 			yield($VictorySFX, "finished")
+			#===========================#
 			var grade = preload('res://Scenes/Grade.tscn').instance()
 			add_child(grade, true);
 			grade.position = Vector2(63, 53)
+			grade.stamped("A")
+			#===========================#
 			while (yield(Events, "event")["owner"] != "mouse"):
 				pass
 			get_tree().quit()
