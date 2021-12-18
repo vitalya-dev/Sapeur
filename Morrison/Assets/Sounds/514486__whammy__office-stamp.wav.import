@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/514486__whammy__office-stamp.wav-922c82f7eb221fd3799e62e0696a5fbb.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/514486__whammy__office-stamp.wav"
+dest_files=[ "res://.import/514486__whammy__office-stamp.wav-922c82f7eb221fd3799e62e0696a5fbb.sample" ]
+
+[params]
+
+force/8_bit=true
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
