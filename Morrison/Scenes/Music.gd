@@ -17,16 +17,17 @@ func play(from_position=0.0):
 	.play(from_position)
 	yield(self, "finished")
 	Events.push({"owner": "music", "name": "finished"})
+	volume_db = initial_volume
 
 
-func fade_out():
+func fade_out(fade=20):
 	$Tween.remove_all()
-	$Tween.interpolate_property(self, "volume_db", volume_db, initial_volume - 20, 3)
+	$Tween.interpolate_property(self, "volume_db", volume_db, initial_volume - fade, 3)
 	$Tween.start()
 
-func fade_in():
+func fade_in(fade=20):
 	$Tween.remove_all()
-	$Tween.interpolate_property(self, "volume_db", volume_db, initial_volume + 20, 3)
+	$Tween.interpolate_property(self, "volume_db", volume_db, initial_volume + fade, 3)
 	$Tween.start()
 
 

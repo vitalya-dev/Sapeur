@@ -12,6 +12,7 @@ export var avatar_4: Texture
 export var avatar_5: Texture
 export var avatar_6: Texture
 export var avatar_7: Texture
+export var avatar_8: Texture
 
 var current_message = 0
 
@@ -61,6 +62,8 @@ func show_current_message():
 			$Avatar/Picture.texture = avatar_6 #Brother
 		"*":
 			$Avatar/Picture.texture = avatar_7 #Doctor
+		"(":
+			$Avatar/Picture.texture = avatar_8 #Wife
 	############################################################################################################
 	$Text.text = messages[current_message].right(1)
 	if $Text.text == "":
