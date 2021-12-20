@@ -55,7 +55,7 @@ var mission_text_3 = [
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	yield(get_tree().create_timer(0.5), "timeout")
-	_mission(4)
+	_mission(0)
 
 func _mission(part):
 	match part:
@@ -86,6 +86,7 @@ func _mission(part):
 			_mission(part+1)
 			return
 		5:
+			print($Score.value)
 			yield(_play_final_screen(), "completed")
 			_stamped_mark()
 			_mission(part+1)
@@ -185,6 +186,15 @@ func _solved(event):
 	else:
 		return false
 
+func _add_score(event):
+	if event["name"] == "tile_open":
+		$Score.value += 5
+	elif event["name"] == "tile_flag":
+		$Score.value += 1
+	elif event["name"] == "tile_unflag":
+		$Score.value += 1
+
+
 func _solve():
 	var _result = null
 	##################################
@@ -192,11 +202,13 @@ func _solve():
 		var event = yield(Events, "event")
 		_play_sfx(event)
 		_play_gfx(event)
+		_add_score(event)
 		if _failed(event):
 			_result = false
 			break
-		if _solved(event):
+		elif _solved(event):
 			_result = true
+			$Score.value += 150
 			break
 	##################################
 	return _result
