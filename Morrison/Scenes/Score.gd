@@ -22,7 +22,12 @@ func value_get():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if _score != value:
+		material.set_shader_param("shake", 1.0)
+		material.set_shader_param("strength", 1.0)
 		_score += sign(value - _score)
 		if !$Sound.playing:
 			$Sound.play()
 		text = str(_score)
+	else:
+		material.set_shader_param("shake", 0.0)
+		material.set_shader_param("strength", 0.0)
