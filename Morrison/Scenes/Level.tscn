@@ -28,6 +28,7 @@
 code = "shader_type canvas_item;
 
 uniform float shake = 0.0;
+uniform vec4 font_color : hint_color;
 
 const float PI = 3.1415926535;
 
@@ -53,7 +54,7 @@ void fragment() {
 	} else {
 		rainbow = vec3(1., 0., x);
 	}
-	vec4 color = texture(TEXTURE, UV);
+	vec4 color = font_color * texture(TEXTURE, UV).a;
 	COLOR = mix(color, vec4(rainbow, color.a), strength);
 }
 
@@ -66,6 +67,7 @@ void vertex() {
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )
 shader_param/shake = 0.0
+shader_param/font_color = Color( 1, 1, 1, 1 )
 shader_param/strength = 0.0
 shader_param/speed = 0.151
 shader_param/angle = 171.628
@@ -115,4 +117,5 @@ voices = [ ExtResource( 11 ), ExtResource( 16 ), ExtResource( 15 ), ExtResource(
 
 [node name="Score" parent="." instance=ExtResource( 23 )]
 material = SubResource( 2 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 0.517647, 0.196078, 0.196078, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )

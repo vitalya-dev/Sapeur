@@ -13,7 +13,7 @@ func _ready():
 	text = str(value)
 
 func value_set(val):
-	value = val
+	value = clamp(val, 0, INF)
 
 func value_get():
 	return value

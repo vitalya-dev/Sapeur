@@ -4,6 +4,9 @@ extends Control
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
+export(int) var scores_in_sec = 50
+
+
 var mission_text_1 = [
 	"@Отличная работа сержант, но наша работа здесь пока не закончена.",
 	"@Отправляйся на територию под мусорный полигон и убедись что там все чисто.",
@@ -50,6 +53,12 @@ var mission_text_3 = [
 	"#Ну все, ну все..."
 ]
 
+var music_1 = preload("res://Assets/Sounds/Kirby - Gourmet Race (Electro_Chiptune) remix-136724831.mp3")
+var music_2 = preload("res://Assets/Sounds/ahoe.mp3")
+
+# var music_1 = preload("res://Assets/Sounds/10s.wav")
+# var music_2 = preload("res://Assets/Sounds/10s.wav")
+
 
 
 # Called when the node enters the scene tree for the first time.
@@ -61,7 +70,7 @@ func _mission(part):
 	match part:
 		0:
 			yield(_show_text(mission_text_1), "completed")
-			$Music.stream = preload("res://Assets/Sounds/Kirby - Gourmet Race (Electro_Chiptune) remix-136724831.mp3")
+			$Music.stream = music_1
 			$Music.play()
 			$Music.fade_in()
 			_mission(part+1)
@@ -72,7 +81,7 @@ func _mission(part):
 			return
 		2:
 			yield(_show_text(mission_text_2), "completed")
-			$Music.stream = preload("res://Assets/Sounds/ahoe.mp3")
+			$Music.stream = music_2
 			$Music.play()
 			$Music.fade_in(25)
 			_mission(part+1)
@@ -109,7 +118,7 @@ func _stamped_mark():
 	var grade = preload('res://Scenes/Grade.tscn').instance()
 	add_child(grade, true);
 	grade.position = Vector2(63, 53)
-	grade.stamped("A")	
+	grade.stamped(_score_to_mark($Score.value))	
 
 
 func _show_text(text):
@@ -194,6 +203,23 @@ func _add_score(event):
 	elif event["name"] == "tile_unflag":
 		$Score.value += 1
 
+func _score_to_mark(score):
+	var top_score = 0
+	top_score += music_1.get_length() * scores_in_sec
+	top_score += music_2.get_length() * scores_in_sec
+	
+	if score > top_score:
+		return "A"
+	elif score > top_score * 0.8:
+		return "B"
+	elif score > top_score * 0.6:
+		return "C"
+	elif score > top_score * 0.4:
+		return "D"
+	else:
+		return "F"
+
+
 
 func _solve():
 	var _result = null
@@ -205,6 +231,7 @@ func _solve():
 		_add_score(event)
 		if _failed(event):
 			_result = false
+			$Score.value -= 300
 			break
 		elif _solved(event):
 			_result = true
