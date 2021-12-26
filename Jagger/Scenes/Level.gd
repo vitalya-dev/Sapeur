@@ -53,8 +53,8 @@ var mission_text_3 = [
 	"#Ну все, ну все..."
 ]
 
-var music_1 = preload("res://Assets/Sounds/Kirby - Gourmet Race (Electro_Chiptune) remix-136724831.mp3")
-var music_2 = preload("res://Assets/Sounds/ahoe.mp3")
+var music_1 = preload("res://Assets/Sounds/Sound Remedy & Nitro Fun - Turbo Penguin-175179223.mp3")
+var music_2 = preload("res://Assets/Sounds/Nitro Fun - Soldiers-155864719.mp3")
 
 # var music_1 = preload("res://Assets/Sounds/10s.wav")
 # var music_2 = preload("res://Assets/Sounds/10s.wav")

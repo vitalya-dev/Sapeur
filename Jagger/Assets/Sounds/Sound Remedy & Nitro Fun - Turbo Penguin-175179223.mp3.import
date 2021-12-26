@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Sound Remedy & Nitro Fun - Turbo Penguin-175179223.mp3-823859405dd548ea1593816faf86c0c4.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sounds/Sound Remedy & Nitro Fun - Turbo Penguin-175179223.mp3"
+dest_files=[ "res://.import/Sound Remedy & Nitro Fun - Turbo Penguin-175179223.mp3-823859405dd548ea1593816faf86c0c4.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
