@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/victory_sfx.wav-0ab8a07d3d059b2ecb1057bd49f7fa2a.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/SFX/victory_sfx.wav"
+dest_files=[ "res://.import/victory_sfx.wav-0ab8a07d3d059b2ecb1057bd49f7fa2a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
