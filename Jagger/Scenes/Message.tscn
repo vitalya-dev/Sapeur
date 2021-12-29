@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Assets/Fonts/PressStart2P-vaV7.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Assets/Graphics/Avatars/avatar_background.png" type="Texture" id=2]
@@ -20,6 +20,33 @@ anti_aliasing = false
 size = 8
 extra_spacing_top = 3
 font_data = ExtResource( 1 )
+
+[sub_resource type="GDScript" id=4]
+script/source = "extends TextureButton
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	$ButtonText.set(\"custom_colors/font_color\", Color(\"#ececec\"))
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+
+
+func _on_Button_button_down():
+	$ButtonText.set(\"custom_colors/font_color\", Color(\"#c0c0c0\"))
+
+
+func _on_Button_button_up():
+	$ButtonText.set(\"custom_colors/font_color\", Color(\"#ececec\"))
+"
 
 [sub_resource type="DynamicFont" id=3]
 size = 8
@@ -80,6 +107,7 @@ shortcut_in_tooltip = false
 texture_normal = ExtResource( 4 )
 texture_pressed = ExtResource( 3 )
 expand = true
+script = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -92,7 +120,7 @@ margin_top = 1.0
 margin_right = -2.0
 margin_bottom = -2.0
 custom_fonts/font = SubResource( 3 )
-custom_colors/font_color = Color( 0.796078, 0.792157, 0.760784, 1 )
+custom_colors/font_color = Color( 0.752941, 0.752941, 0.752941, 1 )
 text = "Дальше"
 valign = 1
 __meta__ = {
@@ -102,3 +130,6 @@ __meta__ = {
 [node name="TypewriterSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
 pitch_scale = 2.0
+
+[connection signal="button_down" from="Button" to="Button" method="_on_Button_button_down"]
+[connection signal="button_up" from="Button" to="Button" method="_on_Button_button_up"]
