@@ -19,14 +19,27 @@ var mission_text_1 = [
 ]
 
 var mission_text_2 = [
-	"$Testing"
+	"$Сержант вам входящий.",
+	"#Соединяйте.",
+	"%Скотина!",
+	"#Боже что опять?",
+	"%Ты оказывается не только отвратительный сын, но еще и отвратительный брат.",
+	"#Аааа понятно куда ветер дует.",
+	"%Ты почему не дал ребенку то о чем он тебя просил, чудовище?",
+	"%Из за тебя мой птенчик грустит!",
+	"#Твоему птенчику 31 Мам!!! Пусть найдет работу, снимет квартиру, и станет нормальным взрослым человеком.",
+	"%Что бы мой ребенок превратился в такого же падонка как и его брат?",
+	"%Никогда, пока я живу!",
+	"$Соединение прервано.",
+	"#...!",
+	"#За что мне все вот это вот?"
 ]
 
 var mission_text_3 = [
 	"$Testing"
 ]
 
-var music_1 = preload("res://Assets/Sounds/Sound Remedy & Nitro Fun - Turbo Penguin-175179223.mp3")
+var music_1 = preload("res://Assets/Sounds/Sound Remedy & Nitro Fun - Turbo Penguin-175179223.ogg")
 var music_2 = preload("res://Assets/Sounds/Nitro Fun - Soldiers-155864719.mp3")
 
 # var music_1 = preload("res://Assets/Sounds/10s.wav")
@@ -45,7 +58,7 @@ func _mission(part):
 			yield(_show_text(mission_text_1), "completed")
 			$Music.stream = music_1
 			$Music.play()
-			$Music.fade_in()
+			$Music.fade_in(15)
 			_mission(part+1)
 			return
 		1:
@@ -56,7 +69,7 @@ func _mission(part):
 			yield(_show_text(mission_text_2), "completed")
 			$Music.stream = music_2
 			$Music.play()
-			$Music.fade_in(25)
+			$Music.fade_in(17)
 			_mission(part+1)
 			return
 		3:

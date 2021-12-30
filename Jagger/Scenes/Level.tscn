@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Scenes/Field.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Sounds/SFX/open_sfx.wav" type="AudioStream" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://Assets/Sounds/SFX/victory_sfx.wav" type="AudioStream" id=4]
 [ext_resource path="res://Assets/Sounds/SFX/flag_sfx.wav" type="AudioStream" id=5]
 [ext_resource path="res://Scenes/Level.gd" type="Script" id=6]
-[ext_resource path="res://Assets/Sounds/10s.wav" type="AudioStream" id=7]
 [ext_resource path="res://Scenes/Music.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/BG.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/Voice.tscn" type="PackedScene" id=10]
@@ -101,7 +100,6 @@ stream = ExtResource( 3 )
 stream = ExtResource( 4 )
 
 [node name="Music" parent="." instance=ExtResource( 8 )]
-stream = ExtResource( 7 )
 volume_db = -30.0
 
 [node name="Scream" parent="." instance=ExtResource( 8 )]
