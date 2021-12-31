@@ -36,7 +36,18 @@ var mission_text_2 = [
 ]
 
 var mission_text_3 = [
-	"$Testing"
+	"#Боже что я делаю. Оператор.",
+	"$Оператор.",
+	"#Да. Соедините меня с моим братом.",
+	"&Алло?",
+	"#Мурло! Наябедничал все мамочки да, здоровяк?",
+	"#Надеюсь ты собой доволен. Можешь взять приставку.",
+	"&Кто это?",
+	"#Ну погоди, ну приеду я.  Ну все. Ну все.",
+	"&А понял",
+	"#ЧТО ТЫ ПОНЯЛ!!! ЧТО ТЫ ПОНЯЛ!!!",
+	"$Соединение прервано",
+	"#Ну все ну все..."
 ]
 
 var music_1 = preload("res://Assets/Sounds/Sound Remedy & Nitro Fun - Turbo Penguin-175179223.mp3")
@@ -78,10 +89,16 @@ func _mission(part):
 			return
 		4:
 			yield(_show_text(mission_text_3), "completed")
+			$Music.stream = music_3
+			$Music.play()
+			$Music.fade_in()
 			_mission(part+1)
 			return
 		5:
-			print($Score.value)
+			yield(_play_while_music_play(), "completed")
+			_mission(part+1)
+			return
+		6:
 			yield(_play_final_screen(), "completed")
 			_stamped_mark()
 			_mission(part+1)
