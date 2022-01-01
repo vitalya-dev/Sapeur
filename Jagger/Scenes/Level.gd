@@ -4,7 +4,7 @@ extends Control
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-export(int) var scores_in_sec = 50
+export(int) var scores_in_sec = 40
 
 
 var mission_text_1 = [
@@ -40,18 +40,30 @@ var mission_text_3 = [
 	"$Оператор.",
 	"#Да. Соедините меня с моим братом.",
 	"&Алло?",
-	"#Мурло! Наябедничал все мамочки да, здоровяк?",
-	"#Надеюсь ты собой доволен. Можешь взять приставку.",
+	"#Мурло!",
+	"#Можешь взять приставку.",
 	"&Кто это?",
 	"#Ну погоди, ну приеду я.  Ну все. Ну все.",
-	"&А понял",
+	"&А понял.",
 	"#ЧТО ТЫ ПОНЯЛ!!! ЧТО ТЫ ПОНЯЛ!!!",
 	"$Соединение прервано",
-	"#Ну все ну все..."
+	"#Ну все. Ну все..."
+]
+
+var mission_text_4 = [
+	"@Cержант.",
+	"#Домой, товарищ полковник?",
+	"#...",
+	"#Полковник?",
+	"@Cержант.",
+	"@Зови меня...",
+	"@...Ахмед ибн Юсуф."
 ]
 
 var music_1 = preload("res://Assets/Sounds/Sound Remedy & Nitro Fun - Turbo Penguin-175179223.mp3")
 var music_2 = preload("res://Assets/Sounds/Nitro Fun - Soldiers-155864719.mp3")
+var music_3 = preload("res://Assets/Sounds/Algar - Demomans Adventure-204087543.mp3")
+
 
 # var music_1 = preload("res://Assets/Sounds/10s.wav")
 # var music_2 = preload("res://Assets/Sounds/10s.wav")
@@ -61,7 +73,7 @@ var music_2 = preload("res://Assets/Sounds/Nitro Fun - Soldiers-155864719.mp3")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	yield(get_tree().create_timer(0.5), "timeout")
-	_mission(0)
+	_mission(7)
 
 func _mission(part):
 	match part:
@@ -103,12 +115,18 @@ func _mission(part):
 			_stamped_mark()
 			_mission(part+1)
 			return
+		7:
+			yield(_show_text(mission_text_4), "completed")
+			_mission(part+1)
+			return
 		_:
+			yield(_play_final_screen(), "completed")
+			_stamped_mark()
 			yield(get_tree().create_timer(0.5), "timeout")
 			while (yield(Events, "event")["owner"] != "mouse"):
 				pass
 			get_tree().quit()
-
+		
 
 func _play_final_screen():
 	$Field.visible = false

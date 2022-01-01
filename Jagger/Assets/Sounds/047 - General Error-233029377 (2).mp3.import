@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/047 - General Error-233029377 (2).mp3-e8ba30fb2fbf896c82654637a81e063e.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sounds/047 - General Error-233029377 (2).mp3"
+dest_files=[ "res://.import/047 - General Error-233029377 (2).mp3-e8ba30fb2fbf896c82654637a81e063e.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
