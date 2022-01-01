@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/avatar_sergeant.png-ef70a7fd0c23965f42f35a8b5f0c02d1.stex"
+path="res://.import/avatar_ahmed.png-01d20e6c914e6b583b3a360b210a9f49.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Avatars/avatar_sergeant.png"
-dest_files=[ "res://.import/avatar_sergeant.png-ef70a7fd0c23965f42f35a8b5f0c02d1.stex" ]
+source_file="res://Assets/Graphics/Avatars/avatar_ahmed.png"
+dest_files=[ "res://.import/avatar_ahmed.png-01d20e6c914e6b583b3a360b210a9f49.stex" ]
 
 [params]
 

@@ -57,7 +57,7 @@ var mission_text_4 = [
 	"#Полковник?",
 	"@Cержант.",
 	"@Зови меня...",
-	"@...Ахмед ибн Юсуф."
+	")...Ахмед ибн Юсуф."
 ]
 
 var music_1 = preload("res://Assets/Sounds/Sound Remedy & Nitro Fun - Turbo Penguin-175179223.mp3")
@@ -190,6 +190,7 @@ func _message_window(messages):
 	message_window.get_node("Message").avatar_6 = preload("res://Assets/Graphics/Avatars/avatar_brother.png")
 	message_window.get_node("Message").avatar_7 = preload("res://Assets/Graphics/Avatars/avatar_doctor.png")
 	message_window.get_node("Message").avatar_8 = preload("res://Assets/Graphics/Avatars/avatar_wife.png")
+	message_window.get_node("Message").avatar_9 = preload("res://Assets/Graphics/Avatars/avatar_ahmed.png")
 	add_child(message_window, true);
 	yield(message_window, "tree_exited")
 
