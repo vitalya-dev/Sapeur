@@ -41,14 +41,11 @@ var mission_text_3 = [
 	"#Да. Соедините меня с моим братом.",
 	"&Алло?",
 	"#Мурло!",
-	"#Можешь взять приставку.",
-	"&Кто это?",
-	"#Ну погоди, ну приеду я.  Ну все. Ну все.",
-	"&А понял.",
-	"#ЧТО ТЫ ПОНЯЛ!!! ЧТО ТЫ ПОНЯЛ!!!",
-	"$Соединение прервано",
-	"#Ну все. Ну все..."
+	"#Можешь взять приставку."
 ]
+
+	
+
 
 var mission_text_4 = [
 	"@Cержант.",
@@ -73,7 +70,7 @@ var music_3 = preload("res://Assets/Sounds/Algar - Demomans Adventure-204087543.
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	yield(get_tree().create_timer(0.5), "timeout")
-	_mission(7)
+	_mission(0)
 
 func _mission(part):
 	match part:
@@ -111,11 +108,6 @@ func _mission(part):
 			_mission(part+1)
 			return
 		6:
-			yield(_play_final_screen(), "completed")
-			_stamped_mark()
-			_mission(part+1)
-			return
-		7:
 			yield(_show_text(mission_text_4), "completed")
 			_mission(part+1)
 			return
@@ -229,6 +221,7 @@ func _score_to_mark(score):
 	var top_score = 0
 	top_score += music_1.get_length() * scores_in_sec
 	top_score += music_2.get_length() * scores_in_sec
+	top_score += music_3.get_length() * scores_in_sec
 	
 	if score > top_score:
 		return "A"
