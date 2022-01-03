@@ -1,0 +1,135 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Assets/Fonts/PressStart2P-vaV7.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Assets/Graphics/Avatars/avatar_background.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Graphics/message_button_pressed.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Graphics/message_button_normal.png" type="Texture" id=4]
+[ext_resource path="res://Scenes/Message.gd" type="Script" id=5]
+[ext_resource path="res://Assets/Sounds/typewriter.wav" type="AudioStream" id=6]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.482353, 0.388235, 0.317647, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0, 0, 0, 1 )
+anti_aliasing = false
+
+[sub_resource type="DynamicFont" id=2]
+size = 8
+extra_spacing_top = 3
+font_data = ExtResource( 1 )
+
+[sub_resource type="GDScript" id=4]
+script/source = "extends TextureButton
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	$ButtonText.set(\"custom_colors/font_color\", Color(\"#ececec\"))
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+
+
+func _on_Button_button_down():
+	$ButtonText.set(\"custom_colors/font_color\", Color(\"#c0c0c0\"))
+
+
+func _on_Button_button_up():
+	$ButtonText.set(\"custom_colors/font_color\", Color(\"#ececec\"))
+"
+
+[sub_resource type="DynamicFont" id=3]
+size = 8
+font_data = ExtResource( 1 )
+
+[node name="Message" type="Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -173.0
+margin_top = -40.0
+margin_right = 147.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 320, 80 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Avatar" type="Sprite" parent="."]
+position = Vector2( 34, 41 )
+texture = ExtResource( 2 )
+
+[node name="Picture" type="Sprite" parent="Avatar"]
+
+[node name="Text" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -91.0
+margin_top = -36.0
+margin_right = 150.0
+margin_bottom = 17.0
+custom_fonts/font = SubResource( 2 )
+autowrap = true
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="TextureButton" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -92.0
+margin_top = 19.0
+margin_right = -28.0
+margin_bottom = 36.0
+mouse_default_cursor_shape = 2
+shortcut_in_tooltip = false
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 3 )
+expand = true
+script = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonText" type="Label" parent="Button"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 3.0
+margin_top = 1.0
+margin_right = -2.0
+margin_bottom = -2.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.752941, 0.752941, 0.752941, 1 )
+text = "Дальше"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TypewriterSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+pitch_scale = 2.0
+
+[connection signal="button_down" from="Button" to="Button" method="_on_Button_button_down"]
+[connection signal="button_up" from="Button" to="Button" method="_on_Button_button_up"]

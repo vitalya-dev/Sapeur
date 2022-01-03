@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/warp.wav-623d59c0c72623c61442d8494eb12dba.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/warp.wav"
+dest_files=[ "res://.import/warp.wav-623d59c0c72623c61442d8494eb12dba.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/NV_Custom_Yunbou_CustomWhistleGo0400.wav-83f98e3ff4231d85b799a32cfb681d09.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleGo0400.wav"
+dest_files=[ "res://.import/NV_Custom_Yunbou_CustomWhistleGo0400.wav-83f98e3ff4231d85b799a32cfb681d09.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

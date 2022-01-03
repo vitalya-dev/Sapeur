@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Sound Remedy & Nitro Fun - Turbo Penguin-175179223.ogg-e1f40491efd85a100525789a2679764d.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/Sound Remedy & Nitro Fun - Turbo Penguin-175179223.ogg"
+dest_files=[ "res://.import/Sound Remedy & Nitro Fun - Turbo Penguin-175179223.ogg-e1f40491efd85a100525789a2679764d.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/flag_sfx.wav-80147424eb0cb08a55b120f322a04850.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/SFX/flag_sfx.wav"
+dest_files=[ "res://.import/flag_sfx.wav-80147424eb0cb08a55b120f322a04850.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
