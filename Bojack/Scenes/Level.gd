@@ -25,16 +25,8 @@ var mission_text_3 = [
 ]
 
 
-
-
-var music_1 = preload("res://Assets/Sounds/Sound Remedy & Nitro Fun - Turbo Penguin-175179223.mp3")
-var music_2 = preload("res://Assets/Sounds/Nitro Fun - Soldiers-155864719.mp3")
-var music_3 = preload("res://Assets/Sounds/Algar - Demomans Adventure-204087543.mp3")
-
-
-# var music_1 = preload("res://Assets/Sounds/10s.wav")
-# var music_2 = preload("res://Assets/Sounds/10s.wav")
-
+var music_1 = preload("res://Assets/Sounds/Mimosa-697049527.mp3")
+var music_2 = preload("res://Assets/Sounds/The Gauntlet [POKEY Original]-714991828.mp3")
 
 
 # Called when the node enters the scene tree for the first time.
@@ -48,7 +40,7 @@ func _mission(part):
 			yield(_show_text(mission_text_1), "completed")
 			$Music.stream = music_1
 			$Music.play()
-			$Music.fade_in(15)
+			$Music.fade_in()
 			_mission(part+1)
 			return
 		1:
@@ -180,7 +172,6 @@ func _score_to_mark(score):
 	var top_score = 0
 	top_score += music_1.get_length() * scores_in_sec
 	top_score += music_2.get_length() * scores_in_sec
-	top_score += music_3.get_length() * scores_in_sec
 	
 	if score > top_score:
 		return "A"
