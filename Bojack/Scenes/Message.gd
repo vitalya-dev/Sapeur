@@ -14,6 +14,7 @@ export var avatar_6: Texture
 export var avatar_7: Texture
 export var avatar_8: Texture
 export var avatar_9: Texture
+export var avatar_10: Texture
 
 var current_message = 0
 
@@ -48,6 +49,8 @@ func _on_button_pressed():
 
 	
 func show_current_message():
+	if len(messages[current_message]) == 0:
+		return
 	match messages[current_message][0]:
 		"@":
 			$Avatar/Picture.texture = avatar_1 #Colonel
@@ -67,6 +70,8 @@ func show_current_message():
 			$Avatar/Picture.texture = avatar_8 #Wife
 		")":
 			$Avatar/Picture.texture = avatar_9 #Ahmed
+		"-":	
+			$Avatar/Picture.texture = avatar_10 #Ahmed
 	############################################################################################################
 	$Text.text = messages[current_message].right(1)
 	if $Text.text == "":

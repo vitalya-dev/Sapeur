@@ -24,6 +24,7 @@ var mission_text_3 = [
 	")Да будет жизнь простой, да будет она от чистого сердца."
 ]
 
+var mission_text_4 = ["-."]
 
 var music_1 = preload("res://Assets/Sounds/Mimosa-697049527.mp3")
 var music_2 = preload("res://Assets/Sounds/The Gauntlet [POKEY Original]-714991828.mp3")
@@ -32,7 +33,7 @@ var music_2 = preload("res://Assets/Sounds/The Gauntlet [POKEY Original]-7149918
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	yield(get_tree().create_timer(0.5), "timeout")
-	_mission(0)
+	_mission(4)
 
 func _mission(part):
 	match part:
@@ -60,6 +61,8 @@ func _mission(part):
 			return
 		4:
 			yield(_show_text(mission_text_3), "completed")
+			$ShotSFX.play()
+			yield(_show_text(mission_text_4), "completed")
 			_mission(part+1)
 			return
 		_:
@@ -134,6 +137,7 @@ func _message_window(messages):
 	message_window.get_node("Message").avatar_7 = preload("res://Assets/Graphics/Avatars/avatar_doctor.png")
 	message_window.get_node("Message").avatar_8 = preload("res://Assets/Graphics/Avatars/avatar_wife.png")
 	message_window.get_node("Message").avatar_9 = preload("res://Assets/Graphics/Avatars/avatar_ahmed.png")
+	message_window.get_node("Message").avatar_10 = preload("res://Assets/Graphics/Avatars/avatar_ahmed_dead.png")
 	add_child(message_window, true);
 	yield(message_window, "tree_exited")
 
