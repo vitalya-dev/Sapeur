@@ -24,7 +24,21 @@ var mission_text_3 = [
 	")Да будет жизнь простой, да будет она от чистого сердца."
 ]
 
-var mission_text_4 = ["-."]
+var mission_text_4 = [
+	"-."
+]
+
+var mission_text_5 = [
+	"#Оператор, соедините меня с моим братом.",
+	"$Соединяю.",
+	"&Алло?",
+	"#Забудь.",
+	"&Кто это?",
+	"#Сделка отменяется. Тронешь мою приставку, с тобой произойдет страшное. Держись от нее подальше.",
+	"#...",
+	"#Ладно увидимся когда приеду.",
+]
+
 
 var music_1 = preload("res://Assets/Sounds/Mimosa-697049527.mp3")
 var music_2 = preload("res://Assets/Sounds/The Gauntlet [POKEY Original]-714991828.mp3")
@@ -32,6 +46,7 @@ var music_2 = preload("res://Assets/Sounds/The Gauntlet [POKEY Original]-7149918
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$BG.show_default()
 	yield(get_tree().create_timer(0.5), "timeout")
 	_mission(4)
 
@@ -65,12 +80,20 @@ func _mission(part):
 			yield(_show_text(mission_text_4), "completed")
 			_mission(part+1)
 			return
-		_:
+		5:
 			yield(_play_final_screen(), "completed")
 			_stamped_mark()
 			yield(get_tree().create_timer(0.5), "timeout")
 			while (yield(Events, "event")["owner"] != "mouse"):
 				pass
+			_mission(part+1)
+			return
+		6:
+
+			yield(_show_text(mission_text_5), "completed")
+			_mission(part+1)
+			return
+		_:
 			get_tree().quit()
 		
 
@@ -89,7 +112,6 @@ func _stamped_mark():
 
 
 func _show_text(text):
-	$BG.show_default()
 	_prepare_field(0)
 	yield(_message_window(text), "completed")
 
