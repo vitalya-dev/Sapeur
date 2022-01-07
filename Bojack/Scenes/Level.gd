@@ -39,6 +39,13 @@ var mission_text_5 = [
 	"#Ладно увидимся когда приеду.",
 ]
 
+var mission_text_6 = [
+	"$Сержант вам входящий.",
+	"#Соединяйте.",
+	"%Сукин ты сын.",
+	"%Спасибо что играл в нашу игру."
+]
+
 
 var music_1 = preload("res://Assets/Sounds/Mimosa-697049527.mp3")
 var music_2 = preload("res://Assets/Sounds/The Gauntlet [POKEY Original]-714991828.mp3")
@@ -48,7 +55,7 @@ var music_2 = preload("res://Assets/Sounds/The Gauntlet [POKEY Original]-7149918
 func _ready():
 	$BG.show_default()
 	yield(get_tree().create_timer(0.5), "timeout")
-	_mission(4)
+	_mission(7)
 
 func _mission(part):
 	match part:
@@ -89,8 +96,18 @@ func _mission(part):
 			_mission(part+1)
 			return
 		6:
-
 			yield(_show_text(mission_text_5), "completed")
+			_mission(part+1)
+			return
+		7:
+			yield(_play_credits_screen(), "completed")
+			yield(get_tree().create_timer(0.5), "timeout")
+			while (yield(Events, "event")["owner"] != "mouse"):
+				pass
+			_mission(part+1)	
+			return
+		8:
+			yield(_show_text(mission_text_6), "completed")
 			_mission(part+1)
 			return
 		_:
@@ -100,6 +117,13 @@ func _mission(part):
 func _play_final_screen():
 	$Field.visible = false
 	$BG.show_glory()
+	#===========================#
+	$VictorySFX.play()
+	yield($VictorySFX, "finished")
+
+func _play_credits_screen():
+	$Field.visible = false
+	$BG.show_credits()
 	#===========================#
 	$VictorySFX.play()
 	yield($VictorySFX, "finished")

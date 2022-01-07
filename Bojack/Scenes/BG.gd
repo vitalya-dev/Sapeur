@@ -32,6 +32,9 @@ func show_default():
 func show_rage():
 	play("rage")
 
+func show_credits():
+	play("credits")
+
 func blurry(value=true):
 	_blurry = value
 	if _blurry:
