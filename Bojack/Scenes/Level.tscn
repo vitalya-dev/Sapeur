@@ -105,6 +105,7 @@ stream = ExtResource( 4 )
 
 [node name="Music" parent="." instance=ExtResource( 8 )]
 volume_db = -30.0
+pitch_scale = 2.0
 
 [node name="Scream" parent="." instance=ExtResource( 8 )]
 stream = ExtResource( 21 )

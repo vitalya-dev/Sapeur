@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Mimosa-697049527.mp3-caba92f656194dfcf7804f7f401b729
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

@@ -15,8 +15,8 @@ var mission_text_1 = [
 
 var mission_text_2 = [
 	")Мир все крепче держится за свою привычку потреблять каждый год постоянно нарастающие количества...",
-	")...каменного угля, нефти, свежего воздуха и воды, древесины, чернозема и тысячи других видов природных ресурсов...",
-	")...которые мы отторгаем от земной коры и превращаем не только в необходимые нам пищу и крышу над головой...",
+	")...каменного угля, нефти, древесины, чернозема и тысячи других видов природных ресурсов...",
+	")...которые мы превращаем не только в необходимые нам пищу и крышу над головой...",
 	")...но в гораздо большей степени используем для изготовления не нужных нам вещей."
 ]
 
@@ -55,7 +55,7 @@ var music_2 = preload("res://Assets/Sounds/The Gauntlet [POKEY Original]-7149918
 func _ready():
 	$BG.show_default()
 	yield(get_tree().create_timer(0.5), "timeout")
-	_mission(7)
+	_mission(4)
 
 func _mission(part):
 	match part:
@@ -74,7 +74,7 @@ func _mission(part):
 			yield(_show_text(mission_text_2), "completed")
 			$Music.stream = music_2
 			$Music.play()
-			$Music.fade_in(17)
+			$Music.fade_in()
 			_mission(part+1)
 			return
 		3:
@@ -96,6 +96,7 @@ func _mission(part):
 			_mission(part+1)
 			return
 		6:
+			_hide_mark()
 			yield(_show_text(mission_text_5), "completed")
 			_mission(part+1)
 			return
@@ -109,6 +110,11 @@ func _mission(part):
 		8:
 			yield(_show_text(mission_text_6), "completed")
 			_mission(part+1)
+			return
+		9:
+			while (yield(Events, "event")["owner"] != "mouse"):
+				pass
+			_mission(part+1)	
 			return
 		_:
 			get_tree().quit()
@@ -134,6 +140,8 @@ func _stamped_mark():
 	grade.position = Vector2(63, 53)
 	grade.stamped(_score_to_mark($Score.value))	
 
+func _hide_mark():
+	$Grade.queue_free()
 
 func _show_text(text):
 	_prepare_field(0)

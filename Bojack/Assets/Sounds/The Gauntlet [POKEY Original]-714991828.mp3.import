@@ -11,5 +11,5 @@ dest_files=[ "res://.import/The Gauntlet [POKEY Original]-714991828.mp3-4646ab9e
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
