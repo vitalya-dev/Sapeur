@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Mimosa-697049527.mp3-caba92f656194dfcf7804f7f401b729b.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sounds/Mimosa-697049527.mp3"
+dest_files=[ "res://.import/Mimosa-697049527.mp3-caba92f656194dfcf7804f7f401b729b.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

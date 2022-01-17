@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/266916__coolguy244e__gun-shot-bullet-hit.ogg-17a39e34600caf009fb0d8e7b8d8de51.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/266916__coolguy244e__gun-shot-bullet-hit.ogg"
+dest_files=[ "res://.import/266916__coolguy244e__gun-shot-bullet-hit.ogg-17a39e34600caf009fb0d8e7b8d8de51.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

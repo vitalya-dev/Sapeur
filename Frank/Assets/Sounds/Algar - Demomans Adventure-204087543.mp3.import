@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Algar - Demomans Adventure-204087543.mp3-c3f6176dbbf7ca5e0133bc790ebee63f.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sounds/Algar - Demomans Adventure-204087543.mp3"
+dest_files=[ "res://.import/Algar - Demomans Adventure-204087543.mp3-c3f6176dbbf7ca5e0133bc790ebee63f.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

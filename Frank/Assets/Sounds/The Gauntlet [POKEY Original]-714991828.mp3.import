@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/The Gauntlet [POKEY Original]-714991828.mp3-4646ab9e45e48eb8dd733007b5d1c9a8.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sounds/The Gauntlet [POKEY Original]-714991828.mp3"
+dest_files=[ "res://.import/The Gauntlet [POKEY Original]-714991828.mp3-4646ab9e45e48eb8dd733007b5d1c9a8.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
