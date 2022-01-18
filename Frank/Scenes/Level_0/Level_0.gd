@@ -6,18 +6,25 @@ extends Control
 # var b = "text"
 export(int) var scores_in_sec = 40
 
-
 var mission_text_1 = [
-	")Мы убиваем себя, работаем все больше, наслаждаемся жизнью все меньше.", 
-	")Все ради горы продуктов потребления которая не приносит нам радости.",
-	")Простые люди покупают вещь — и радуются. А безудержное потребление убивает эту радость."
+	"@Добро пожаловать в симуляцию, сержант.",
+	"@Пространство поделено на смежные ячейки.",
+	"@Есть ячейки в которых установлена мина.",
+	"@Твоя работа - открыть все ячейки не содержащие мину и пометить те в которых мина есть.",
+	"@Ячейка в которой нет мины покажет тебе количество соседних ячеек в которых есть мина.",
+	"@Используя эту информацию даже такой идиот как ты сможет все сделать правильно.",
+	"@Используй левую кнопку мыши что бы открыть ячейку, используй правую кнопку что бы пометить ячейку.",
+	"@Надеюсь все ясно?"
 ]
 
+
 var mission_text_2 = [
-	")Мир все крепче держится за свою привычку потреблять каждый год постоянно нарастающие количества...",
-	")...каменного угля, нефти, древесины, чернозема и тысячи других видов природных ресурсов...",
-	")...которые мы превращаем не только в необходимые нам пищу и крышу над головой...",
-	")...но в гораздо большей степени используем для изготовления не нужных нам вещей."
+	"@Мы спрятали пару мин на учебном полигоне, сержант.",
+	"@Найди их!",
+	"@Первая безопасная ячейка крутится.",
+	"@Всегда начинай с нее!",
+	"@Развлекайся, пока играет музыка.",
+	"@По результатам твоей работы тебе будет выставлена оценка"
 ]
 
 var mission_text_3 = [
@@ -55,18 +62,23 @@ var music_2 = preload("res://Assets/Sounds/The Gauntlet [POKEY Original]-7149918
 func _ready():
 	$BG.show_default()
 	yield(get_tree().create_timer(0.5), "timeout")
-	_mission(4)
+	_mission(0)
 
 func _mission(part):
 	match part:
 		0:
 			yield(_show_text(mission_text_1), "completed")
+			yield(get_tree().create_timer(0.1), "timeout")
+			_mission(part+1)
+			return
+		1:	
+			yield(_show_text(mission_text_2), "completed")
 			$Music.stream = music_1
 			$Music.play()
 			$Music.fade_in()
 			_mission(part+1)
 			return
-		1:
+		2:
 			yield(_play_while_music_play(), "completed")
 			_mission(part+1)
 			return
@@ -135,7 +147,7 @@ func _play_credits_screen():
 	yield($VictorySFX, "finished")
 
 func _stamped_mark():
-	var grade = preload('res://Scenes/Grade.tscn').instance()
+	var grade = preload('res://Scenes/Shared/Grade.tscn').instance()
 	add_child(grade, true);
 	grade.position = Vector2(63, 53)
 	grade.stamped(_score_to_mark($Score.value))	
@@ -149,7 +161,7 @@ func _show_text(text):
 
 func _play_while_music_play():
 	while $Music.is_playing():
-		_prepare_field(5)
+		_prepare_field(2)
 		if (yield(_solve(), "completed")):
 			$VictorySFX.play()
 			yield($VictorySFX, "finished")
@@ -180,7 +192,7 @@ func _play_gfx(event):
 
 		
 func _message_window(messages):
-	var message_window = preload('res://Scenes/MessageWindow.tscn').instance()
+	var message_window = preload('res://Scenes/Shared/MessageWindow.tscn').instance()
 	message_window.get_node("Message").messages = messages
 	message_window.get_node("Message").avatar_1 = preload("res://Assets/Graphics/Avatars/avatar_colonel.png")
 	message_window.get_node("Message").avatar_2 = preload("res://Assets/Graphics/Avatars/avatar_sergeant.png")

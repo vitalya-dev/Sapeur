@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Scenes/Score.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Shared/Score.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Fonts/PressStart2P-vaV7.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Assets/Sounds/118236__pierrecartoons1979__classic-slot-machine.wav" type="AudioStream" id=3]
 

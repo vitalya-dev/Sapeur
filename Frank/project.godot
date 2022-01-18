@@ -11,13 +11,13 @@ config_version=4
 [application]
 
 config/name="Frank"
-run/main_scene="res://Scenes/Level.tscn"
+run/main_scene="res://Scenes/Level_0/Level_0.tscn"
 config/icon="res://icon.png"
 config/windows_native_icon="res://icon.ico"
 
 [autoload]
 
-Events="*res://Scenes/Events.gd"
+Events="*res://Scenes/Shared/Events.gd"
 
 [display]
 

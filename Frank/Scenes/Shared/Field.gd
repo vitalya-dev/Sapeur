@@ -27,7 +27,7 @@ func _create_tiles():
 
 
 func _create_tile(x, y):
-	var tile = preload('res://Scenes/Tile.tscn').instance()
+	var tile = preload('res://Scenes/Shared/Tile.tscn').instance()
 	tile.x = x
 	tile.y = y
 	tile.position = rect_size / 2 - Vector2(int(field_size.x / 2) * 32 + 8, int(field_size.y / 2) * 8)
