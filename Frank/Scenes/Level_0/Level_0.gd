@@ -4,7 +4,7 @@ extends Control
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-export(int) var scores_in_sec = 40
+export(int) var scores_in_sec = 60
 
 var mission_text_1 = [
 	"@Добро пожаловать в симуляцию, сержант.",
@@ -27,35 +27,8 @@ var mission_text_2 = [
 	"@По результатам твоей работы тебе будет выставлена оценка"
 ]
 
-var mission_text_3 = [
-	")Да будет жизнь простой, да будет она от чистого сердца."
-]
-
-var mission_text_4 = [
-	"-."
-]
-
-var mission_text_5 = [
-	"#Оператор, соедините меня с моим братом.",
-	"$Соединяю.",
-	"&Алло?",
-	"#Забудь.",
-	"&Кто это?",
-	"#Сделка отменяется. Тронешь мою приставку, с тобой произойдет страшное. Держись от нее подальше.",
-	"#...",
-	"#Ладно увидимся когда приеду.",
-]
-
-var mission_text_6 = [
-	"$Сержант вам входящий.",
-	"#Соединяйте.",
-	"%Сукин ты сын.",
-	"%Спасибо что играл в нашу игру."
-]
-
 
 var music_1 = preload("res://Assets/Sounds/Gravity Falls Opening (8-Bit Remix)-54452827.mp3")
-var music_2 = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -81,51 +54,13 @@ func _mission(part):
 			yield(_play_while_music_play(), "completed")
 			_mission(part+1)
 			return
-		2:
-			yield(_show_text(mission_text_2), "completed")
-			$Music.stream = music_2
-			$Music.play()
-			$Music.fade_in()
-			_mission(part+1)
-			return
 		3:
-			yield(_play_while_music_play(), "completed")
-			_mission(part+1)
-			return
-		4:
-			yield(_show_text(mission_text_3), "completed")
-			$ShotSFX.play()
-			yield(_show_text(mission_text_4), "completed")
-			_mission(part+1)
-			return
-		5:
 			yield(_play_final_screen(), "completed")
 			_stamped_mark()
 			yield(get_tree().create_timer(0.5), "timeout")
 			while (yield(Events, "event")["owner"] != "mouse"):
 				pass
 			_mission(part+1)
-			return
-		6:
-			_hide_mark()
-			yield(_show_text(mission_text_5), "completed")
-			_mission(part+1)
-			return
-		7:
-			yield(_play_credits_screen(), "completed")
-			yield(get_tree().create_timer(0.5), "timeout")
-			while (yield(Events, "event")["owner"] != "mouse"):
-				pass
-			_mission(part+1)	
-			return
-		8:
-			yield(_show_text(mission_text_6), "completed")
-			_mission(part+1)
-			return
-		9:
-			while (yield(Events, "event")["owner"] != "mouse"):
-				pass
-			_mission(part+1)	
 			return
 		_:
 			get_tree().quit()
@@ -240,7 +175,6 @@ func _add_score(event):
 func _score_to_mark(score):
 	var top_score = 0
 	top_score += music_1.get_length() * scores_in_sec
-	top_score += music_2.get_length() * scores_in_sec
 	
 	if score > top_score:
 		return "A"
