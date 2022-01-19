@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Gravity Falls Opening (8-Bit Remix)-54452827.mp3-2e7cc6c8c400c8adff0ee9cdd93c1d14.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sounds/Gravity Falls Opening (8-Bit Remix)-54452827.mp3"
+dest_files=[ "res://.import/Gravity Falls Opening (8-Bit Remix)-54452827.mp3-2e7cc6c8c400c8adff0ee9cdd93c1d14.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

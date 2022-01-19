@@ -54,9 +54,8 @@ var mission_text_6 = [
 ]
 
 
-var music_1 = preload("res://Assets/Sounds/Mimosa-697049527.mp3")
-var music_2 = preload("res://Assets/Sounds/The Gauntlet [POKEY Original]-714991828.mp3")
-
+var music_1 = preload("res://Assets/Sounds/Gravity Falls Opening (8-Bit Remix)-54452827.mp3")
+var music_2 = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
