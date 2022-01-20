@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="Frank"
-run/main_scene="res://Scenes/Level_0/Level_0.tscn"
+run/main_scene="res://Scenes/Level_1/Level_1.tscn"
 config/icon="res://icon.png"
 config/windows_native_icon="res://icon.ico"
 
