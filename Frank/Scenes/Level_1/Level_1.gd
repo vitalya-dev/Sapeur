@@ -4,19 +4,22 @@ extends Control
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-export(int) var scores_in_sec = 60
+export(int) var scores_in_sec = 40
 
 var mission_text_1 = [
-	"@Добро пожаловать в симуляцию, сержант.",
-	"@Пространство поделено на смежные ячейки.",
-	"@Есть ячейки в которых установлена мина.",
-	"@Твоя работа - открыть все ячейки не содержащие мину и пометить те в которых мина есть.",
-	"@Ячейка в которой нет мины покажет тебе количество соседних ячеек в которых есть мина.",
-	"@Используя эту информацию даже такой идиот как ты сможет все сделать правильно.",
-	"@Используй левую кнопку мыши что бы открыть ячейку, используй правую кнопку что бы пометить ячейку.",
-	"@Надеюсь все ясно?"
+	"@Доброе утро Сержант.",
+	"@В Алжир съежаются денежные мешки.",
+	"@Их задача - закопать радиоактивный мусор в пустыне.",
+	"@Президенту пообещали приз если он пойдет на это.",
+	"@Терористам из группировки <<черный баклажан>> эта преспектива крайне ненравится.",
+	"@Они заминировали часть Сахары на подьезде к Алжиру.",
+	"@Задача нашей ЧВК - не один толстосум не должен превратиться в мокрое место на песочке.",
+	"@Вопросы?",
+	"#Никак нет.",
+	"#Разрешите выполнять задание?",
+	"@Разрешаю.",
+	"@Желаю удачи."
 ]
-
 
 var mission_text_2 = [
 	"@Мы спрятали пару мин на учебном полигоне, сержант.",
@@ -28,11 +31,11 @@ var mission_text_2 = [
 ]
 
 
-var music_1 = preload("res://Assets/Sounds/Gravity Falls Opening (8-Bit Remix)-54452827.mp3")
+var music_1 = preload("res://Assets/Sounds/ahoe.mp3")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$BG.show_default()
+	$BG.show_default(1)
 	_mission(0)
 
 func _mission(part):
@@ -41,20 +44,16 @@ func _mission(part):
 		0:
 			yield(get_tree().create_timer(0.5), "timeout")
 			yield(_show_text(mission_text_1), "completed")
-			_mission(part+1)
-			return
-		1:	
-			yield(_show_text(mission_text_2), "completed")
-			$Music.stream = music_1
+			$Music.stream = music_1			
 			$Music.play()
 			$Music.fade_in()
 			_mission(part+1)
 			return
-		2:
+		1:
 			yield(_play_while_music_play(), "completed")
 			_mission(part+1)
 			return
-		3:
+		2:
 			yield(_play_final_screen(), "completed")
 			_stamped_mark()
 			yield(get_tree().create_timer(0.5), "timeout")
@@ -95,7 +94,7 @@ func _show_text(text):
 
 func _play_while_music_play():
 	while $Music.is_playing():
-		_prepare_field(2)
+		_prepare_field(5)
 		if (yield(_solve(), "completed")):
 			$VictorySFX.play()
 			yield($VictorySFX, "finished")

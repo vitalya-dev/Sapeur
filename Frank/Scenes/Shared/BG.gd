@@ -26,8 +26,9 @@ func show_explosion():
 func show_glory():
 	play("glory")
 
-func show_default():
+func show_default(id):
 	play("default")
+	frame = id
 
 func show_rage():
 	play("rage")
