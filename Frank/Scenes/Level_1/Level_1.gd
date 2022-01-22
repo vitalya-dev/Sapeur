@@ -22,21 +22,41 @@ var mission_text_1 = [
 ]
 
 var mission_text_2 = [
-	"@Мы спрятали пару мин на учебном полигоне, сержант.",
-	"@Найди их!",
-	"@Первая безопасная ячейка крутится.",
-	"@Всегда начинай с нее!",
-	"@Развлекайся, пока играет музыка.",
-	"@По результатам твоей работы тебе будет выставлена оценка"
+	"$Сержант вам входящий.",
+	"#Соединяйте.",
+	"%ТЫ ЧЕГО МНЕ НЕ ЗВОНИШЬ СКОТИНА?",
+	"#Мам!!!",
+	"#Я на работе!!!",
+	"%Ага на работе он. Твой брат все рассказал на какой ты работе.",
+	"%Загораешь под солнцем и даже свою мать не пригласил.",
+	"%Ты ведь знаешь как мне нужен витамин D.",
+	"#Мам. Я не на курорте. Тут мины кругом. Очень опасно.",
+	"%Очень опасно было тебя рожать. Ты меня чуть не убил при родах. Безсердечное ты животное.",
+	"%Из за тебя у меня было внутрнее кравотечение.",
+	"%А сейчас сердце кровью обливается от того что бывают такие неблагодарные дети.",
+	"%Сукин ты сын...",
+	"$Соеденение прервано.",
+	"#Господи...",
+]
+
+var mission_text_3= [
+	"$Сержант Вам входящий.",
+	"%Надо было отдать тебя в детдом а еще лучше вообще не рожать!",
+	"$Соеденение прервано.",
+	"#...",
+	"#Что за день."
 ]
 
 
 var music_1 = preload("res://Assets/Sounds/ahoe.mp3")
+var music_2 = preload("res://Assets/Sounds/Mimosa-697049527.mp3")
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$BG.show_default(1)
-	_mission(0)
+	_mission(4)
 
 func _mission(part):
 	yield(Engine.get_main_loop(), "idle_frame")
@@ -54,6 +74,21 @@ func _mission(part):
 			_mission(part+1)
 			return
 		2:
+			yield(_show_text(mission_text_2), "completed")
+			$Music.stream = music_2
+			$Music.play()
+			$Music.fade_in()
+			_mission(part+1)
+			return
+		3:
+			yield(_play_while_music_play(), "completed")
+			_mission(part+1)
+			return
+		4:
+			yield(_show_text(mission_text_3), "completed")
+			_mission(part+1)
+			return
+		5:
 			yield(_play_final_screen(), "completed")
 			_stamped_mark()
 			yield(get_tree().create_timer(0.5), "timeout")
@@ -106,7 +141,7 @@ func _play_while_music_play():
 			$FireSFX.play()
 			yield($FireSFX, "finished")
 			#===========================#
-			$BG.show_default()
+			$BG.show_default(1)
 			#===========================#
 			continue	
 
