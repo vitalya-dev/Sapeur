@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/8 Bit Adventure.mp3-f82b641b8fdc7e1eaabbd00760218c4f.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sounds/8 Bit Adventure.mp3"
+dest_files=[ "res://.import/8 Bit Adventure.mp3-f82b641b8fdc7e1eaabbd00760218c4f.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

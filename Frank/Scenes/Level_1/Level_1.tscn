@@ -84,6 +84,7 @@ __meta__ = {
 
 [node name="BG" parent="." instance=ExtResource( 9 )]
 animation = "default"
+frame = 1
 
 [node name="Field" parent="." instance=ExtResource( 1 )]
 rect_pivot_offset = Vector2( -344, 72 )

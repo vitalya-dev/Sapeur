@@ -209,6 +209,7 @@ func _add_score(event):
 func _score_to_mark(score):
 	var top_score = 0
 	top_score += music_1.get_length() * scores_in_sec
+	top_score += music_2.get_length() * scores_in_sec
 	
 	if score > top_score:
 		return "A"

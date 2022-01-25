@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Assets/Graphics/background_0.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Shared/BG.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Assets/Graphics/glory.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Graphics/credits.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Graphics/background_1.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Graphics/background_2.png" type="Texture" id=8]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 3 )
@@ -26,20 +27,20 @@ region = Rect2( 426, 240, 426, 240 )
 
 [sub_resource type="SpriteFrames" id=5]
 animations = [ {
-"frames": [ ExtResource( 1 ), ExtResource( 7 ) ],
+"frames": [ ExtResource( 1 ), ExtResource( 7 ), ExtResource( 8 ) ],
 "loop": false,
 "name": "default",
 "speed": 0.0
-}, {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
-"loop": false,
-"name": "explosion",
-"speed": 30.0
 }, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
 "name": "rage",
 "speed": 5.0
+}, {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"loop": false,
+"name": "explosion",
+"speed": 30.0
 }, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
