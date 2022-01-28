@@ -1,0 +1,124 @@
+[gd_scene load_steps=26 format=2]
+
+[ext_resource path="res://Scenes/Shared/Field.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Sounds/SFX/open_sfx.wav" type="AudioStream" id=2]
+[ext_resource path="res://Assets/Sounds/SFX/fire_sfx.wav" type="AudioStream" id=3]
+[ext_resource path="res://Assets/Sounds/SFX/victory_sfx.wav" type="AudioStream" id=4]
+[ext_resource path="res://Assets/Sounds/SFX/flag_sfx.wav" type="AudioStream" id=5]
+[ext_resource path="res://Scenes/Level_3/Level_3.gd" type="Script" id=6]
+[ext_resource path="res://Assets/Sounds/266916__coolguy244e__gun-shot-bullet-hit.ogg" type="AudioStream" id=7]
+[ext_resource path="res://Scenes/Shared/Music.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/Shared/BG.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/Shared/Voice.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleGo0000.wav" type="AudioStream" id=11]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleGo0400.wav" type="AudioStream" id=12]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleStop0400.wav" type="AudioStream" id=13]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleStop0200.wav" type="AudioStream" id=14]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleGo0200.wav" type="AudioStream" id=15]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleGo0100.wav" type="AudioStream" id=16]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleGo0300.wav" type="AudioStream" id=17]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleStop0000.wav" type="AudioStream" id=18]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleStop0100.wav" type="AudioStream" id=19]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleStop0300.wav" type="AudioStream" id=20]
+[ext_resource path="res://Assets/Sounds/239900__thesubber13__scream-1.ogg" type="AudioStream" id=21]
+[ext_resource path="res://Scenes/Shared/Mouse.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Scenes/Shared/Score.tscn" type="PackedScene" id=23]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float shake = 0.0;
+uniform vec4 font_color : hint_color;
+
+const float PI = 3.1415926535;
+
+uniform float strength: hint_range(0., 1.) = 0.5;
+uniform float speed: hint_range(0., 10.) = 0.5;
+uniform float angle: hint_range(0., 360.) = 0.;
+
+void fragment() {
+	float hue = UV.x * cos(radians(angle)) - UV.y * sin(radians(angle));
+	hue = fract(hue + fract(TIME  * speed));
+	float x = 1. - abs(mod(hue / (1./ 6.), 2.) - 1.);
+	vec3 rainbow;
+	if(hue < 1./6.){
+		rainbow = vec3(1., x, 0.);
+	} else if (hue < 1./3.) {
+		rainbow = vec3(x, 1., 0);
+	} else if (hue < 0.5) {
+		rainbow = vec3(0, 1., x);
+	} else if (hue < 2./3.) {
+		rainbow = vec3(0., x, 1.);
+	} else if (hue < 5./6.) {
+		rainbow = vec3(x, 0., 1.);
+	} else {
+		rainbow = vec3(1., 0., x);
+	}
+	vec4 color = font_color * texture(TEXTURE, UV).a;
+	COLOR = mix(color, vec4(rainbow, color.a), strength);
+}
+
+void vertex() {
+    // Animate Sprite moving in big circle around its location
+    VERTEX += vec2(0, sin(40.0*TIME) * shake);
+}
+"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/shake = 0.0
+shader_param/font_color = Color( 1, 1, 1, 1 )
+shader_param/strength = 0.0
+shader_param/speed = 0.151
+shader_param/angle = 171.628
+
+[node name="Level" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_edit_vertical_guides_": [ 424.0 ]
+}
+
+[node name="BG" parent="." instance=ExtResource( 9 )]
+animation = "default"
+frame = 3
+
+[node name="Field" parent="." instance=ExtResource( 1 )]
+rect_pivot_offset = Vector2( -344, 72 )
+
+[node name="OpenSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+
+[node name="FlagSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="FireSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[node name="ShotSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[node name="VictorySFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="Music" parent="." instance=ExtResource( 8 )]
+volume_db = -30.0
+
+[node name="Scream" parent="." instance=ExtResource( 8 )]
+stream = ExtResource( 21 )
+volume_db = -10.0
+script = null
+
+[node name="Voice" parent="." instance=ExtResource( 10 )]
+volume_db = 10.0
+voices = [ ExtResource( 11 ), ExtResource( 16 ), ExtResource( 15 ), ExtResource( 17 ), ExtResource( 12 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 14 ), ExtResource( 20 ), ExtResource( 13 ) ]
+
+[node name="Mouse" parent="." instance=ExtResource( 22 )]
+
+[node name="Score" parent="." instance=ExtResource( 23 )]
+material = SubResource( 2 )
+custom_colors/font_color = Color( 0.517647, 0.196078, 0.196078, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )

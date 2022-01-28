@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Bounty Battle - Animated Trailer theme-892202470.mp3-b2e4436ac1d8809fc22e721ee5c24fe6.mp3str"
+
+[deps]
+
+source_file="res://Assets/Graphics/Bounty Battle - Animated Trailer theme-892202470.mp3"
+dest_files=[ "res://.import/Bounty Battle - Animated Trailer theme-892202470.mp3-b2e4436ac1d8809fc22e721ee5c24fe6.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
