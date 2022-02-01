@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/MarioBros Deluxe Staff Roll (Remix) by supertimmydrip-1206270208.mp3-3f7c7dc3b8df10e7822d998f0ecee9db.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sounds/MarioBros Deluxe Staff Roll (Remix) by supertimmydrip-1206270208.mp3"
+dest_files=[ "res://.import/MarioBros Deluxe Staff Roll (Remix) by supertimmydrip-1206270208.mp3-3f7c7dc3b8df10e7822d998f0ecee9db.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

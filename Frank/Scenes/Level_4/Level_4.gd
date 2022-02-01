@@ -33,12 +33,13 @@ var mission_text_5 = [
 	"#Вы что нибудь поняли?",
 	"$Нет сержант.",
 	"#И я вот нет.",
-	"#Наверное то что произошло было важно. Ну что б я сдох если хоть что нибудь понял.",
+	"#Наверное то что произошло было важно.",
+	"#Ну что б я сдох если хоть что нибудь понял."
 ]
 
 
-var music_1 = preload("res://Assets/Sounds/The Gauntlet [POKEY Original]-714991828.mp3")
-var music_2 = preload("res://Assets/Sounds/Bounty Battle - Animated Trailer theme-892202470.mp3")
+var music_1 = preload("res://Assets/Sounds/Daft Punk - Get Lucky (Dualtrax Chiptune Cover)-93087327.mp3")
+var music_2 = preload("res://Assets/Sounds/Chiptune-148861894.mp3")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

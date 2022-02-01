@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Daft Punk - Get Lucky (Dualtrax Chiptune Cover)-93087327.mp3-01bc059410b7a09115b8468999c63b79.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sounds/Daft Punk - Get Lucky (Dualtrax Chiptune Cover)-93087327.mp3"
+dest_files=[ "res://.import/Daft Punk - Get Lucky (Dualtrax Chiptune Cover)-93087327.mp3-01bc059410b7a09115b8468999c63b79.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
