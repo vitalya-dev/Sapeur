@@ -30,9 +30,11 @@ var mission_text_2 = [
 
 var music_1 = preload("res://Assets/Sounds/Gravity Falls Opening (8-Bit Remix)-54452827.mp3")
 
+signal complete()
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$BG.show_default()
+	$BG.show_default(0)
 	yield(get_tree().create_timer(0.5), "timeout")
 	_mission(0)
 
@@ -63,7 +65,8 @@ func _mission(part):
 			_mission(part+1)
 			return
 		_:
-			get_tree().quit()
+			emit_signal("complete") 
+			return
 		
 
 func _play_final_screen():
@@ -107,7 +110,7 @@ func _play_while_music_play():
 			$FireSFX.play()
 			yield($FireSFX, "finished")
 			#===========================#
-			$BG.show_default()
+			$BG.show_default(0)
 			#===========================#
 			continue	
 
