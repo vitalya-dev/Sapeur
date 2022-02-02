@@ -44,7 +44,7 @@ var music_2 = preload("res://Assets/Sounds/Chiptune-148861894.mp3")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$BG.show_default(4)
-	_mission(0)
+	_mission(4)
 
 func _mission(part):
 	yield(Engine.get_main_loop(), "idle_frame")
@@ -74,6 +74,8 @@ func _mission(part):
 			return
 		4:
 			yield(_show_text(mission_text_3), "completed")
+			$ShotSFX.play()
+			yield(_show_text(mission_text_4), "completed")
 			_mission(part+1)
 			return
 		5:
@@ -82,6 +84,10 @@ func _mission(part):
 			yield(get_tree().create_timer(0.5), "timeout")
 			while (yield(Events, "event")["owner"] != "mouse"):
 				pass
+			_mission(part+1)
+			return
+		6:
+			yield(_show_text(mission_text_5), "completed")
 			_mission(part+1)
 			return
 		_:
