@@ -28,6 +28,12 @@ var mission_text_2 = [
 ]
 
 
+var mission_text_3 = [
+	"@Очень хорошо. Собирайте вещи. Ваш вылет через пару часов.",
+	"#Что? Куда?"
+]
+
+
 var music_1 = preload("res://Assets/Sounds/Gravity Falls Opening (8-Bit Remix)-54452827.mp3")
 
 signal complete()
@@ -56,12 +62,17 @@ func _mission(part):
 			yield(_play_while_music_play(), "completed")
 			_mission(part+1)
 			return
+
 		3:
 			yield(_play_final_screen(), "completed")
 			_stamped_mark()
 			yield(get_tree().create_timer(0.5), "timeout")
 			while (yield(Events, "event")["owner"] != "mouse"):
 				pass
+			_mission(part+1)
+			return
+		4:
+			yield(_show_text(mission_text_3), "completed")
 			_mission(part+1)
 			return
 		_:

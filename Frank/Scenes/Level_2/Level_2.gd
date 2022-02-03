@@ -45,6 +45,8 @@ var mission_text_3= [
 var music_1 = preload("res://Assets/Sounds/8 Bit Adventure.mp3")
 var music_2 = preload("res://Assets/Sounds/Algar - Demomans Adventure-204087543.mp3")
 
+signal complete()
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$BG.show_default(2)
@@ -89,7 +91,8 @@ func _mission(part):
 			_mission(part+1)
 			return
 		_:
-			get_tree().quit()
+			emit_signal("complete")
+			return 
 		
 
 func _play_final_screen():

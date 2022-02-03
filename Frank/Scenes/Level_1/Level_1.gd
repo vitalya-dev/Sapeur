@@ -7,13 +7,14 @@ extends Control
 export(int) var scores_in_sec = 40
 
 var mission_text_1 = [
-	"@Доброе утро Сержант.",
-	"@В Алжир съежаются денежные мешки.",
+	"@Добро пожаловать в Алжир сержант.",
+	"#О Боже.",
+	"@Скоро сюда приедут денежные мешки.",
 	"@Их задача - закопать радиоактивный мусор в пустыне.",
 	"@Президенту пообещали приз если он пойдет на это.",
-	"@Терористам из группировки <<черный баклажан>> эта преспектива крайне ненравится.",
+	"@Местным эта преспектива крайне ненравится.",
 	"@Они заминировали часть Сахары на подьезде к Алжиру.",
-	"@Задача нашей ЧВК - не один толстосум не должен превратиться в мокрое место на песочке.",
+	"@Наша задача - разминировать то что они заминировали.",
 	"@Вопросы?",
 	"#Никак нет.",
 	"#Разрешите выполнять задание?",
@@ -51,12 +52,12 @@ var mission_text_3= [
 var music_1 = preload("res://Assets/Sounds/ahoe.mp3")
 var music_2 = preload("res://Assets/Sounds/Mimosa-697049527.mp3")
 
-
+signal complete()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$BG.show_default(1)
-	_mission(4)
+	_mission(0)
 
 func _mission(part):
 	yield(Engine.get_main_loop(), "idle_frame")
@@ -97,7 +98,8 @@ func _mission(part):
 			_mission(part+1)
 			return
 		_:
-			get_tree().quit()
+			emit_signal("complete")
+			return 
 		
 
 func _play_final_screen():

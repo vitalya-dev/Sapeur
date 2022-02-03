@@ -41,6 +41,9 @@ var mission_text_5 = [
 var music_1 = preload("res://Assets/Sounds/Daft Punk - Get Lucky (Dualtrax Chiptune Cover)-93087327.mp3")
 var music_2 = preload("res://Assets/Sounds/Chiptune-148861894.mp3")
 
+
+signal complete()
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$BG.show_default(4)
@@ -91,7 +94,8 @@ func _mission(part):
 			_mission(part+1)
 			return
 		_:
-			get_tree().quit()
+			emit_signal("complete")
+			return 
 		
 
 func _play_final_screen():

@@ -46,6 +46,8 @@ var mission_text_4 = [
 var music_1 = preload("res://Assets/Sounds/The Gauntlet [POKEY Original]-714991828.mp3")
 var music_2 = preload("res://Assets/Sounds/Bounty Battle - Animated Trailer theme-892202470.mp3")
 
+signal complete()
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$BG.show_default(3)
@@ -90,7 +92,8 @@ func _mission(part):
 			_mission(part+1)
 			return
 		_:
-			get_tree().quit()
+			emit_signal("complete")
+			return 
 		
 
 func _play_final_screen():
