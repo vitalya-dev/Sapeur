@@ -221,7 +221,3 @@ func _solve():
 			break
 	##################################
 	return _result
-	
-func _input(ev):
-	if ev.is_action_pressed("ui_cancel"):
-		get_tree().quit()

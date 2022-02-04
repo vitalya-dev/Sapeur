@@ -39,11 +39,6 @@ animations = [ {
 "name": "rage",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
-"loop": false,
-"name": "explosion",
-"speed": 30.0
-}, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
 "name": "credits",
@@ -53,6 +48,11 @@ animations = [ {
 "loop": false,
 "name": "glory",
 "speed": 5.0
+}, {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"loop": false,
+"name": "explosion",
+"speed": 30.0
 } ]
 
 [node name="BG" type="AnimatedSprite"]

@@ -21,6 +21,23 @@ func _load_current_level():
 	level.connect("complete", self, "_on_level_complete")
 	add_child(level, true);
 
+func _input(ev):
+	print("Input")
+	if ev.is_action_pressed("ui_cancel"):
+		_show_menu(get_node_or_null("Menu"))
+
+
+func _show_menu(current_menu):
+	if current_menu:
+		get_tree().paused = false	
+		current_menu.queue_free()
+	else:
+		get_tree().paused = true	
+		var menu = preload('res://Scenes/Menu.tscn').instance()
+		add_child(menu, true);
+		yield(menu, "tree_exited")
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
