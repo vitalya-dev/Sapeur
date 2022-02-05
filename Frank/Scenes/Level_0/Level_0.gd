@@ -48,7 +48,7 @@ func _mission(part):
 	match part:
 		0:
 			yield(_show_text(mission_text_1), "completed")
-			yield(get_tree().create_timer(0.1), "timeout")
+			if get_owner() != null: yield(get_tree().create_timer(0.1), "timeout")
 			_mission(part+1)
 			return
 		1:	
@@ -66,7 +66,7 @@ func _mission(part):
 		3:
 			yield(_play_final_screen(), "completed")
 			_stamped_mark()
-			yield(get_tree().create_timer(0.5), "timeout")
+			if get_owner() != null: yield(get_tree().create_timer(0.5), "timeout")
 			while (yield(Events, "event")["owner"] != "mouse"):
 				pass
 			_mission(part+1)
@@ -79,6 +79,7 @@ func _mission(part):
 			emit_signal("complete") 
 			return
 		
+
 
 func _play_final_screen():
 	$Field.visible = false
