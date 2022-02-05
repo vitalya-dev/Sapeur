@@ -1,6 +1,8 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Assets/Graphics/menu.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Fonts/PressStart2P-vaV7.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Scenes/Menu.gd" type="Script" id=3]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
@@ -38,16 +40,60 @@ animations = [ {
 "speed": 5.0
 } ]
 
+[sub_resource type="StyleBoxFlat" id=11]
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="DynamicFont" id=10]
+font_data = ExtResource( 2 )
+
 [node name="Menu" type="Control"]
 pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Background" type="AnimatedSprite" parent="."]
 frames = SubResource( 8 )
-frame = 3
+frame = 4
 playing = true
 centered = false
+
+[node name="Continue" type="Button" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -89.5
+margin_top = 11.9276
+margin_right = 89.5
+margin_bottom = 40.9276
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 10 )
+text = "Продолжить"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="Button" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -89.5
+margin_top = 56.5326
+margin_right = 89.5
+margin_bottom = 85.5326
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 10 )
+text = "Выход"
+__meta__ = {
+"_edit_use_anchors_": false
+}

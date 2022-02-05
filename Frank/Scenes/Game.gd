@@ -29,13 +29,17 @@ func _input(ev):
 
 func _show_menu(current_menu):
 	if current_menu:
-		get_tree().paused = false	
-		current_menu.queue_free()
+		current_menu.emit_signal("button_pressed", "continue")
 	else:
 		get_tree().paused = true	
 		var menu = preload('res://Scenes/Menu.tscn').instance()
 		add_child(menu, true);
-		yield(menu, "tree_exited")
+		var button_name = yield(menu, "button_pressed")
+		if button_name == "continue":
+			get_tree().paused = false	
+			menu.queue_free()
+		if button_name == "exit":
+			get_tree().quit()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
