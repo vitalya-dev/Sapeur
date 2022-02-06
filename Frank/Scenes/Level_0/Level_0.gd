@@ -45,10 +45,11 @@ func _ready():
 	_mission(0)
 
 func _mission(part):
+	if is_queued_for_deletion():
+		return
 	match part:
 		0:
 			yield(_show_text(mission_text_1), "completed")
-			if get_owner() != null: yield(get_tree().create_timer(0.1), "timeout")
 			_mission(part+1)
 			return
 		1:	
@@ -66,7 +67,6 @@ func _mission(part):
 		3:
 			yield(_play_final_screen(), "completed")
 			_stamped_mark()
-			if get_owner() != null: yield(get_tree().create_timer(0.5), "timeout")
 			while (yield(Events, "event")["owner"] != "mouse"):
 				pass
 			_mission(part+1)
@@ -135,9 +135,6 @@ func _play_sfx(event):
 		$FlagSFX.stop()
 		$FlagSFX.play()
 		$Voice.talk()
-
-func _play_gfx(event):
-	pass
 
 		
 func _message_window(messages):
@@ -210,7 +207,6 @@ func _solve():
 	while true:
 		var event = yield(Events, "event")
 		_play_sfx(event)
-		_play_gfx(event)
 		_add_score(event)
 		if _failed(event):
 			_result = false

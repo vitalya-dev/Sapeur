@@ -22,7 +22,6 @@ func _load_current_level():
 	add_child(level, true);
 
 func _input(ev):
-	print("Input")
 	if ev.is_action_pressed("ui_cancel"):
 		_show_menu(get_node_or_null("Menu"))
 
@@ -39,6 +38,8 @@ func _show_menu(current_menu):
 			get_tree().paused = false	
 			menu.queue_free()
 		if button_name == "exit":
+			$Level.queue_free()
+			yield($Level, "tree_exited")
 			get_tree().quit()
 
 
