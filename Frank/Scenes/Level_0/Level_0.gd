@@ -44,6 +44,11 @@ func _ready():
 	yield(get_tree().create_timer(0.5), "timeout")
 	_mission(0)
 
+func _input(ev):
+	if ev.is_action_pressed("ui_cancel"):
+		get_node("/root/Game").show_menu() 
+
+
 func _mission(part):
 	if is_queued_for_deletion():
 		return

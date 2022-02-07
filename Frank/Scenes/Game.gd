@@ -21,26 +21,21 @@ func _load_current_level():
 	level.connect("complete", self, "_on_level_complete")
 	add_child(level, true);
 
-func _input(ev):
-	if ev.is_action_pressed("ui_cancel"):
-		_show_menu(get_node_or_null("Menu"))
-
-
-func _show_menu(current_menu):
-	if current_menu:
-		current_menu.emit_signal("button_pressed", "continue")
-	else:
-		get_tree().paused = true	
-		var menu = preload('res://Scenes/Menu.tscn').instance()
-		add_child(menu, true);
-		var button_name = yield(menu, "button_pressed")
-		if button_name == "continue":
-			get_tree().paused = false	
-			menu.queue_free()
-		if button_name == "exit":
-			$Level.queue_free()
-			yield($Level, "tree_exited")
-			get_tree().quit()
+func show_menu():
+	get_tree().paused = true	
+	###############################################################
+	var menu = preload('res://Scenes/Menu.tscn').instance()
+	add_child(menu, true);
+	###############################################################
+	var result = yield(menu, "button_pressed")
+	if result == "continue":
+		yield(get_tree(), "idle_frame")
+		get_tree().paused = false	
+		menu.queue_free()
+	if result == "exit":
+		$Level.queue_free()
+		yield($Level, "tree_exited")
+		get_tree().quit()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
