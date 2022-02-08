@@ -5,7 +5,7 @@ extends Control
 # var a = 2
 # var b = "text"
 
-var current_level = 0
+var current_level = -1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,18 +14,19 @@ func _ready():
 func _on_level_complete():
 	current_level += 1
 	$Level.queue_free()
+	remove_child($Level)
 	_load_current_level()
 
 func _load_current_level():
 	var level = load('res://Scenes/Level_%d/Level_%d.tscn' % [current_level, current_level]).instance()
 	level.connect("complete", self, "_on_level_complete")
-	add_child(level, true);
+	add_child(level)
 
 func show_menu():
 	get_tree().paused = true	
 	###############################################################
 	var menu = preload('res://Scenes/Menu.tscn').instance()
-	add_child(menu, true);
+	add_child(menu);
 	###############################################################
 	var result = yield(menu, "button_pressed")
 	if result == "continue":

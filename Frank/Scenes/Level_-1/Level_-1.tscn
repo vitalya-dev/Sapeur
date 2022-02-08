@@ -1,8 +1,8 @@
 [gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Assets/Graphics/menu.png" type="Texture" id=1]
-[ext_resource path="res://Assets/Fonts/PressStart2P-vaV7.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://Scenes/Menu.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/Level_-1/Level_-1.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Fonts/PressStart2P-vaV7.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
@@ -45,24 +45,25 @@ corner_detail = 1
 anti_aliasing = false
 
 [sub_resource type="DynamicFont" id=10]
-font_data = ExtResource( 2 )
+font_data = ExtResource( 3 )
 
-[node name="Menu" type="Control"]
-pause_mode = 2
+[node name="Level" type="Control"]
+pause_mode = 1
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 3 )
+mouse_filter = 2
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Background" type="AnimatedSprite" parent="."]
 frames = SubResource( 8 )
-frame = 3
+frame = 2
 playing = true
 centered = false
 
-[node name="Continue" type="Button" parent="."]
+[node name="New" type="Button" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -89.5
@@ -75,7 +76,7 @@ custom_styles/focus = SubResource( 9 )
 custom_styles/disabled = SubResource( 9 )
 custom_styles/normal = SubResource( 9 )
 custom_fonts/font = SubResource( 10 )
-text = "Продолжить"
+text = "Новая игра"
 __meta__ = {
 "_edit_use_anchors_": false
 }
