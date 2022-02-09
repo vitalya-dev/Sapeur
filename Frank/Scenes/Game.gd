@@ -36,9 +36,12 @@ func show_menu():
 	if result == "exit":
 		$Level.queue_free()
 		yield($Level, "tree_exited")
-		get_tree().quit()
+		quit_game()
 
+func quit_game():
+	get_tree().quit()
 
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

@@ -41,7 +41,7 @@ signal complete()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$BG.show_default(0)
-	yield(get_tree().create_timer(0.5), "timeout")
+	yield(get_tree(), "idle_frame")
 	_mission(0)
 
 func _input(ev):
