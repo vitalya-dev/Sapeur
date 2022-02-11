@@ -60,7 +60,6 @@ __meta__ = {
 
 [node name="Background" type="AnimatedSprite" parent="."]
 frames = SubResource( 8 )
-frame = 5
 playing = true
 centered = false
 

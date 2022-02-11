@@ -8,12 +8,7 @@ export(int) var scores_in_sec = 40
 
 var mission_text_1 = [
 	"@Добро пожаловать в Алжир сержант.",
-	"#О Боже.",
-	"@Скоро сюда приедут денежные мешки.",
-	"@Их задача - закопать радиоактивный мусор в пустыне.",
-	"@Президенту пообещали приз если он пойдет на это.",
-	"@Местным эта преспектива крайне ненравится.",
-	"@Они заминировали часть Сахары на подьезде к Алжиру.",
+	"@Местные заминировали часть Сахары на подьезде к городу.",
 	"@Наша задача - разминировать то что они заминировали.",
 	"@Вопросы?",
 	"#Никак нет.",
@@ -57,13 +52,18 @@ signal complete()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$BG.show_default(1)
+	yield(get_tree(), "idle_frame")
 	_mission(0)
 
+func _input(ev):
+	if ev.is_action_pressed("ui_cancel"):
+		get_node("/root/Game").show_menu() 
+
 func _mission(part):
-	yield(Engine.get_main_loop(), "idle_frame")
+	if is_queued_for_deletion():
+		return
 	match part:
 		0:
-			yield(get_tree().create_timer(0.5), "timeout")
 			yield(_show_text(mission_text_1), "completed")
 			$Music.stream = music_1			
 			$Music.play()
@@ -92,7 +92,6 @@ func _mission(part):
 		5:
 			yield(_play_final_screen(), "completed")
 			_stamped_mark()
-			yield(get_tree().create_timer(0.5), "timeout")
 			while (yield(Events, "event")["owner"] != "mouse"):
 				pass
 			_mission(part+1)
@@ -157,10 +156,6 @@ func _play_sfx(event):
 		$FlagSFX.play()
 		$Voice.talk()
 
-func _play_gfx(event):
-	pass
-
-		
 func _message_window(messages):
 	var message_window = preload('res://Scenes/Shared/MessageWindow.tscn').instance()
 	message_window.get_node("Message").messages = messages
@@ -232,7 +227,6 @@ func _solve():
 	while true:
 		var event = yield(Events, "event")
 		_play_sfx(event)
-		_play_gfx(event)
 		_add_score(event)
 		if _failed(event):
 			_result = false
@@ -244,7 +238,3 @@ func _solve():
 			break
 	##################################
 	return _result
-	
-func _input(ev):
-	if ev.is_action_pressed("ui_cancel"):
-		get_tree().quit()
