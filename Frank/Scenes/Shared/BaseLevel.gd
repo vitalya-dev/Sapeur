@@ -1,10 +1,7 @@
 extends Control
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-export(int) var scores_in_sec = 60
+# Declare member variables here. Examples
+export(int) var scores_in_sec = 50
 export(int) var mines = 5
 export (int) var bg_frame = 0
 
@@ -21,7 +18,10 @@ func _mission(part):
 
 func _input(ev):
 	if ev.is_action_pressed("ui_cancel"):
-		get_node("/root/Game").show_menu() 
+		_esc_pressed()
+
+func _esc_pressed():
+	get_node("/root/Game").show_menu() 
 
 func _play_final_screen():
 	$Field.visible = false
