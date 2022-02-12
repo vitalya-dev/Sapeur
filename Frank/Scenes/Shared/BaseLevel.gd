@@ -13,6 +13,11 @@ signal complete()
 func _ready():
 	pass
 
+func _start_level():
+	$BG.show_default(bg_frame)
+	yield(get_tree(), "idle_frame")
+	_mission(0)
+
 func _mission(part):
 	pass
 

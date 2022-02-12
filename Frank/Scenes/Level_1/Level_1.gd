@@ -44,20 +44,15 @@ var mission_text_3= [
 ]
 
 
-var music_1 = preload("res://Assets/Sounds/ahoe.mp3")
-var music_2 = preload("res://Assets/Sounds/Mimosa-697049527.mp3")
 
 signal complete()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	music = [preload("res://Assets/Sounds/ahoe.mp3"), preload("res://Assets/Sounds/Mimosa-697049527.mp3")]
 	$BG.show_default(1)
 	yield(get_tree(), "idle_frame")
 	_mission(0)
-
-func _input(ev):
-	if ev.is_action_pressed("ui_cancel"):
-		get_node("/root/Game").show_menu() 
 
 func _mission(part):
 	if is_queued_for_deletion():
